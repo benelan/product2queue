@@ -9,7 +9,7 @@ const products = [
     'ArcGIS Runtime SDK for OSX', 
     'ArcGIS Runtime SDK for Qt',
     'ArcObjects',
-    'Pro SDK',
+    'ArcGIS Pro SDK',
 ]
 
 export default products;

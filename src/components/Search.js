@@ -1,27 +1,29 @@
 import React from "react";
-import { Input } from "reactstrap";
-import search from '../data/searchData'
+import { Input, ListGroup, ListGroupItem } from "reactstrap";
+import productSearch from "../data/productSearch";
+import queueSearch from "../data/queueSearch";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filtered: [],
+      result: []
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({
-      filtered: this.props.items,
-    });
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     filtered: this.props.items,
+  //   });
+  // }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      filtered: nextProps.items,
-    });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     filtered: nextProps.items,
+  //   });
+  // }
 
   handleChange(e) {
     // Variable to hold the original version of the list
@@ -48,30 +50,58 @@ class Search extends React.Component {
       });
     } else {
       // If the search bar is empty, set newList to original task list
-      newList = this.props.items;
+      newList = [];
     }
     // Set the filtered state based on what our rules added to newList
     this.setState({
       filtered: newList,
+      result: []
     });
   }
 
+  startSearch = (item) => {
+    if (this.props.category == "Product") {
+      this.searchProduct(item);
+    } else {
+      this.searchQueue(item);
+    }
+  };
+
+  searchProduct = (item) => {
+    this.setState({result: [productSearch[item]] })
+  };
+
+  searchQueue = (item) => {
+    this.setState({result: queueSearch[item] })
+  };
+
   render() {
-    const ph = "Search by " + this.props.category
+    const ph = "Search by " + this.props.category;
     return (
-      <div>
+      <React.Fragment>
         <Input
           type="text"
           className="input"
           onChange={this.handleChange}
           placeholder={ph}
         />
-        <ul style={{"list-style" : "none"}}>
+
+        <ListGroup>
           {this.state.filtered.map((item) => (
-            <li key={item}>{item} &nbsp;</li>
+            <ListGroupItem onClick={() => this.startSearch(item)} tag="button" action>
+              {item}
+            </ListGroupItem>
           ))}
-        </ul>
-      </div>
+        </ListGroup>
+          
+        <ListGroup style={{marginTop: "50px"}}>
+          {this.state.result.map((item) => (
+            <ListGroupItem color="success">
+              {item}
+            </ListGroupItem>
+          ))}
+        </ListGroup>
+      </React.Fragment>
     );
   }
 }
