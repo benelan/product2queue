@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, ListGroup, ListGroupItem } from "reactstrap";
+import { Input,  InputGroup, InputGroupAddon, ListGroup, ListGroupItem, Button } from "reactstrap";
 import productSearch from "../data/productSearch";
 import queueSearch from "../data/queueSearch";
 
@@ -80,8 +80,10 @@ class Search extends React.Component {
     return (
       <React.Fragment>
         <Input
-          type="text"
+           type="search"
+           name="search"
           className="input"
+          id="searchInput"
           onChange={this.handleChange}
           placeholder={ph}
         />
