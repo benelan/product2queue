@@ -7,8 +7,8 @@ let documents = JSON.parse(data);
 var idx = lunr(function () {
   this.ref("product");
   this.field("product");
-  this.field("queue");
 
+  this.metadataWhitelist = ['position']
   documents.forEach(function (doc) {
     this.add(doc);
   }, this);
