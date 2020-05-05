@@ -1,109 +1,77 @@
 import React from "react";
-import { Input,  InputGroup, InputGroupAddon, ListGroup, ListGroupItem, Button } from "reactstrap";
-import productSearch from "../data/productSearch";
-import queueSearch from "../data/queueSearch";
+import { Row, Col, Input, ListGroup, ListGroupItem } from "reactstrap";
+import lunr from "lunr";
+import idx from "../data/index";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
+    this.handleProductChange = this.handleProductChange.bind(this);
     this.state = {
+      index: lunr.Index.load(idx),
       filtered: [],
-      result: []
+      query: {
+        product: "",
+        technology: "",
+      },
+      results: [],
     };
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     filtered: this.props.items,
-  //   });
-  // }
+  componentDidMount() {
+    console.log(this.state.index.search("JavaScript"));
+  }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     filtered: nextProps.items,
-  //   });
-  // }
-
-  handleChange(e) {
-    // Variable to hold the original version of the list
-    let currentList = [];
-    // Variable to hold the filtered list before putting into state
-    let newList = [];
-
-    // If the search bar isn't empty
-    if (e.target.value !== "") {
-      // Assign the original list to currentList
-      currentList = this.props.items;
-
-      // Use .filter() to determine which items should be displayed
-      // based on the search terms
-      newList = currentList.filter((item) => {
-        // change current item to lowercase
-        const lc = item.toLowerCase();
-        // change search term to lowercase
-        const filter = e.target.value.toLowerCase();
-        // check to see if the current list item includes the search term
-        // If it does, it will be added to newList. Using lowercase eliminates
-        // issues with capitalization in search terms and search content
-        return lc.includes(filter);
-      });
-    } else {
-      // If the search bar is empty, set newList to original task list
-      newList = [];
+  handleProductChange(e) {
+    this.setState({ filtered: [] });
+    let q = this.state.query;
+    q.product = e.target.value;
+    this.setState({ query: q });
+    if (e.target.value != "") {
+      this.startSearch();
     }
-    // Set the filtered state based on what our rules added to newList
-    this.setState({
-      filtered: newList,
-      result: []
+  }
+
+  startSearch = () => {
+    let string = "*" + this.state.query.product + "*";
+    let r = this.state.index.search(string);
+    let temp = [];
+    r.forEach((i) => {
+      temp.push(i.ref);
     });
-  }
-
-  startSearch = (item) => {
-    if (this.props.category == "Product") {
-      this.searchProduct(item);
-    } else {
-      this.searchQueue(item);
-    }
-  };
-
-  searchProduct = (item) => {
-    this.setState({result: [productSearch[item]] })
-  };
-
-  searchQueue = (item) => {
-    this.setState({result: queueSearch[item] })
+    this.setState({ filtered: temp });
   };
 
   render() {
-    const ph = "Search by " + this.props.category;
+    const appStyle = {
+      margin: "40px",
+    };
     return (
-      <React.Fragment>
-        <Input
-           type="search"
-           name="search"
-          className="input"
-          id="searchInput"
-          onChange={this.handleChange}
-          placeholder={ph}
-        />
+      <Row className="justify-content-md-center" style={appStyle}>
+        <Col md={{ size: 5, offset: 0 }}>
+          <Input
+            type="search"
+            name="search"
+            className="input"
+            id="searchInput"
+            onChange={this.handleProductChange}
+            placeholder="Search by Product"
+          />
 
-        <ListGroup>
-          {this.state.filtered.map((item) => (
-            <ListGroupItem onClick={() => this.startSearch(item)} tag="button" action>
-              {item}
-            </ListGroupItem>
-          ))}
-        </ListGroup>
-          
-        <ListGroup style={{marginTop: "50px"}}>
-          {this.state.result.map((item) => (
-            <ListGroupItem color="success">
-              {item}
-            </ListGroupItem>
-          ))}
-        </ListGroup>
-      </React.Fragment>
+          <ListGroup>
+            {this.state.filtered.map((item, index) => (
+              <ListGroupItem key={index}
+                //onClick={() => this.startSearch(item)}
+                tag="button"
+                action
+              >
+                {item}
+              </ListGroupItem>
+            ))}
+          </ListGroup>
+        </Col>
+        <Col md={{ size: 5, offset: 2 }}></Col>
+      </Row>
     );
   }
 }
