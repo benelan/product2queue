@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Input, Label, ListGroup, ListGroupItem } from "reactstrap";
 import lunr from "lunr";
 import idx from "../data/idx";
-import data from "../data/mock.json";
+import data from "../data/products.json";
 
 class Search extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class Search extends React.Component {
     this.handleProductChange = this.handleProductChange.bind(this);
     this.handleTechnologyChange = this.handleTechnologyChange.bind(this);
     this.state = {
-      index: lunr.Index.load(idx),
+      index: lunr.Index.load(idx), // create the index from the serialized json
       filtered: [],
       query: {
         product: "",
@@ -23,38 +23,50 @@ class Search extends React.Component {
   componentDidMount() {}
 
   handleProductChange(e) {
+    // clear the dropdown and results
     this.setState({ filtered: [], results: [] });
+    // set the state to the product input value
     let q = this.state.query;
     q.product = e.target.value;
     this.setState({ query: q });
-    if (e.target.value != "") {
+    // if the input isn't blank
+    if (e.target.value !== "") {
+      // start the search
       this.startSearch();
     }
   }
 
   handleTechnologyChange(e) {
+    // clear the dropdown and results
     this.setState({ filtered: [], results: [] });
     let q = this.state.query;
     q.technology = e.target.value;
-    // this.setState({ query: q });
-    // if (e.target.value != "" && q.product != "") {
-    //   this.startSearch();
-    //}
+    // if a technology is selected and there are inputs in the product search
+    if (e.target.value !== "Any" && q.product !== "") {
+      // set the state to the technology input value
+      this.setState({ query: q });
+      // start the search
+      this.startSearch();
+    }
   }
 
   startSearch = () => {
+    // * wildcard means anything can be
+    // before or behind the search value
+    // ie *at* would include 'attack', 'fat', 'matter', etc
     let pQ = "product:*" + this.state.query.product + "*";
-    //let tQ = " technology:*" + this.state.query.technology + "*";
+    // + means it must contain the value
+    //let tQ = " technology:+" + this.state.query.technology;
     let q = pQ; //+ tQ;
     let f = this.state.index.search(q);
     this.setState({ filtered: f });
   };
 
   matchQueue = (item) => {
+    // match the index ref to the full data struct to get all of the info
     const result = data.find((post) => item.ref === post.product);
-    let r = [];
-    r.push(result);
-    this.setState({ results: r });
+    // set the state to the result info
+    this.setState({ results: [result] });
   };
 
   render() {
@@ -113,11 +125,11 @@ class Search extends React.Component {
             <div>
               <Label for="results">Results</Label>
               <ListGroup>
-                <ListGroupItem >
-                <b>Queue:</b> {this.state.results[0].queue}
+                <ListGroupItem>
+                  <b>Queue:</b> {this.state.results[0].queue}
                 </ListGroupItem>
-                <ListGroupItem >
-                <b>Support Method:</b> {this.state.results[0].supportMethod}
+                <ListGroupItem>
+                  <b>Support Method:</b> {this.state.results[0].supportMethod}
                 </ListGroupItem>
               </ListGroup>
             </div>
