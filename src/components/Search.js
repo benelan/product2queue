@@ -14,13 +14,11 @@ class Search extends React.Component {
       filtered: [],
       query: {
         product: "",
-        technology: "",
+        technology: "Any",
       },
       results: [],
     };
   }
-
-  componentDidMount() {}
 
   handleProductChange(e) {
     // clear the dropdown and results
@@ -29,11 +27,7 @@ class Search extends React.Component {
     let q = this.state.query;
     q.product = e.target.value;
     this.setState({ query: q });
-    // if the input isn't blank
-    if (e.target.value !== "") {
-      // start the search
-      this.startSearch();
-    }
+    this.startSearch();
   }
 
   handleTechnologyChange(e) {
@@ -41,38 +35,57 @@ class Search extends React.Component {
     this.setState({ filtered: [], results: [] });
     let q = this.state.query;
     q.technology = e.target.value;
-    console.log(e.target.value);
+    // set the state to the technology input value
     this.setState({ query: q });
-    // if a technology is selected and there are inputs in the product search
-    if (e.target.value !== "Any" && q.product !== "") {
-      // set the state to the technology input value
-      // start the search
-      this.startSearch();
-    }
+    // start the search
+    this.startSearch();
   }
 
   startSearch = () => {
-    let q = "";
+     if (this.state.query.product !== "") {
     // * wildcard means anything can be
     // before or behind the search value
     // ie *at* would include 'attack', 'fat', 'matter', etc
-    q += "+product:*" + this.state.query.product + "*";
+    let q = "+product:*" + this.state.query.product + "*";
     // + means it must contain the value
-    if (this.state.query.technology !== "") {
+    if (this.state.query.technology !== "Any") {
       q += " +technology:" + this.state.query.technology;
     }
-
-    console.log(q);
-    let f = this.state.index.search(q);
-    this.setState({ filtered: f });
+    const f = this.state.index.search(q);
+      this.setState({ filtered: f });
+      if (f.length === 1) {
+        this.findResult(f[0]);
+      }
+    }
   };
 
-  matchQueue = (item) => {
+  findResult = (item) => {
     // match the index ref to the full data struct to get all of the info
-    const result = data.find((post) => item.ref === post.product);
+    const qs = data.find((post) => item.ref === post.product);
+    const qa = qs.queue.split(",");
+    // var key, value, result;
+    // for (key in qa) {
+    //   if (qa.hasOwnProperty(key) && !isNaN(parseInt(key, 10))) {
+    //     value = qa[key];
+    //     if (value.substring(0, 3) === "id-") {
+    //       // You've found it, the full text is in `value`.
+    //       // So you might grab it and break the loop, although
+    //       // really what you do having found it depends on
+    //       // what you need.
+    //       result = value;
+    //       break;
+    //     }
+    //   }
+    // }
+    // console.log(result);
+
     // set the state to the result info
-    this.setState({ results: [result] });
+    this.setState({ results: [qs] });
   };
+
+  // filterQueue = () => {
+  //   qs = result.queue.split(",")
+  // }
 
   render() {
     const appStyle = {
@@ -89,7 +102,7 @@ class Search extends React.Component {
             onChange={this.handleTechnologyChange}
           >
             <option value={"Any"}>Any</option>
-            <option value={"Data Management"}>Data Management</option>
+            <option value={"Data"}>Data Management</option>
             <option value={"Desktop"}>Desktop</option>
             <option value={"Enterprise"}>Enterprise</option>
             <option value={"Implementation"}>Implementation</option>
@@ -116,7 +129,7 @@ class Search extends React.Component {
             {this.state.filtered.map((item, index) => (
               <ListGroupItem
                 key={index}
-                onClick={() => this.matchQueue(item)}
+                onClick={() => this.findResult(item)}
                 tag="button"
                 action
               >
@@ -136,6 +149,15 @@ class Search extends React.Component {
                 <ListGroupItem>
                   <b>Support Method:</b> {this.state.results[0].supportMethod}
                 </ListGroupItem>
+                {this.state.results[0].reference !== "" ? (
+                  <ListGroupItem>
+                    <a href={this.state.results[0].reference}>
+                      <b>Reference</b>
+                    </a>
+                  </ListGroupItem>
+                ) : (
+                  ""
+                )}
               </ListGroup>
             </div>
           ) : (
