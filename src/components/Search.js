@@ -41,23 +41,28 @@ class Search extends React.Component {
     this.setState({ filtered: [], results: [] });
     let q = this.state.query;
     q.technology = e.target.value;
+    console.log(e.target.value);
+    this.setState({ query: q });
     // if a technology is selected and there are inputs in the product search
     if (e.target.value !== "Any" && q.product !== "") {
       // set the state to the technology input value
-      this.setState({ query: q });
       // start the search
       this.startSearch();
     }
   }
 
   startSearch = () => {
+    let q = "";
     // * wildcard means anything can be
     // before or behind the search value
     // ie *at* would include 'attack', 'fat', 'matter', etc
-    let pQ = "product:*" + this.state.query.product + "*";
+    q += "+product:*" + this.state.query.product + "*";
     // + means it must contain the value
-    //let tQ = " technology:+" + this.state.query.technology;
-    let q = pQ; //+ tQ;
+    if (this.state.query.technology !== "") {
+      q += " +technology:" + this.state.query.technology;
+    }
+
+    console.log(q);
     let f = this.state.index.search(q);
     this.setState({ filtered: f });
   };
@@ -92,7 +97,7 @@ class Search extends React.Component {
             <option value={"Professional Services"}>
               Professional Services
             </option>
-            <option value={"SDK<"}>SDK</option>
+            <option value={"SDK"}>SDK</option>
           </Input>
         </Col>
 

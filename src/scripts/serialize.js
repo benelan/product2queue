@@ -12,6 +12,7 @@ var idx = lunr(function () {
   this.ref("product");
   // the fields are for searching
   this.field("product");
+  this.field("technology")
 
   documents.forEach(function (doc) {
     this.add(doc);
@@ -19,7 +20,7 @@ var idx = lunr(function () {
 });
 
 // path for export
-var file = '../data/index.js';
+var file = '../data/idx.js';
 
 // make it a js variable so it is easy to use in the code
 var output = 'const idx = ' + JSON.stringify(idx) + '; export default idx';
