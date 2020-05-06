@@ -1,109 +1,148 @@
 import React from "react";
-import { Input,  InputGroup, InputGroupAddon, ListGroup, ListGroupItem, Button } from "reactstrap";
-import productSearch from "../data/productSearch";
-import queueSearch from "../data/queueSearch";
+import { Row, Col, Input, Label, ListGroup, ListGroupItem } from "reactstrap";
+import lunr from "lunr";
+import idx from "../data/idx";
+import data from "../data/products.json";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
+    this.handleProductChange = this.handleProductChange.bind(this);
+    this.handleTechnologyChange = this.handleTechnologyChange.bind(this);
     this.state = {
+      index: lunr.Index.load(idx), // create the index from the serialized json
       filtered: [],
-      result: []
+      query: {
+        product: "",
+        technology: "",
+      },
+      results: [],
     };
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     filtered: this.props.items,
-  //   });
-  // }
+  componentDidMount() {}
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     filtered: nextProps.items,
-  //   });
-  // }
-
-  handleChange(e) {
-    // Variable to hold the original version of the list
-    let currentList = [];
-    // Variable to hold the filtered list before putting into state
-    let newList = [];
-
-    // If the search bar isn't empty
+  handleProductChange(e) {
+    // clear the dropdown and results
+    this.setState({ filtered: [], results: [] });
+    // set the state to the product input value
+    let q = this.state.query;
+    q.product = e.target.value;
+    this.setState({ query: q });
+    // if the input isn't blank
     if (e.target.value !== "") {
-      // Assign the original list to currentList
-      currentList = this.props.items;
-
-      // Use .filter() to determine which items should be displayed
-      // based on the search terms
-      newList = currentList.filter((item) => {
-        // change current item to lowercase
-        const lc = item.toLowerCase();
-        // change search term to lowercase
-        const filter = e.target.value.toLowerCase();
-        // check to see if the current list item includes the search term
-        // If it does, it will be added to newList. Using lowercase eliminates
-        // issues with capitalization in search terms and search content
-        return lc.includes(filter);
-      });
-    } else {
-      // If the search bar is empty, set newList to original task list
-      newList = [];
+      // start the search
+      this.startSearch();
     }
-    // Set the filtered state based on what our rules added to newList
-    this.setState({
-      filtered: newList,
-      result: []
-    });
   }
 
-  startSearch = (item) => {
-    if (this.props.category == "Product") {
-      this.searchProduct(item);
-    } else {
-      this.searchQueue(item);
+  handleTechnologyChange(e) {
+    // clear the dropdown and results
+    this.setState({ filtered: [], results: [] });
+    let q = this.state.query;
+    q.technology = e.target.value;
+    console.log(e.target.value);
+    this.setState({ query: q });
+    // if a technology is selected and there are inputs in the product search
+    if (e.target.value !== "Any" && q.product !== "") {
+      // set the state to the technology input value
+      // start the search
+      this.startSearch();
     }
+  }
+
+  startSearch = () => {
+    let q = "";
+    // * wildcard means anything can be
+    // before or behind the search value
+    // ie *at* would include 'attack', 'fat', 'matter', etc
+    q += "+product:*" + this.state.query.product + "*";
+    // + means it must contain the value
+    if (this.state.query.technology !== "") {
+      q += " +technology:" + this.state.query.technology;
+    }
+
+    console.log(q);
+    let f = this.state.index.search(q);
+    this.setState({ filtered: f });
   };
 
-  searchProduct = (item) => {
-    this.setState({result: [productSearch[item]] })
-  };
-
-  searchQueue = (item) => {
-    this.setState({result: queueSearch[item] })
+  matchQueue = (item) => {
+    // match the index ref to the full data struct to get all of the info
+    const result = data.find((post) => item.ref === post.product);
+    // set the state to the result info
+    this.setState({ results: [result] });
   };
 
   render() {
-    const ph = "Search by " + this.props.category;
+    const appStyle = {
+      margin: "40px",
+    };
     return (
-      <React.Fragment>
-        <Input
-           type="search"
-           name="search"
-          className="input"
-          id="searchInput"
-          onChange={this.handleChange}
-          placeholder={ph}
-        />
+      <Row className="justify-content-md-center" style={appStyle}>
+        <Col md={{ size: 3, offset: 0 }}>
+          <Label for="exampleSelect">Technology</Label>
+          <Input
+            type="select"
+            name="select"
+            id="technologySelect"
+            onChange={this.handleTechnologyChange}
+          >
+            <option value={"Any"}>Any</option>
+            <option value={"Data Management"}>Data Management</option>
+            <option value={"Desktop"}>Desktop</option>
+            <option value={"Enterprise"}>Enterprise</option>
+            <option value={"Implementation"}>Implementation</option>
+            <option value={"Online"}>Online</option>
+            <option value={"Professional Services"}>
+              Professional Services
+            </option>
+            <option value={"SDK"}>SDK</option>
+          </Input>
+        </Col>
 
-        <ListGroup>
-          {this.state.filtered.map((item) => (
-            <ListGroupItem onClick={() => this.startSearch(item)} tag="button" action>
-              {item}
-            </ListGroupItem>
-          ))}
-        </ListGroup>
-          
-        <ListGroup style={{marginTop: "50px"}}>
-          {this.state.result.map((item) => (
-            <ListGroupItem color="success">
-              {item}
-            </ListGroupItem>
-          ))}
-        </ListGroup>
-      </React.Fragment>
+        <Col md={{ size: 5, offset: 0 }}>
+          <Label for="productInput">Product</Label>
+          <Input
+            type="search"
+            name="search"
+            className="input"
+            id="productInput"
+            onChange={this.handleProductChange}
+            placeholder="Search by Product"
+          />
+
+          <ListGroup>
+            {this.state.filtered.map((item, index) => (
+              <ListGroupItem
+                key={index}
+                onClick={() => this.matchQueue(item)}
+                tag="button"
+                action
+              >
+                {item.ref}
+              </ListGroupItem>
+            ))}
+          </ListGroup>
+        </Col>
+        <Col md={{ size: 4, offset: 0 }}>
+          {this.state.results.length > 0 ? (
+            <div>
+              <Label for="results">Results</Label>
+              <ListGroup>
+                <ListGroupItem>
+                  <b>Queue:</b> {this.state.results[0].queue}
+                </ListGroupItem>
+                <ListGroupItem>
+                  <b>Support Method:</b> {this.state.results[0].supportMethod}
+                </ListGroupItem>
+              </ListGroup>
+            </div>
+          ) : (
+            ""
+          )}
+        </Col>
+      </Row>
     );
   }
 }
