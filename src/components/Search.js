@@ -1,8 +1,9 @@
 import React from "react";
 import { Row, Col, Input, Label, ListGroup, ListGroupItem } from "reactstrap";
 import lunr from "lunr";
-import idx from "../data/idx";
-import data from "../data/products.json";
+import idx from "../data/idx.json";
+import prod from "../data/product_tech_queue.json";
+import tech from "../data/tech_queue.json";
 
 class Search extends React.Component {
   constructor(props) {
@@ -42,16 +43,16 @@ class Search extends React.Component {
   }
 
   startSearch = () => {
-     if (this.state.query.product !== "") {
-    // * wildcard means anything can be
-    // before or behind the search value
-    // ie *at* would include 'attack', 'fat', 'matter', etc
-    let q = "+product:*" + this.state.query.product + "*";
-    // + means it must contain the value
-    if (this.state.query.technology !== "Any") {
-      q += " +technology:" + this.state.query.technology;
-    }
-    const f = this.state.index.search(q);
+    if (this.state.query.product !== "") {
+      // * wildcard means anything can be
+      // before or behind the search value
+      // ie *at* would include 'attack', 'fat', 'matter', etc
+      let q = "+product:*" + this.state.query.product + "*";
+      // + means it must contain the value
+      if (this.state.query.technology !== "Any") {
+        q += " +technology:" + this.state.query.technology;
+      }
+      const f = this.state.index.search(q);
       this.setState({ filtered: f });
       if (f.length === 1) {
         this.findResult(f[0]);
@@ -61,31 +62,24 @@ class Search extends React.Component {
 
   findResult = (item) => {
     // match the index ref to the full data struct to get all of the info
-    const qs = data.find((post) => item.ref === post.product);
+    let qs = prod.find((res) => item.ref === res.product);
+    // create an array of queues
     const qa = qs.queue.split(",");
-    // var key, value, result;
-    // for (key in qa) {
-    //   if (qa.hasOwnProperty(key) && !isNaN(parseInt(key, 10))) {
-    //     value = qa[key];
-    //     if (value.substring(0, 3) === "id-") {
-    //       // You've found it, the full text is in `value`.
-    //       // So you might grab it and break the loop, although
-    //       // really what you do having found it depends on
-    //       // what you need.
-    //       result = value;
-    //       break;
-    //     }
-    //   }
-    // }
-    // console.log(result);
+    let newQS = JSON.parse(JSON.stringify(qs)) // don't ask, don't remove
+
+    if (this.state.query.technology !== "Any" && qa.length > 1) {
+      let temp = "";
+      qa.forEach((q) => {
+        if (tech[0][this.state.query.technology].includes(q.trim())) {
+          temp += q.trim();
+        }
+      });
+      newQS.queue = temp;
+    }
 
     // set the state to the result info
-    this.setState({ results: [qs] });
+    this.setState({ results: [newQS] });
   };
-
-  // filterQueue = () => {
-  //   qs = result.queue.split(",")
-  // }
 
   render() {
     const appStyle = {
@@ -141,7 +135,7 @@ class Search extends React.Component {
         <Col md={{ size: 4, offset: 0 }}>
           {this.state.results.length > 0 ? (
             <div>
-              <Label for="results">Results</Label>
+              <Label for="res">Results</Label>
               <ListGroup>
                 <ListGroupItem>
                   <b>Queue:</b> {this.state.results[0].queue}
