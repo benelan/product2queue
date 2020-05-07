@@ -1,4 +1,4 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
 import { Row, Col, Input, Label, ListGroup, ListGroupItem } from "reactstrap";
 import lunr from "lunr";
 import VirtualScroll from "./VirtualScroll";
@@ -33,13 +33,38 @@ class Search extends React.Component {
   }
 
   handleTechnologyChange(e) {
-    // clear the dropdown and results
-    this.setState({ filtered: [], results: [] });
     let q = this.state.query;
     q.technology = e.target.value;
-    // set the state to the technology input value
     this.setState({ query: q });
-    // start the search
+
+    if (this.state.results.length > 0) {
+      const or = this.state.results[0];
+      var ort = or.technology.split(",").map(item => item.trim());
+      // set the state to the technology input value
+
+      if (ort.includes(e.target.value)) {
+        console.log(or)
+        let temp = "";
+        let orq = or.queue.split(",");
+        orq.forEach((q) => {
+          if (tech[0][e.target.value].includes(q.trim())) {
+            temp += q.trim();
+          }
+        });
+        or.visibleQueue = temp;
+        
+        this.setState({ results: [or] });
+      }
+      else {
+        // clear the dropdown and results
+        this.setState({ filtered: [], results: [] });
+        // start the search
+      }
+    } else {
+      // clear the dropdown and results
+      this.setState({ filtered: [], results: [] });
+      // start the search
+    }
     this.startSearch();
   }
 
@@ -65,9 +90,9 @@ class Search extends React.Component {
     // match the index ref to the full data struct to get all of the info
     let qs = prod.find((res) => item.ref === res.product);
     // create an array of queues
-    const qa = qs.queue.split(",");
-    let newQS = JSON.parse(JSON.stringify(qs)) // don't ask, don't remove
-
+    const qa = qs.queue.split(",").map(item => item.trim());
+    // create a seperate list of queues that will be visible in the results
+    qs.visibleQueue = qs.queue;
     if (this.state.query.technology !== "Any" && qa.length > 1) {
       let temp = "";
       qa.forEach((q) => {
@@ -75,28 +100,33 @@ class Search extends React.Component {
           temp += q.trim();
         }
       });
-      newQS.queue = temp;
+      qs.visibleQueue = temp;
     }
 
     // set the state to the result info
-    this.setState({ results: [newQS] });
+    this.setState({ results: [qs] });
   };
 
   render() {
+    const lgi = {
+      height: "70px",
+    };
     const Item = memo(({ index }) => (
       <ListGroupItem
-                key={index}
-                onClick={() => this.findResult(this.state.filtered[index])}
-                tag="button"
-                action
-              >
-                {this.state.filtered[index].ref}
-              </ListGroupItem>
+        key={index}
+        style={lgi}
+        onClick={() => this.findResult(this.state.filtered[index])}
+        tag="button"
+        action
+      >
+        {this.state.filtered[index].ref}
+      </ListGroupItem>
     ));
 
     const appStyle = {
       margin: "40px",
     };
+    
     return (
       <Row className="justify-content-md-center" style={appStyle}>
         <Col md={{ size: 3, offset: 0 }}>
@@ -132,13 +162,12 @@ class Search extends React.Component {
           />
 
           <ListGroup>
-          <VirtualScroll
-          itemCount={this.state.filtered.length}
-          height={400}
-          childHeight={50}
-          Item={Item}
-        />
-           
+            <VirtualScroll
+              itemCount={this.state.filtered.length}
+              height={400}
+              childHeight={70}
+              Item={Item}
+            />
           </ListGroup>
         </Col>
         <Col md={{ size: 4, offset: 0 }}>
@@ -146,11 +175,11 @@ class Search extends React.Component {
             <div>
               <Label for="res">Results</Label>
               <ListGroup>
-              <ListGroupItem>
+                <ListGroupItem>
                   <b>Product:</b> {this.state.results[0].product}
                 </ListGroupItem>
                 <ListGroupItem>
-                  <b>Queue:</b> {this.state.results[0].queue}
+                  <b>Queue:</b> {this.state.results[0].visibleQueue}
                 </ListGroupItem>
                 <ListGroupItem>
                   <b>Support Method:</b> {this.state.results[0].supportMethod}
