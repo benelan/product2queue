@@ -1,6 +1,7 @@
-import React from "react";
+import React, {memo} from "react";
 import { Row, Col, Input, Label, ListGroup, ListGroupItem } from "reactstrap";
 import lunr from "lunr";
+import VirtualScroll from "./VirtualScroll";
 import idx from "../data/idx.json";
 import prod from "../data/product_tech_queue.json";
 import tech from "../data/tech_queue.json";
@@ -82,6 +83,17 @@ class Search extends React.Component {
   };
 
   render() {
+    const Item = memo(({ index }) => (
+      <ListGroupItem
+                key={index}
+                onClick={() => this.findResult(this.state.filtered[index])}
+                tag="button"
+                action
+              >
+                {this.state.filtered[index].ref}
+              </ListGroupItem>
+    ));
+
     const appStyle = {
       margin: "40px",
     };
@@ -120,16 +132,13 @@ class Search extends React.Component {
           />
 
           <ListGroup>
-            {this.state.filtered.map((item, index) => (
-              <ListGroupItem
-                key={index}
-                onClick={() => this.findResult(item)}
-                tag="button"
-                action
-              >
-                {item.ref}
-              </ListGroupItem>
-            ))}
+          <VirtualScroll
+          itemCount={this.state.filtered.length}
+          height={400}
+          childHeight={50}
+          Item={Item}
+        />
+           
           </ListGroup>
         </Col>
         <Col md={{ size: 4, offset: 0 }}>
@@ -137,6 +146,9 @@ class Search extends React.Component {
             <div>
               <Label for="res">Results</Label>
               <ListGroup>
+              <ListGroupItem>
+                  <b>Product:</b> {this.state.results[0].product}
+                </ListGroupItem>
                 <ListGroupItem>
                   <b>Queue:</b> {this.state.results[0].queue}
                 </ListGroupItem>
