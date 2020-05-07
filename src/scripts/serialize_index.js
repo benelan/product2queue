@@ -2,7 +2,7 @@ var lunr = require("lunr"),
   fs = require("fs-extra");
 
 // read in the data structure
-let data = fs.readFileSync("../data/products.json");
+let data = fs.readFileSync("../data/product_tech_queue.json");
 // parse the data into JSON
 let documents = JSON.parse(data);
 
@@ -20,10 +20,9 @@ var idx = lunr(function () {
 });
 
 // path for export
-var file = "../data/idx.js";
+var file = "../data/idx.json";
 
-// make it a js variable so it is easy to use in the code
-var output = "const idx = " + JSON.stringify(idx) + "; export default idx";
+var output = JSON.stringify(idx);
 
 // export
 fs.outputFile(file, output);
