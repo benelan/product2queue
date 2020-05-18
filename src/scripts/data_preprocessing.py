@@ -65,7 +65,7 @@ df_tech_queue
 
 # 4 - Export df_tech_queue to JSON
 
-json_tech_queue = df_tech_queue.to_json(r'..\data\tech_queues.json', orient="records")
+json_tech_queue = df_tech_queue.to_json(r'..\data\tech_queue.json', orient="records")
 
 
 # In[7]:
@@ -141,5 +141,5 @@ df_final.head()
 
 # 7 - Export df_final to JSON
 
-json_final = df_final.to_json(r'..\data\product_tech_queues.json', orient="records")
+json_final = df_final.to_json(r'..\data\product_tech_queue.json', orient="records")
 
