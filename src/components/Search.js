@@ -1,7 +1,9 @@
-import React, { memo } from "react";
-import { Row, Col, Input, Label, ListGroup, ListGroupItem } from "reactstrap";
+import React from "react";
+import { Row, Col } from "reactstrap";
 import lunr from "lunr";
-import VirtualScroll from "./VirtualScroll";
+import Product from "./Product";
+import Technology from "./Technology";
+import Result from "./Result";
 import idx from "../data/idx.json";
 import prod from "../data/product_tech_queue.json";
 import tech from "../data/tech_queue.json";
@@ -39,11 +41,11 @@ class Search extends React.Component {
 
     if (this.state.results.length > 0) {
       const or = this.state.results[0];
-      var ort = or.technology.split(",").map(item => item.trim());
+      var ort = or.technology.split(",").map((item) => item.trim());
       // set the state to the technology input value
 
       if (ort.includes(e.target.value)) {
-        console.log(or)
+        console.log(or);
         let temp = "";
         let orq = or.queue.split(",");
         orq.forEach((q) => {
@@ -52,10 +54,9 @@ class Search extends React.Component {
           }
         });
         or.visibleQueue = temp;
-        
+
         this.setState({ results: [or] });
-      }
-      else {
+      } else {
         // clear the dropdown and results
         this.setState({ filtered: [], results: [] });
         // start the search
@@ -90,7 +91,7 @@ class Search extends React.Component {
     // match the index ref to the full data struct to get all of the info
     let qs = prod.find((res) => item.ref === res.product);
     // create an array of queues
-    const qa = qs.queue.split(",").map(item => item.trim());
+    const qa = qs.queue.split(",").map((item) => item.trim());
     // create a seperate list of queues that will be visible in the results
     qs.visibleQueue = qs.queue;
     if (this.state.query.technology !== "Any" && qa.length > 1) {
@@ -108,96 +109,21 @@ class Search extends React.Component {
   };
 
   render() {
-    const lgi = {
-      height: "70px",
-    };
-    const Item = memo(({ index }) => (
-      <ListGroupItem
-        key={index}
-        style={lgi}
-        onClick={() => this.findResult(this.state.filtered[index])}
-        tag="button"
-        action
-      >
-        {this.state.filtered[index].ref}
-      </ListGroupItem>
-    ));
-
     const appStyle = {
       margin: "40px",
     };
-    
+
     return (
       <Row className="justify-content-md-center" style={appStyle}>
         <Col md={{ size: 3, offset: 0 }}>
-          <Label for="exampleSelect">Technology</Label>
-          <Input
-            type="select"
-            name="select"
-            id="technologySelect"
-            onChange={this.handleTechnologyChange}
-          >
-            <option value={"Any"}>Any</option>
-            <option value={"Data"}>Data Management</option>
-            <option value={"Desktop"}>Desktop</option>
-            <option value={"Enterprise"}>Enterprise</option>
-            <option value={"Implementation"}>Implementation</option>
-            <option value={"Online"}>Online</option>
-            <option value={"Professional Services"}>
-              Professional Services
-            </option>
-            <option value={"SDK"}>SDK</option>
-          </Input>
+          <Technology onTechnologyChange={this.handleTechnologyChange} />
         </Col>
 
         <Col md={{ size: 5, offset: 0 }}>
-          <Label for="productInput">Product</Label>
-          <Input
-            type="search"
-            name="search"
-            className="input"
-            id="productInput"
-            onChange={this.handleProductChange}
-            placeholder="Search by Product"
-          />
-
-          <ListGroup>
-            <VirtualScroll
-              itemCount={this.state.filtered.length}
-              height={400}
-              childHeight={70}
-              Item={Item}
-            />
-          </ListGroup>
+          <Product filtered={this.state.filtered} onProductChange={this.handleProductChange} onResult={this.findResult}/>
         </Col>
         <Col md={{ size: 4, offset: 0 }}>
-          {this.state.results.length > 0 ? (
-            <div>
-              <Label for="res">Results</Label>
-              <ListGroup>
-                <ListGroupItem>
-                  <b>Product:</b> {this.state.results[0].product}
-                </ListGroupItem>
-                <ListGroupItem>
-                  <b>Queue:</b> {this.state.results[0].visibleQueue}
-                </ListGroupItem>
-                <ListGroupItem>
-                  <b>Support Method:</b> {this.state.results[0].supportMethod}
-                </ListGroupItem>
-                {this.state.results[0].reference !== "" ? (
-                  <ListGroupItem>
-                    <a href={this.state.results[0].reference}>
-                      <b>Reference</b>
-                    </a>
-                  </ListGroupItem>
-                ) : (
-                  ""
-                )}
-              </ListGroup>
-            </div>
-          ) : (
-            ""
-          )}
+        <Result results={this.state.results} />
         </Col>
       </Row>
     );
