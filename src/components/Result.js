@@ -19,7 +19,7 @@ class Result extends React.Component {
               <ListGroupItem>
                 <b>Support Method:</b> {this.props.results[0].supportMethod}
               </ListGroupItem>
-              {this.props.results[0].url !== "" ? (
+              {this.props.results[0].url ? (
                 <ListGroupItem>
                   <a href={this.props.results[0].url}>
                     <b>Reference</b>
@@ -28,7 +28,7 @@ class Result extends React.Component {
               ) : (
                 ""
               )}
-              {this.props.results[0].email !== "" ? (
+              {this.props.results[0].email ? (
                 <ListGroupItem>
                   <b>Contact: </b>
                   <a href={`mailto:${this.props.results[0].email}`}>

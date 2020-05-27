@@ -1,11 +1,9 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
-import lunr from "lunr";
 import Product from "./Product";
 import Technology from "./Technology";
 import Result from "./Result";
-import idx from "../data/idx.json";
-import prod from "../data/product_tech_queue.json";
+
 import tech from "../data/tech_queue.json";
 
 class Search extends React.Component {
@@ -14,7 +12,6 @@ class Search extends React.Component {
     this.handleProductChange = this.handleProductChange.bind(this);
     this.handleTechnologyChange = this.handleTechnologyChange.bind(this);
     this.state = {
-      index: lunr.Index.load(idx), // create the index from the serialized json
       filtered: [],
       query: {
         product: "",
@@ -45,7 +42,6 @@ class Search extends React.Component {
       // set the state to the technology input value
 
       if (ort.includes(e.target.value)) {
-        console.log(or);
         let temp = "";
         let orq = or.queue.split(",");
         orq.forEach((q) => {
@@ -79,7 +75,7 @@ class Search extends React.Component {
       if (this.state.query.technology !== "Any") {
         q += " +technology:" + this.state.query.technology;
       }
-      const f = this.state.index.search(q);
+      const f = this.props.index.search(q);
       this.setState({ filtered: f });
       if (f.length === 1) {
         this.findResult(f[0]);
@@ -89,7 +85,7 @@ class Search extends React.Component {
 
   findResult = (item) => {
     // match the index ref to the full data struct to get all of the info
-    let qs = prod.find((res) => item.ref === res.product);
+    let qs = this.props.data.find((res) => item.ref === res.product);
     // create an array of queues
     const qa = qs.queue.split(",").map((item) => item.trim());
     // create a seperate list of queues that will be visible in the results
