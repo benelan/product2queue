@@ -4,8 +4,6 @@ import Product from "./Product";
 import Technology from "./Technology";
 import Result from "./Result";
 
-import tech from "../data/tech_queue.json";
-
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +43,7 @@ class Search extends React.Component {
         let temp = "";
         let orq = or.queue.split(",");
         orq.forEach((q) => {
-          if (tech[0][e.target.value].includes(q.trim())) {
+          if (this.props.tech[e.target.value].includes(q.trim())) {
             temp += q.trim();
           }
         });
@@ -85,7 +83,7 @@ class Search extends React.Component {
 
   findResult = (item) => {
     // match the index ref to the full data struct to get all of the info
-    let qs = this.props.data.find((res) => item.ref === res.product);
+    let qs = this.props.prod.find((res) => item.ref === res.product);
     // create an array of queues
     const qa = qs.queue.split(",").map((item) => item.trim());
     // create a seperate list of queues that will be visible in the results
@@ -93,7 +91,7 @@ class Search extends React.Component {
     if (this.state.query.technology !== "Any" && qa.length > 1) {
       let temp = "";
       qa.forEach((q) => {
-        if (tech[0][this.state.query.technology].includes(q.trim())) {
+        if (this.props.tech[this.state.query.technology].includes(q.trim())) {
           temp += q.trim();
         }
       });
