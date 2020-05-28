@@ -13,16 +13,10 @@ class Technology extends React.Component {
             id="technologySelect"
             onChange={this.props.onTechnologyChange}
           >
-            <option value={"Any"}>Any</option>
-            <option value={"Data"}>Data Management</option>
-            <option value={"Desktop"}>Desktop</option>
-            <option value={"Enterprise"}>Enterprise</option>
-            <option value={"Implementation"}>Implementation</option>
-            <option value={"Online"}>Online</option>
-            <option value={"Professional Services"}>
-              Professional Services
-            </option>
-            <option value={"SDK"}>SDK</option>
+             <option value={"Any"}>Any</option>
+             {this.props.techList.map((tech, i) => {
+              return <option key={i} value={tech}>{tech}</option>
+            })}
           </Input>
         </div>
     );
