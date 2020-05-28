@@ -111,7 +111,7 @@ class Search extends React.Component {
     return (
       <Row className="justify-content-md-center" style={appStyle}>
         <Col md={{ size: 3, offset: 0 }}>
-          <Technology onTechnologyChange={this.handleTechnologyChange} />
+          <Technology onTechnologyChange={this.handleTechnologyChange} techList={this.props.techList}/>
         </Col>
 
         <Col md={{ size: 5, offset: 0 }}>

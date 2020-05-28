@@ -12,11 +12,12 @@ class App extends React.Component {
       index: null,
       prod: [],
       tech: {},
+      techList: []
     };
     this.getData = this.getData.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getCsvData();
   }
 
@@ -45,11 +46,13 @@ class App extends React.Component {
   getData(result) {
     let prod = []; // final json of products
     let tech = {}; // final json of tech to queue
+    let techList = []; // for populating the dropdown menu
     const header = result.data[0]; // the header of the csv
     for (let i = 1; i < 8; i++) {
       // iterate through the technologies
       // init the json of technologies to queues
       tech[header[i]] = [];
+      techList.push(header[i])
     }
 
     // iterate through the rows
@@ -93,6 +96,7 @@ class App extends React.Component {
     // after creating the jsons set them to state
     this.setState({ prod: prod });
     this.setState({ tech: tech });
+    this.setState({techList: techList})
     // create the lunr index
     this.createIndex(prod);
   }
@@ -121,6 +125,7 @@ class App extends React.Component {
         index={this.state.index}
         prod={this.state.prod}
         tech={this.state.tech}
+        techList={this.state.techList}
       />
     );
   }
