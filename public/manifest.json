@@ -1,8 +1,0 @@
-{
-  "short_name": "Search Product to Queue",
-  "name": "Search Product to Queue",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
-}
