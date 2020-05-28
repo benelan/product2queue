@@ -1,3 +1,0 @@
-Only show results and filtered items for technologies selected on dropdown
-No need to click on filtered items if there is only one (auto show results)
-make buzzwords searchable

@@ -33,7 +33,8 @@ class Search extends React.Component {
     let q = this.state.query;
     q.technology = e.target.value;
     this.setState({ query: q });
-
+    // the section below is for changing the queue/tech in the results
+    // when the technology dropdown is changed
     if (this.state.results.length > 0) {
       const or = this.state.results[0];
       var ort = or.technology.split(",").map((item) => item.trim());
@@ -114,10 +115,14 @@ class Search extends React.Component {
         </Col>
 
         <Col md={{ size: 5, offset: 0 }}>
-          <Product filtered={this.state.filtered} onProductChange={this.handleProductChange} onResult={this.findResult}/>
+          <Product
+            filtered={this.state.filtered}
+            onProductChange={this.handleProductChange}
+            onResult={this.findResult}
+          />
         </Col>
         <Col md={{ size: 4, offset: 0 }}>
-        <Result results={this.state.results} />
+          <Result results={this.state.results} />
         </Col>
       </Row>
     );
