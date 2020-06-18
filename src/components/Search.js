@@ -69,11 +69,19 @@ class Search extends React.Component {
       // * wildcard means anything can be
       // before or behind the search value
       // ie *at* would include 'attack', 'fat', 'matter', etc
-      let q = "+product:*" + this.state.query.product + "*";
       // + means it must contain the value
+      let q = "product:*" + this.state.query.product + "*";
+      
       if (this.state.query.technology !== "Any") {
+        q += ` b_${this.state.query.technology.replace(/\s/g, '')}: ${this.state.query.product}`
         q += " +technology:" + this.state.query.technology;
       }
+      else {
+        this.props.techList.forEach(t => {
+          q += ` b_${t.replace(/\s/g, '')}: ${this.state.query.product}`
+        })
+      }
+      
       const f = this.props.index.search(q);
       this.setState({ filtered: f });
       if (f.length === 1) {
@@ -104,24 +112,28 @@ class Search extends React.Component {
   };
 
   render() {
-    const appStyle = {
-      margin: "40px",
+    const mBot = {
+      marginBottom: "10px",
     };
+
+    const appStyle = {
+      margin: "20px"
+    }
 
     return (
       <Row className="justify-content-md-center" style={appStyle}>
-        <Col md={{ size: 3, offset: 0 }}>
+        <Col style={mBot} md={{ size: 3, offset: 0 }}>
           <Technology onTechnologyChange={this.handleTechnologyChange} techList={this.props.techList}/>
         </Col>
 
-        <Col md={{ size: 5, offset: 0 }}>
+        <Col style={mBot} md={{ size: 5, offset: 0 }}>
           <Product
             filtered={this.state.filtered}
             onProductChange={this.handleProductChange}
             onResult={this.findResult}
           />
         </Col>
-        <Col md={{ size: 4, offset: 0 }}>
+        <Col style={mBot} md={{ size: 4, offset: 0 }}>
           <Result results={this.state.results} />
         </Col>
       </Row>

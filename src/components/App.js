@@ -12,7 +12,7 @@ class App extends React.Component {
       index: null,
       prod: [],
       tech: {},
-      techList: []
+      techList: [],
     };
     this.getData = this.getData.bind(this);
   }
@@ -48,11 +48,11 @@ class App extends React.Component {
     let tech = {}; // final json of tech to queue
     let techList = []; // for populating the dropdown menu
     const header = result.data[0]; // the header of the csv
-    for (let i = 1; i < 8; i++) {
+    for (let i = 1; i < 15; i += 2) {
       // iterate through the technologies
       // init the json of technologies to queues
       tech[header[i]] = [];
-      techList.push(header[i])
+      techList.push(header[i]);
     }
 
     // iterate through the rows
@@ -63,12 +63,16 @@ class App extends React.Component {
         object["product"] = row[0]; // set the product to the value
         let t = ""; // init tech string
         let q = ""; // init queue string
-        for (let i = 1; i < 8; i++) {
+        for (let i = 1; i < 15; i += 2) {
           // iterate through the technologies
           if (row[i]) {
             // if the queue isn't blank
             q += row[i] + ", "; // add the queue to the product's list
             t += header[i] + ", "; // add the tech to the product's list
+            // adds the buzzwords for each tech
+            // removes spaces in tech like 'Data Management'
+            // for the new buzzword variable name
+            object[`b_${header[i].replace(/\s/g, "")}`] = row[i + 1];
             if (!tech[header[i]].includes(row[i])) {
               // if the queue hasn't already been added to the tech object
               tech[header[i]].push(row[i]); // add it
@@ -81,14 +85,14 @@ class App extends React.Component {
         // set the queue, tech, and support method values
         object["technology"] = strippedT;
         object["queue"] = strippedQ;
-        object["supportMethod"] = row[8];
+        object["supportMethod"] = row[15];
         // if there is a reference and it is an email address
         if (row[9] && row[9].includes("@")) {
           // set it to the value of email
-          object["email"] = row[9];
+          object["email"] = row[16];
         } else {
           // otherwise set it to the value of url
-          object["url"] = row[9];
+          object["url"] = row[16];
         }
         prod.push(object); // add the prod object to the array of products
       }
@@ -96,13 +100,16 @@ class App extends React.Component {
     // after creating the jsons set them to state
     this.setState({ prod: prod });
     this.setState({ tech: tech });
-    this.setState({techList: techList})
+    this.setState({ techList: techList });
     // create the lunr index
     this.createIndex(prod);
+
+    console.log(prod);
   }
 
   // creates the lunr index
   createIndex(documents) {
+    let that = this;
     var idx = lunr(function () {
       //stemming causes issues when doing wildcard searches
       this.pipeline.remove(lunr.stemmer);
@@ -112,12 +119,20 @@ class App extends React.Component {
       // the fields are for searching
       this.field("product");
       this.field("technology");
+
+      // this makes the buzzword fields for each tech searchable
+      // buzzwords in the form of b_Online, b_SDK, etc
+      that.state.techList.forEach((t) => {
+        this.field(`b_${t.replace(/\s/g, "")}`);
+      });
+
       documents.forEach(function (doc) {
         this.add(doc);
       }, this);
     });
 
     this.setState({ index: idx });
+    console.log(idx);
   }
   render() {
     return (
