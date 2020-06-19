@@ -25,11 +25,20 @@ class Product extends React.Component {
           <Label for="productInput">Product</Label>
           <Input
             type="search"
-            name="search"
+            name="searchProduct"
             className="input"
             id="productInput"
             onChange={this.props.onProductChange}
             placeholder="Search by Product"
+          />
+          <Label for="buzzwordsInput">Buzzwords</Label>
+          <Input
+            type="search"
+            name="searchBuzzwords"
+            className="input"
+            id="buzzwordsInput"
+            onChange={this.props.onBuzzwordsChange}
+            placeholder="Search by Buzzwords"
           />
 
           <ListGroup>

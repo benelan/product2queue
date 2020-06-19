@@ -8,23 +8,39 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.handleProductChange = this.handleProductChange.bind(this);
+    this.handleBuzzwordsChange = this.handleBuzzwordsChange.bind(this);
     this.handleTechnologyChange = this.handleTechnologyChange.bind(this);
     this.state = {
       filtered: [],
       query: {
         product: "",
         technology: "Any",
+        buzzwords: "",
       },
       results: [],
     };
   }
 
   handleProductChange(e) {
+    console.log(2)
     // clear the dropdown and results
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
     q.product = e.target.value;
+    q.buzzwords = "";
+    this.setState({ query: q });
+    this.startSearch();
+  }
+
+  handleBuzzwordsChange(e) {
+    console.log(1)
+    // clear the dropdown and results
+    this.setState({ filtered: [], results: [] });
+    // set the state to the product input value
+    let q = this.state.query;
+    q.buzzwords = e.target.value;
+    q.product = "";
     this.setState({ query: q });
     this.startSearch();
   }
@@ -65,23 +81,32 @@ class Search extends React.Component {
   }
 
   startSearch = () => {
+    // * wildcard means anything can be
+    // before or behind the search value
+    // ie *at* would include 'attack', 'fat', 'matter', etc
+    // + means it must contain the value
+    console.log(this.state.query)
+    let q = "";
     if (this.state.query.product !== "") {
-      // * wildcard means anything can be
-      // before or behind the search value
-      // ie *at* would include 'attack', 'fat', 'matter', etc
-      // + means it must contain the value
-      let q = "product:*" + this.state.query.product + "*";
-      
+      q += "+product:*" + this.state.query.product + "*";
       if (this.state.query.technology !== "Any") {
-        q += ` b_${this.state.query.technology.replace(/\s/g, '')}: ${this.state.query.product}`
         q += " +technology:" + this.state.query.technology;
       }
-      else {
-        this.props.techList.forEach(t => {
-          q += ` b_${t.replace(/\s/g, '')}: ${this.state.query.product}`
-        })
+      const f = this.props.index.search(q);
+      this.setState({ filtered: f });
+      if (f.length === 1) {
+        this.findResult(f[0]);
       }
-      
+    } else if (this.state.query.buzzwords !== "") {
+      if (this.state.query.technology !== "Any") {
+        q += ` +b_${this.state.query.technology.replace(/\s/g, "")}:*${this.state.query.buzzwords}*`;
+        q += " +technology:" + this.state.query.technology;
+      } else {
+        this.props.techList.forEach((t) => {
+          q += ` b_${t.replace(/\s/g, "")}:*${this.state.query.buzzwords}*`;
+        });
+      }
+      console.log(q)
       const f = this.props.index.search(q);
       this.setState({ filtered: f });
       if (f.length === 1) {
@@ -117,19 +142,23 @@ class Search extends React.Component {
     };
 
     const appStyle = {
-      margin: "20px"
-    }
+      margin: "20px",
+    };
 
     return (
       <Row className="justify-content-md-center" style={appStyle}>
         <Col style={mBot} md={{ size: 3, offset: 0 }}>
-          <Technology onTechnologyChange={this.handleTechnologyChange} techList={this.props.techList}/>
+          <Technology
+            onTechnologyChange={this.handleTechnologyChange}
+            techList={this.props.techList}
+          />
         </Col>
 
         <Col style={mBot} md={{ size: 5, offset: 0 }}>
           <Product
             filtered={this.state.filtered}
             onProductChange={this.handleProductChange}
+            onBuzzwordsChange={this.handleBuzzwordsChange}
             onResult={this.findResult}
           />
         </Col>
