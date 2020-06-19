@@ -19,37 +19,36 @@ class Product extends React.Component {
       </ListGroupItem>
     ));
 
-
     return (
-        <div>
-          <Label for="productInput">Product</Label>
-          <Input
-            type="search"
-            name="searchProduct"
-            className="input"
-            id="productInput"
-            onChange={this.props.onProductChange}
-            placeholder="Search by Product"
-          />
-          <Label for="buzzwordsInput">Buzzwords</Label>
-          <Input
-            type="search"
-            name="searchBuzzwords"
-            className="input"
-            id="buzzwordsInput"
-            onChange={this.props.onBuzzwordsChange}
-            placeholder="Search by Buzzwords"
-          />
+      <div>
+        <Label for="productInput">Product</Label>
+        <Input
+          type="search"
+          name="searchProduct"
+          className="input"
+          id="productInput"
+          onChange={this.props.onProductChange}
+          placeholder="Search by Product"
+        />
+        <Label for="buzzwordsInput">Buzzwords</Label>
+        <Input
+          type="search"
+          name="searchBuzzwords"
+          className="input"
+          id="buzzwordsInput"
+          onChange={this.props.onBuzzwordsChange}
+          placeholder="Search by Buzzwords"
+        />
 
-          <ListGroup>
-            <VirtualScroll
-              itemCount={this.props.filtered.length}
-              height={400}
-              childHeight={70}
-              Item={Item}
-            />
-          </ListGroup>
-        </div>
+        <ListGroup>
+          <VirtualScroll
+            itemCount={this.props.filtered.length}
+            height={400}
+            childHeight={70}
+            Item={Item}
+          />
+        </ListGroup>
+      </div>
     );
   }
 }
