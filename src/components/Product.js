@@ -87,7 +87,7 @@ class Product extends React.Component {
               className="input"
               id="productInput"
               style={{
-                height: "40px",
+                height: "38px",
               }}
               onChange={this.props.onProductChange}
               placeholder="Search by Product"
@@ -100,7 +100,7 @@ class Product extends React.Component {
               className="input"
               id="buzzwordsInput"
               style={{
-                height: "40px",
+                height: "38px",
               }}
               onChange={this.props.onBuzzwordsChange}
               placeholder="Search by Buzzwords"

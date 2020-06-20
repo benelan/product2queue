@@ -180,17 +180,10 @@ class Search extends React.Component {
 
     const extraM = {
       marginBottom: "10px",
-      marginTop: "11px"
+      marginTop: "10px"
     }
     return (
       <Row className="justify-content-md-center" style={appStyle}>
-        <Col style={extraM} md={{ size: 3, offset: 0 }}>
-          <Technology
-            onTechnologyChange={this.handleTechnologyChange}
-            techList={this.props.techList}
-          />
-        </Col>
-
         <Col style={mBot} md={{ size: 5, offset: 0 }}>
           <Product
             filtered={this.state.filtered}
@@ -199,6 +192,14 @@ class Search extends React.Component {
             onResult={this.findResult}
           />
         </Col>
+
+        <Col style={extraM} md={{ size: 3, offset: 0 }}>
+          <Technology
+            onTechnologyChange={this.handleTechnologyChange}
+            techList={this.props.techList}
+          />
+        </Col>
+
         <Col style={extraM} md={{ size: 4, offset: 0 }}>
           <Result results={this.state.results} />
         </Col>

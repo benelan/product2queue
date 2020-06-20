@@ -57,7 +57,7 @@ class App extends React.Component {
 
     // iterate through the rows
     result.data.forEach((row, index) => {
-      if (index != 0) {
+      if (index !== 0) {
         // if the row is not the header
         let object = {}; // init the product object
         object["product"] = row[0]; // set the product to the value
