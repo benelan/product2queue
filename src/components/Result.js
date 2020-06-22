@@ -8,7 +8,7 @@ class Result extends React.Component {
       <div>
         {this.props.results.length > 0 ? (
           <div>
-            <Label for="res">Results</Label>
+            <Label style={{marginBottom: "11px"}} for="res">Results</Label>
             <ListGroup>
               <ListGroupItem>
                 <b>Product:</b> {this.props.results[0].product}

@@ -8,12 +8,14 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.handleProductChange = this.handleProductChange.bind(this);
+    this.handleBuzzwordsChange = this.handleBuzzwordsChange.bind(this);
     this.handleTechnologyChange = this.handleTechnologyChange.bind(this);
     this.state = {
       filtered: [],
       query: {
         product: "",
         technology: "Any",
+        buzzwords: "",
       },
       results: [],
     };
@@ -25,6 +27,18 @@ class Search extends React.Component {
     // set the state to the product input value
     let q = this.state.query;
     q.product = e.target.value;
+    q.buzzwords = ""; // clear buzzword search value
+    this.setState({ query: q });
+    this.startSearch();
+  }
+
+  handleBuzzwordsChange(e) {
+    // clear the dropdown and results
+    this.setState({ filtered: [], results: [] });
+    // set the state to the product input value
+    let q = this.state.query;
+    q.buzzwords = e.target.value;
+    q.product = ""; // clear product search value
     this.setState({ query: q });
     this.startSearch();
   }
@@ -33,6 +47,7 @@ class Search extends React.Component {
     let q = this.state.query;
     q.technology = e.target.value;
     this.setState({ query: q });
+
     // the section below is for changing the queue/tech in the results
     // when the technology dropdown is changed
     if (this.state.results.length > 0) {
@@ -65,17 +80,68 @@ class Search extends React.Component {
   }
 
   startSearch = () => {
+    // * wildcard means anything can be
+    // before or behind the search value
+    // ie *at* would include 'attack', 'fat', 'matter', etc
+    // + means it must contain the value
+    let q = ""; // init query string
+
+    // ---- FOR PRODUCT SEARCHES  ---- \\
     if (this.state.query.product !== "") {
-      // * wildcard means anything can be
-      // before or behind the search value
-      // ie *at* would include 'attack', 'fat', 'matter', etc
-      let q = "+product:*" + this.state.query.product + "*";
-      // + means it must contain the value
+      // split search words
+      let products = this.state.query.product.split(" ");
+      // iterate through search words
+      // adding them all to product field search
+      products.forEach((prod) => {
+        q += ` +product:*${prod}*`;
+      });
+      // add tech field search value
+      // if selected from dropdown
+      if (this.state.query.technology !== "Any") {
+        q += ` +technology:${this.state.query.technology}`;
+      }
+      // set lunr search to query
+      const f = this.props.index.search(q);
+      // set the search results for the dropdown list
+      this.setState({ filtered: f });
+      // if there is only one result display its info
+      if (f.length === 1) {
+        this.findResult(f[0]);
+      }
+
+      // ---- FOR BUZZWORD SEARCHES  ---- \\
+    } else if (this.state.query.buzzwords !== "") {
+      // split search words
+      let buzzwords = this.state.query.buzzwords.split(" ");
+      // add tech field search value
+      // if selected from dropdown
       if (this.state.query.technology !== "Any") {
         q += " +technology:" + this.state.query.technology;
+        // iterate through the buzzwords
+        // adding them to the search value
+        // for the tech specified in the dropdown
+        buzzwords.forEach((buzz) => {
+          q += ` +b_${this.state.query.technology.replace(
+            /\s/g,
+            ""
+          )}:*${buzz}*`;
+        });
+      } else {
+        // if a tech isn't specified
+        // iterate through the buzzwords
+        // adding them to the search value
+        // for all techs
+        this.props.techList.forEach((t) => {
+          buzzwords.forEach((buzz) => {
+            q += ` b_${t.replace(/\s/g, "")}:*${buzz}*`;
+          });
+        });
       }
+      // set lunr search to query
       const f = this.props.index.search(q);
+      // set the search results for the dropdown list
       this.setState({ filtered: f });
+      // if there is only one result display its info
       if (f.length === 1) {
         this.findResult(f[0]);
       }
@@ -104,24 +170,37 @@ class Search extends React.Component {
   };
 
   render() {
-    const appStyle = {
-      margin: "40px",
+    const mBot = {
+      marginBottom: "10px",
     };
 
+    const appStyle = {
+      margin: "20px",
+    };
+
+    const extraM = {
+      marginBottom: "10px",
+      marginTop: "7px"
+    }
     return (
       <Row className="justify-content-md-center" style={appStyle}>
-        <Col md={{ size: 3, offset: 0 }}>
-          <Technology onTechnologyChange={this.handleTechnologyChange} techList={this.props.techList}/>
-        </Col>
-
-        <Col md={{ size: 5, offset: 0 }}>
+        <Col style={mBot} md={{ size: 5, offset: 0 }}>
           <Product
             filtered={this.state.filtered}
             onProductChange={this.handleProductChange}
+            onBuzzwordsChange={this.handleBuzzwordsChange}
             onResult={this.findResult}
           />
         </Col>
-        <Col md={{ size: 4, offset: 0 }}>
+
+        <Col style={extraM} md={{ size: 3, offset: 0 }}>
+          <Technology
+            onTechnologyChange={this.handleTechnologyChange}
+            techList={this.props.techList}
+          />
+        </Col>
+
+        <Col style={extraM} md={{ size: 4, offset: 0 }}>
           <Result results={this.state.results} />
         </Col>
       </Row>

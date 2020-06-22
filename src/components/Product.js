@@ -1,8 +1,27 @@
 import React, { memo } from "react";
-import { Input, Label, ListGroup, ListGroupItem } from "reactstrap";
+import {
+  Input,
+  ListGroup,
+  ListGroupItem,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Card,
+} from "reactstrap";
+import classnames from "classnames";
 import VirtualScroll from "./VirtualScroll";
 
 class Product extends React.Component {
+  state = {
+    activeTab: "1", // the active tab for mobile phones
+  };
+
+  toggle = (tab) => {
+    if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
+  };
+
   render() {
     const lgi = {
       height: "70px",
@@ -19,28 +38,90 @@ class Product extends React.Component {
       </ListGroupItem>
     ));
 
-
     return (
-        <div>
-          <Label for="productInput">Product</Label>
-          <Input
-            type="search"
-            name="search"
-            className="input"
-            id="productInput"
-            onChange={this.props.onProductChange}
-            placeholder="Search by Product"
-          />
+      <React.Fragment>
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: this.state.activeTab === "1",
+              })}
+              onClick={() => {
+                const val = {
+                  target: {
+                    value: "",
+                  },
+                };
+                this.props.onProductChange(val);
+                document.getElementById("productInput").value = "";
+                this.toggle("1");
+              }}
+            >
+              Product
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: this.state.activeTab === "2",
+              })}
+              onClick={() => {
+                const val = {
+                  target: {
+                    value: "",
+                  },
+                };
+                this.props.onBuzzwordsChange(val);
+                document.getElementById("buzzwordsInput").value = "";
+                this.toggle("2");
+              }}
+            >
+              Buzzwords
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <Card body>
+              <Input
+                type="search"
+                name="searchProduct"
+                className="input"
+                id="productInput"
+                style={{
+                  height: "38px",
+                }}
+                onChange={this.props.onProductChange}
+                placeholder="Search by Product"
+              />
+            </Card>
+          </TabPane>
+          <TabPane tabId="2">
+            <Card body>
+              <Input
+                type="search"
+                name="searchBuzzwords"
+                className="input"
+                id="buzzwordsInput"
+                style={{
+                  height: "38px",
+                }}
+                onChange={this.props.onBuzzwordsChange}
+                placeholder="Search by Buzzwords"
+              />
+            </Card>
+          </TabPane>
+        </TabContent>
 
-          <ListGroup>
-            <VirtualScroll
-              itemCount={this.props.filtered.length}
-              height={400}
-              childHeight={70}
-              Item={Item}
-            />
-          </ListGroup>
-        </div>
+        <ListGroup>
+          <VirtualScroll
+            itemCount={this.props.filtered.length}
+            height={400}
+            childHeight={70}
+            Item={Item}
+          />
+        </ListGroup>
+      </React.Fragment>
     );
   }
 }

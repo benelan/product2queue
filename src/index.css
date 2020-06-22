@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+select:active,
+select:focus,
+input:active,
+input:focus,
+input:hover,
+textarea:hover,
+textarea:active,
+textarea:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active
+{
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+
+}
