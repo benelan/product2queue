@@ -22,25 +22,23 @@ class Search extends React.Component {
   }
 
   handleProductChange(e) {
-    console.log(2)
     // clear the dropdown and results
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
     q.product = e.target.value;
-    q.buzzwords = "";
+    q.buzzwords = ""; // clear buzzword search value
     this.setState({ query: q });
     this.startSearch();
   }
 
   handleBuzzwordsChange(e) {
-    console.log(1)
     // clear the dropdown and results
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
     q.buzzwords = e.target.value;
-    q.product = "";
+    q.product = ""; // clear product search value
     this.setState({ query: q });
     this.startSearch();
   }
@@ -49,6 +47,7 @@ class Search extends React.Component {
     let q = this.state.query;
     q.technology = e.target.value;
     this.setState({ query: q });
+
     // the section below is for changing the queue/tech in the results
     // when the technology dropdown is changed
     if (this.state.results.length > 0) {
@@ -85,30 +84,64 @@ class Search extends React.Component {
     // before or behind the search value
     // ie *at* would include 'attack', 'fat', 'matter', etc
     // + means it must contain the value
-    console.log(this.state.query)
-    let q = "";
+    let q = ""; // init query string
+
+    // ---- FOR PRODUCT SEARCHES  ---- \\
     if (this.state.query.product !== "") {
-      q += "+product:*" + this.state.query.product + "*";
+      // split search words
+      let products = this.state.query.product.split(" ");
+      // iterate through search words
+      // adding them all to product field search
+      products.forEach((prod) => {
+        q += ` +product:*${prod}*`;
+      });
+      // add tech field search value
+      // if selected from dropdown
       if (this.state.query.technology !== "Any") {
-        q += " +technology:" + this.state.query.technology;
+        q += ` +technology:${this.state.query.technology}`;
       }
+      // set lunr search to query
       const f = this.props.index.search(q);
+      // set the search results for the dropdown list
       this.setState({ filtered: f });
+      // if there is only one result display its info
       if (f.length === 1) {
         this.findResult(f[0]);
       }
+
+      // ---- FOR BUZZWORD SEARCHES  ---- \\
     } else if (this.state.query.buzzwords !== "") {
+      // split search words
+      let buzzwords = this.state.query.buzzwords.split(" ");
+      // add tech field search value
+      // if selected from dropdown
       if (this.state.query.technology !== "Any") {
-        q += ` +b_${this.state.query.technology.replace(/\s/g, "")}:*${this.state.query.buzzwords}*`;
         q += " +technology:" + this.state.query.technology;
+        // iterate through the buzzwords
+        // adding them to the search value
+        // for the tech specified in the dropdown
+        buzzwords.forEach((buzz) => {
+          q += ` +b_${this.state.query.technology.replace(
+            /\s/g,
+            ""
+          )}:*${buzz}*`;
+        });
       } else {
+        // if a tech isn't specified
+        // iterate through the buzzwords
+        // adding them to the search value
+        // for all techs
         this.props.techList.forEach((t) => {
-          q += ` b_${t.replace(/\s/g, "")}:*${this.state.query.buzzwords}*`;
+          buzzwords.forEach((buzz) => {
+            q += ` b_${t.replace(/\s/g, "")}:*${buzz}*`;
+          });
         });
       }
-      console.log(q)
+      // set lunr search to query
       const f = this.props.index.search(q);
+      // set the search results for the dropdown list
       this.setState({ filtered: f });
+      // if there is only one result display its info
       if (f.length === 1) {
         this.findResult(f[0]);
       }
