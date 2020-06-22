@@ -6,8 +6,6 @@ import {
     NavItem,
     NavLink,
     Input,
-    Row,
-    Col,
     Card,
     ListGroup,
     ListGroupItem
