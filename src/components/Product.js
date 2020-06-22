@@ -8,6 +8,7 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Card,
 } from "reactstrap";
 import classnames from "classnames";
 import VirtualScroll from "./VirtualScroll";
@@ -81,30 +82,34 @@ class Product extends React.Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            <Input
-              type="search"
-              name="searchProduct"
-              className="input"
-              id="productInput"
-              style={{
-                height: "38px",
-              }}
-              onChange={this.props.onProductChange}
-              placeholder="Search by Product"
-            />
+            <Card body>
+              <Input
+                type="search"
+                name="searchProduct"
+                className="input"
+                id="productInput"
+                style={{
+                  height: "38px",
+                }}
+                onChange={this.props.onProductChange}
+                placeholder="Search by Product"
+              />
+            </Card>
           </TabPane>
           <TabPane tabId="2">
-            <Input
-              type="search"
-              name="searchBuzzwords"
-              className="input"
-              id="buzzwordsInput"
-              style={{
-                height: "38px",
-              }}
-              onChange={this.props.onBuzzwordsChange}
-              placeholder="Search by Buzzwords"
-            />
+            <Card body>
+              <Input
+                type="search"
+                name="searchBuzzwords"
+                className="input"
+                id="buzzwordsInput"
+                style={{
+                  height: "38px",
+                }}
+                onChange={this.props.onBuzzwordsChange}
+                placeholder="Search by Buzzwords"
+              />
+            </Card>
           </TabPane>
         </TabContent>
 
