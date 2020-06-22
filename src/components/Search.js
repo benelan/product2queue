@@ -180,7 +180,7 @@ class Search extends React.Component {
 
     const extraM = {
       marginBottom: "10px",
-      marginTop: "7px"
+      marginTop: "7.35px"
     }
     return (
       <Row className="justify-content-md-center" style={appStyle}>
