@@ -43,6 +43,7 @@ class Product extends React.Component {
         <Nav tabs>
           <NavItem>
             <NavLink
+              style={{ cursor: "pointer" }}
               className={classnames({
                 active: this.state.activeTab === "1",
               })}
@@ -62,6 +63,7 @@ class Product extends React.Component {
           </NavItem>
           <NavItem>
             <NavLink
+              style={{ cursor: "pointer" }}
               className={classnames({
                 active: this.state.activeTab === "2",
               })}
@@ -89,7 +91,7 @@ class Product extends React.Component {
                 className="input"
                 id="productInput"
                 style={{
-                  height: "38px",
+                  height: "40px",
                 }}
                 onChange={this.props.onProductChange}
                 placeholder="Search by Product"
@@ -104,7 +106,7 @@ class Product extends React.Component {
                 className="input"
                 id="buzzwordsInput"
                 style={{
-                  height: "38px",
+                  height: "40px",
                 }}
                 onChange={this.props.onBuzzwordsChange}
                 placeholder="Search by Buzzwords"
