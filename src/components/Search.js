@@ -26,7 +26,7 @@ class Search extends React.Component {
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
-    q.product = e.target.value;
+    q.product = e.target.value.replace(/[^a-zA-Z ]/g, " ");
     q.buzzwords = ""; // clear buzzword search value
     this.setState({ query: q });
     this.startSearch();
@@ -37,7 +37,7 @@ class Search extends React.Component {
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
-    q.buzzwords = e.target.value;
+    q.buzzwords = e.target.value.replace(/[^a-zA-Z ]/g, " ");
     q.product = ""; // clear product search value
     this.setState({ query: q });
     this.startSearch();
@@ -55,7 +55,6 @@ class Search extends React.Component {
       const or = this.state.results[0];
       // set the list of original techs
       var ort = or.technology.split(",").map((item) => item.trim());
-      console.log(ort)
       // set the state to the technology input value
       // if the original result includes the selected tech
       // we will narrow down the visible queues
