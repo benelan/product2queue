@@ -51,7 +51,8 @@ class App extends React.Component {
     for (let i = 1; i < 15; i += 2) {
       // iterate through the technologies
       // init the json of technologies to queues
-      tech[header[i]] = [];
+      const t = header[i].replace(/\s/g, '')
+      tech[t] = [];
       techList.push(header[i]);
     }
 
@@ -73,9 +74,9 @@ class App extends React.Component {
             // removes spaces in tech like 'Data Management'
             // for the new buzzword variable name
             object[`b_${header[i].replace(/\s/g, "")}`] = row[i + 1];
-            if (!tech[header[i]].includes(row[i])) {
+            if (!tech[header[i].replace(/\s/g, '')].includes(row[i])) {
               // if the queue hasn't already been added to the tech object
-              tech[header[i]].push(row[i]); // add it
+              tech[header[i].replace(/\s/g, '')].push(row[i]); // add it
             }
           }
         }
@@ -103,8 +104,6 @@ class App extends React.Component {
     this.setState({ techList: techList });
     // create the lunr index
     this.createIndex(prod);
-
-    console.log(prod);
   }
 
   // creates the lunr index
@@ -132,7 +131,6 @@ class App extends React.Component {
     });
 
     this.setState({ index: idx });
-    console.log(idx);
   }
   render() {
     return (
