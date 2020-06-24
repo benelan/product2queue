@@ -20,19 +20,18 @@ npm run build
 This application reads directly from a [spreadsheet](https://github.com/benelan/product2queue/blob/master/public/data/product_queue.csv). The spreadsheet must be a csv file named 'product_queue'.
 
 ### Data that can be edited without changes to code
-- The value of any cell
+- The text value of any cell
 	- Changing the name of a Technology/Unit
 	- Changing which queue a product belongs in
 	- changing the reference, etc
+- Adding rows (Products)
+- Removing rows
   
 ### Data that requires changes to code after editing
-- Adding new columns,  such as buzzwords
+- Adding new columns to display new information
+	- Adding a Technology/Buzzword pair should work, but make sure to test before redeploying
 - Removing columns
-- Changing the order of columns. For the app to work without changing code, the column order must be
-	- product first
-	- reference last
-	- support method second to last
-	- the order of the technologies/units can change, but need to be columns 1-7 (count starting at 0)
+- Changing the order of columns
 
 ## Reporting Issues
 Issues with the application can be reported to Ben Elan or Lingtao Xie. If the spreadsheet needs to be edited in a way that requires changes to the code, feel free to reach out to us as well. We would be happy to help get the application working with the necessary changes.
