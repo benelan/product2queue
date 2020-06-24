@@ -11,6 +11,7 @@ class Technology extends React.Component {
             type="select"
             name="select"
             id="technologySelect"
+            style={{height:"40px"}}
             onChange={this.props.onTechnologyChange}
           >
             <option value={"Any"}>Any</option>

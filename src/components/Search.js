@@ -26,7 +26,7 @@ class Search extends React.Component {
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
-    q.product = e.target.value;
+    q.product = e.target.value.replace(/[^a-zA-Z ]/g, " ");
     q.buzzwords = ""; // clear buzzword search value
     this.setState({ query: q });
     this.startSearch();
@@ -37,7 +37,7 @@ class Search extends React.Component {
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
-    q.buzzwords = e.target.value;
+    q.buzzwords = e.target.value.replace(/[^a-zA-Z ]/g, " ");
     q.product = ""; // clear product search value
     this.setState({ query: q });
     this.startSearch();
@@ -51,18 +51,28 @@ class Search extends React.Component {
     // the section below is for changing the queue/tech in the results
     // when the technology dropdown is changed
     if (this.state.results.length > 0) {
+      // set original results
       const or = this.state.results[0];
+      // set the list of original techs
       var ort = or.technology.split(",").map((item) => item.trim());
       // set the state to the technology input value
-
+      // if the original result includes the selected tech
+      // we will narrow down the visible queues
       if (ort.includes(e.target.value)) {
+        // set the temp string of queues
+        // which is what will be visible
         let temp = "";
+        // create the list of queues in the original results
         let orq = or.queue.split(",");
+        // iterate through the queues
         orq.forEach((q) => {
-          if (this.props.tech[e.target.value].includes(q.trim())) {
+          // if the queue belongs to the selected tech
+          if (this.props.tech[e.target.value.replace(/\s/g, '')].includes(q.trim())) {
+            // add it to the temp string
             temp += q.trim();
           }
         });
+        // set the temp string to the visible results
         or.visibleQueue = temp;
 
         this.setState({ results: [or] });
@@ -155,14 +165,54 @@ class Search extends React.Component {
     const qa = qs.queue.split(",").map((item) => item.trim());
     // create a seperate list of queues that will be visible in the results
     qs.visibleQueue = qs.queue;
-    if (this.state.query.technology !== "Any" && qa.length > 1) {
+
+    // if there is more than one queue
+    if (qa.length > 1) {
       let temp = "";
-      qa.forEach((q) => {
-        if (this.props.tech[this.state.query.technology].includes(q.trim())) {
-          temp += q.trim();
+
+      // if a technology is selected
+      if (this.state.query.technology !== "Any") {
+        // iterate through the queues
+        qa.forEach((q) => {
+          // check if the queue is in the selected technology
+          if (this.props.tech[this.state.query.technology.replace(/\s/g, '')].includes(q.trim())) {
+            // if it is, add it to the visible list
+            temp += q.trim();
+          }
+        });
+        qs.visibleQueue = temp;
+      }
+
+      // if we are doing a buzzword search and Technology is Any
+      if (
+        !!this.state.query.buzzwords &&
+        this.state.query.technology === "Any"
+      ) {
+        let buzzTechs = new Set(); // init Set
+        // iterate through all of the buzzwords
+        for (const [_, tech] of Object.entries(item.matchData.metadata)) {
+          // iterate through the techs that each buzzword matches
+          for (const [o] of Object.entries(tech)) {
+            // add the tech to the Set
+            buzzTechs.add(o.substr(2)); // removing the "b_"
+          }
         }
-      });
-      qs.visibleQueue = temp;
+
+        // iterate through the queues
+        qa.forEach((q) => {
+          // iterate through the technologies that the buzzword matches
+          buzzTechs.forEach((t) => {
+            // if the queue belongs to the tech
+            if (this.props.tech[t].includes(q.trim())) {
+              // add it to the list
+              temp += q.trim() + ", ";
+            }
+          });
+        });
+        // set the visible queues
+        // removing trailing comma
+        qs.visibleQueue = temp.replace(/(^[,\s]+)|([,\s]+$)/g, "");
+      }
     }
 
     // set the state to the result info
@@ -180,8 +230,8 @@ class Search extends React.Component {
 
     const extraM = {
       marginBottom: "10px",
-      marginTop: "7px"
-    }
+      marginTop: "7.35px",
+    };
     return (
       <Row className="justify-content-md-center" style={appStyle}>
         <Col style={mBot} md={{ size: 5, offset: 0 }}>
