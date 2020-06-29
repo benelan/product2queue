@@ -13,7 +13,6 @@ code {
 }
 
 select:active,
-select:focus,
 input:active,
 input:focus,
 input:hover,

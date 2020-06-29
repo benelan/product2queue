@@ -3,6 +3,7 @@ import Papa from "papaparse";
 import lunr from "lunr";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Search from "./Search";
+import Navb from "./ui/Navb";
 
 class App extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class App extends React.Component {
     for (let i = 1; i < 15; i += 2) {
       // iterate through the technologies
       // init the json of technologies to queues
-      const t = header[i].replace(/\s/g, '')
+      const t = header[i].replace(/\s/g, "");
       tech[t] = [];
       techList.push(header[i]);
     }
@@ -74,9 +75,9 @@ class App extends React.Component {
             // removes spaces in tech like 'Data Management'
             // for the new buzzword variable name
             object[`b_${header[i].replace(/\s/g, "")}`] = row[i + 1];
-            if (!tech[header[i].replace(/\s/g, '')].includes(row[i])) {
+            if (!tech[header[i].replace(/\s/g, "")].includes(row[i])) {
               // if the queue hasn't already been added to the tech object
-              tech[header[i].replace(/\s/g, '')].push(row[i]); // add it
+              tech[header[i].replace(/\s/g, "")].push(row[i]); // add it
             }
           }
         }
@@ -134,12 +135,15 @@ class App extends React.Component {
   }
   render() {
     return (
-      <Search
-        index={this.state.index}
-        prod={this.state.prod}
-        tech={this.state.tech}
-        techList={this.state.techList}
-      />
+      <React.Fragment>
+        <Navb />
+        <Search
+          index={this.state.index}
+          prod={this.state.prod}
+          tech={this.state.tech}
+          techList={this.state.techList}
+        />
+      </React.Fragment>
     );
   }
 }
