@@ -27,6 +27,8 @@ code {
 }
 
 select:active,
+select:hover,
+select:focus,
 input:active,
 input:focus,
 input:hover,
@@ -39,6 +41,6 @@ button:hover,
 label:focus,
 .btn:active {
   outline: 0px !important;
-  -webkit-appearance: none;
+  /* -webkit-appearance: none; */
   box-shadow: none !important;
 }

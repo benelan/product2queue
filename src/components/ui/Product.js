@@ -94,16 +94,6 @@ class Product extends React.Component {
               Buzzwords
             </NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({
-                active: this.state.activeTab === "3",
-              })}
-              style={navlinkStyle}
-              onClick={() => {
-                this.toggle("3");
-              }}>About</NavLink>
-          </NavItem>
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
@@ -130,11 +120,6 @@ class Product extends React.Component {
                 onChange={this.props.onBuzzwordsChange}
                 placeholder="Search by Buzzwords"
               />
-            </Card>
-          </TabPane>
-          <TabPane tabId="3">
-            <Card body>
-              <label>This app was created for Esri Support Services to help employees determine which team supports each product. </label>
             </Card>
           </TabPane>
         </TabContent>

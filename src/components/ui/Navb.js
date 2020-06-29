@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import About from "./About"
 
 const Navb = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,13 +21,13 @@ const Navb = (props) => {
 
   return (
     <div>
-      <Navbar color="dark" dark expand="md">
+      <Navbar light style={{backgroundColor: "white"}} expand="md">
         <NavbarBrand href="/">Product to Queue</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} className="float-right" navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/about/">About</NavLink>
+              <About buttonLabel="About"/>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
