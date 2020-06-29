@@ -199,7 +199,7 @@ class Search extends React.Component {
             techList={this.props.techList}
           />
         </Col>
-
+        
         <Col style={extraM} md={{ size: 4, offset: 0 }}>
           <Result results={this.state.results} />
         </Col>
