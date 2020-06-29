@@ -3,6 +3,7 @@ import { Input, Label, Card } from "reactstrap";
 
 class Technology extends React.Component {
   render() {
+
     return (
       <React.Fragment>
         <Label style={{marginBottom: "11px"}} for="exampleSelect">Technology</Label>
@@ -11,7 +12,7 @@ class Technology extends React.Component {
             type="select"
             name="select"
             id="technologySelect"
-            style={{height:"40px", background: "#F7F9FA"}}
+            style={{height:"40px", background: "#F7F9FA", cursor: "pointer"}}
             onChange={this.props.onTechnologyChange}
           >
             <option value={"Any"}>Any</option>
