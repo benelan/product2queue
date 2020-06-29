@@ -14,7 +14,7 @@ const About = (props) => {
 
   return (
     <div>
-      <NavLink color="link" onClick={toggle}>{buttonLabel}</NavLink>
+      <NavLink color="link" onClick={toggle} style={{cursor: "pointer"}}>{buttonLabel}</NavLink>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>About</ModalHeader>
         <ModalBody>

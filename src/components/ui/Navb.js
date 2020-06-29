@@ -21,7 +21,7 @@ const Navb = (props) => {
 
   return (
     <div>
-      <Navbar light style={{backgroundColor: "white"}} expand="md">
+      <Navbar dark color="dark" expand="md">
         <NavbarBrand href="/">Product to Queue</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} className="float-right" navbar>
@@ -35,13 +35,13 @@ const Navb = (props) => {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  <NavLink href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view">
+                  <NavLink style={{color: "darkgrey"}} target="_blank" href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view">
                     Data Management
                   </NavLink>
                 </DropdownItem>
                 {/* <DropdownItem divider /> */}
                 <DropdownItem>
-                  <NavLink href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view">
+                  <NavLink style={{color: "darkgrey"}} target="_blank" href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view">
                     SDK
                   </NavLink>
                 </DropdownItem>
