@@ -8,7 +8,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card,
+  Card
 } from "reactstrap";
 import classnames from "classnames";
 import VirtualScroll from "./VirtualScroll";
@@ -26,6 +26,18 @@ class Product extends React.Component {
     const lgi = {
       height: "70px",
     };
+
+    const navlinkStyle = {
+      cursor: "pointer"
+    }
+
+    const inputStyle = {
+      height: "40px",
+      background: "#F7F9FA"
+    };
+
+
+
     const Item = memo(({ index }) => (
       <ListGroupItem
         key={index}
@@ -40,10 +52,11 @@ class Product extends React.Component {
 
     return (
       <React.Fragment>
-        <Nav tabs>
+        <Nav tabs
+          style={{ color: "#ADC5CC" }}>
           <NavItem>
             <NavLink
-              style={{ cursor: "pointer" }}
+              style={navlinkStyle}
               className={classnames({
                 active: this.state.activeTab === "1",
               })}
@@ -63,7 +76,7 @@ class Product extends React.Component {
           </NavItem>
           <NavItem>
             <NavLink
-              style={{ cursor: "pointer" }}
+              style={navlinkStyle}
               className={classnames({
                 active: this.state.activeTab === "2",
               })}
@@ -90,9 +103,7 @@ class Product extends React.Component {
                 name="searchProduct"
                 className="input"
                 id="productInput"
-                style={{
-                  height: "40px",
-                }}
+                style={inputStyle}
                 onChange={this.props.onProductChange}
                 placeholder="Search by Product"
               />
@@ -105,9 +116,7 @@ class Product extends React.Component {
                 name="searchBuzzwords"
                 className="input"
                 id="buzzwordsInput"
-                style={{
-                  height: "40px",
-                }}
+                style={inputStyle}
                 onChange={this.props.onBuzzwordsChange}
                 placeholder="Search by Buzzwords"
               />
