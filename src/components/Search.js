@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
-import Product from "./Product";
-import Technology from "./Technology";
-import Result from "./Result";
+import Product from "./ui/Product";
+import Technology from "./ui/Technology";
+import Result from "./ui/Result";
 
 class Search extends React.Component {
   constructor(props) {
@@ -18,7 +18,22 @@ class Search extends React.Component {
         buzzwords: "",
       },
       results: [],
+      mobile: false,
     };
+  }
+
+  componentDidMount() {
+    // device detection
+    if (
+      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
+        navigator.userAgent
+      ) ||
+      /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(
+        navigator.userAgent.substr(0, 4)
+      )
+    ) {
+      this.setState({ mobile: true });
+    }
   }
 
   handleProductChange(e) {
@@ -26,7 +41,7 @@ class Search extends React.Component {
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
-    q.product = e.target.value;
+    q.product = e.target.value.replace(/[^a-zA-Z ]/g, " ");
     q.buzzwords = ""; // clear buzzword search value
     this.setState({ query: q });
     this.startSearch();
@@ -37,7 +52,7 @@ class Search extends React.Component {
     this.setState({ filtered: [], results: [] });
     // set the state to the product input value
     let q = this.state.query;
-    q.buzzwords = e.target.value;
+    q.buzzwords = e.target.value.replace(/[^a-zA-Z ]/g, " ");
     q.product = ""; // clear product search value
     this.setState({ query: q });
     this.startSearch();
@@ -51,18 +66,32 @@ class Search extends React.Component {
     // the section below is for changing the queue/tech in the results
     // when the technology dropdown is changed
     if (this.state.results.length > 0) {
+      // set original results
       const or = this.state.results[0];
+      // set the list of original techs
       var ort = or.technology.split(",").map((item) => item.trim());
       // set the state to the technology input value
-
+      // if the original result includes the selected tech
+      // we will narrow down the visible queues
       if (ort.includes(e.target.value)) {
+        // set the temp string of queues
+        // which is what will be visible
         let temp = "";
+        // create the list of queues in the original results
         let orq = or.queue.split(",");
+        // iterate through the queues
         orq.forEach((q) => {
-          if (this.props.tech[e.target.value].includes(q.trim())) {
+          // if the queue belongs to the selected tech
+          if (
+            this.props.tech[e.target.value.replace(/\s/g, "")].includes(
+              q.trim()
+            )
+          ) {
+            // add it to the temp string
             temp += q.trim();
           }
         });
+        // set the temp string to the visible results
         or.visibleQueue = temp;
 
         this.setState({ results: [or] });
@@ -155,14 +184,58 @@ class Search extends React.Component {
     const qa = qs.queue.split(",").map((item) => item.trim());
     // create a seperate list of queues that will be visible in the results
     qs.visibleQueue = qs.queue;
-    if (this.state.query.technology !== "Any" && qa.length > 1) {
+
+    // if there is more than one queue
+    if (qa.length > 1) {
       let temp = "";
-      qa.forEach((q) => {
-        if (this.props.tech[this.state.query.technology].includes(q.trim())) {
-          temp += q.trim();
+
+      // if a technology is selected
+      if (this.state.query.technology !== "Any") {
+        // iterate through the queues
+        qa.forEach((q) => {
+          // check if the queue is in the selected technology
+          if (
+            this.props.tech[
+              this.state.query.technology.replace(/\s/g, "")
+            ].includes(q.trim())
+          ) {
+            // if it is, add it to the visible list
+            temp += q.trim();
+          }
+        });
+        qs.visibleQueue = temp;
+      }
+
+      // if we are doing a buzzword search and Technology is Any
+      if (
+        !!this.state.query.buzzwords &&
+        this.state.query.technology === "Any"
+      ) {
+        let buzzTechs = new Set(); // init Set
+        // iterate through all of the buzzwords
+        for (const [_, tech] of Object.entries(item.matchData.metadata)) {
+          // iterate through the techs that each buzzword matches
+          for (const [o] of Object.entries(tech)) {
+            // add the tech to the Set
+            buzzTechs.add(o.substr(2)); // removing the "b_"
+          }
         }
-      });
-      qs.visibleQueue = temp;
+
+        // iterate through the queues
+        qa.forEach((q) => {
+          // iterate through the technologies that the buzzword matches
+          buzzTechs.forEach((t) => {
+            // if the queue belongs to the tech
+            if (this.props.tech[t].includes(q.trim())) {
+              // add it to the list
+              temp += q.trim() + ", ";
+            }
+          });
+        });
+        // set the visible queues
+        // removing trailing comma
+        qs.visibleQueue = temp.replace(/(^[,\s]+)|([,\s]+$)/g, "");
+      }
     }
 
     // set the state to the result info
@@ -180,29 +253,55 @@ class Search extends React.Component {
 
     const extraM = {
       marginBottom: "10px",
-      marginTop: "7.35px"
-    }
+      marginTop: "7.35px",
+    };
     return (
       <Row className="justify-content-md-center" style={appStyle}>
-        <Col style={mBot} md={{ size: 5, offset: 0 }}>
-          <Product
-            filtered={this.state.filtered}
-            onProductChange={this.handleProductChange}
-            onBuzzwordsChange={this.handleBuzzwordsChange}
-            onResult={this.findResult}
-          />
-        </Col>
+        {this.state.mobile ? ( // if the devie is mobile use tabs to divide the map/list
+          <React.Fragment>
+            <Col style={extraM} md={{ size: 4, offset: 0 }}>
+              <Result results={this.state.results} />
+            </Col>
 
-        <Col style={extraM} md={{ size: 3, offset: 0 }}>
-          <Technology
-            onTechnologyChange={this.handleTechnologyChange}
-            techList={this.props.techList}
-          />
-        </Col>
-        
-        <Col style={extraM} md={{ size: 4, offset: 0 }}>
-          <Result results={this.state.results} />
-        </Col>
+            <Col style={extraM} md={{ size: 3, offset: 0 }}>
+              <Technology
+                onTechnologyChange={this.handleTechnologyChange}
+                techList={this.props.techList}
+              />
+            </Col>
+
+            <Col style={mBot} md={{ size: 5, offset: 0 }}>
+              <Product
+                filtered={this.state.filtered}
+                onProductChange={this.handleProductChange}
+                onBuzzwordsChange={this.handleBuzzwordsChange}
+                onResult={this.findResult}
+              />
+            </Col>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Col style={mBot} md={{ size: 5, offset: 0 }}>
+              <Product
+                filtered={this.state.filtered}
+                onProductChange={this.handleProductChange}
+                onBuzzwordsChange={this.handleBuzzwordsChange}
+                onResult={this.findResult}
+              />
+            </Col>
+
+            <Col style={extraM} md={{ size: 3, offset: 0 }}>
+              <Technology
+                onTechnologyChange={this.handleTechnologyChange}
+                techList={this.props.techList}
+              />
+            </Col>
+
+            <Col style={extraM} md={{ size: 4, offset: 0 }}>
+              <Result results={this.state.results} />
+            </Col>
+          </React.Fragment>
+        )}
       </Row>
     );
   }
