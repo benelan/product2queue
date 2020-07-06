@@ -10,9 +10,9 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from "reactstrap";
-import About from "./About"
+import About from "./About";
 
 const Navb = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,24 +24,44 @@ const Navb = (props) => {
       <Navbar dark color="dark" expand="md">
         <NavbarBrand href="/">Product to Queue</NavbarBrand>
         <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} className="float-right" navbar>
+        <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <About buttonLabel="About"/>
+              <About buttonLabel="About" />
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Transfer Resources
               </DropdownToggle>
-              <DropdownMenu right>
+              <DropdownMenu
+                style={{ top: 35, left: +10, padding: 0, margin: 0 }}
+              >
                 <DropdownItem>
-                  <NavLink style={{color: "darkgrey"}} target="_blank" href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view">
+                  <NavLink
+                    style={{
+                      color: "black",
+                      fontSize: "16px",
+                      padding: 0,
+                      margin: 0,
+                    }}
+                    target="_blank"
+                    href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view"
+                  >
                     Data Management
                   </NavLink>
                 </DropdownItem>
                 {/* <DropdownItem divider /> */}
                 <DropdownItem>
-                  <NavLink style={{color: "darkgrey"}} target="_blank" href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view">
+                  <NavLink
+                    style={{
+                      color: "black",
+                      fontSize: "16px",
+                      padding: 0,
+                      margin: 0,
+                    }}
+                    target="_blank"
+                    href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view"
+                  >
                     SDK
                   </NavLink>
                 </DropdownItem>
