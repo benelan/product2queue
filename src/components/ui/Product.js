@@ -25,6 +25,8 @@ class Product extends React.Component {
   render() {
     const lgi = {
       height: "70px",
+      color: "black",
+      fontSize: "16px"
     };
 
     const navlinkStyle = {
@@ -53,7 +55,7 @@ class Product extends React.Component {
     return (
       <React.Fragment>
         <Nav tabs
-          style={{ color: "#ADC5CC" }}>
+          style={{ color: "#ADC5CC", border: "transparent" }}>
           <NavItem>
             <NavLink
               style={navlinkStyle}
@@ -97,7 +99,7 @@ class Product extends React.Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            <Card body>
+            <Card style={{height: "82px"}} body>
               <Input
                 type="search"
                 name="searchProduct"
@@ -110,7 +112,7 @@ class Product extends React.Component {
             </Card>
           </TabPane>
           <TabPane tabId="2">
-            <Card body>
+            <Card style={{height: "82px"}} body>
               <Input
                 type="search"
                 name="searchBuzzwords"
@@ -127,7 +129,7 @@ class Product extends React.Component {
         <ListGroup>
           <VirtualScroll
             itemCount={this.props.filtered.length}
-            height={400}
+            height={300}
             childHeight={70}
             Item={Item}
           />

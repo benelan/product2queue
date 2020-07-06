@@ -35,13 +35,13 @@ const Navb = (props) => {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  <NavLink style={{color: "darkgrey"}} target="_blank" href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view">
+                  <NavLink style={{color: "black"}} target="_blank" href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view">
                     Data Management
                   </NavLink>
                 </DropdownItem>
                 {/* <DropdownItem divider /> */}
                 <DropdownItem>
-                  <NavLink style={{color: "darkgrey"}} target="_blank" href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view">
+                  <NavLink style={{color: "black"}} target="_blank" href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view">
                     SDK
                   </NavLink>
                 </DropdownItem>
