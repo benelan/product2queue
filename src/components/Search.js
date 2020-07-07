@@ -95,6 +95,8 @@ class Search extends React.Component {
         or.visibleQueue = temp;
 
         this.setState({ results: [or] });
+      } else if (e.target.value === "Any") {
+        or.visibleQueue = or.queue;
       } else {
         // clear the dropdown and results
         this.setState({ filtered: [], results: [] });
@@ -114,9 +116,10 @@ class Search extends React.Component {
     // ie *at* would include 'attack', 'fat', 'matter', etc
     // + means it must contain the value
     let q = ""; // init query string
-
+    let search = false;
     // ---- FOR PRODUCT SEARCHES  ---- \\
     if (this.state.query.product !== "") {
+      search = true;
       // split search words
       let products = this.state.query.product.split(" ");
       // iterate through search words
@@ -129,17 +132,9 @@ class Search extends React.Component {
       if (this.state.query.technology !== "Any") {
         q += ` +technology:${this.state.query.technology}`;
       }
-      // set lunr search to query
-      const f = this.props.index.search(q);
-      // set the search results for the dropdown list
-      this.setState({ filtered: f });
-      // if there is only one result display its info
-      if (f.length === 1) {
-        this.findResult(f[0]);
-      }
-
       // ---- FOR BUZZWORD SEARCHES  ---- \\
     } else if (this.state.query.buzzwords !== "") {
+      search = true;
       // split search words
       let buzzwords = this.state.query.buzzwords.split(" ");
       // add tech field search value
@@ -166,6 +161,18 @@ class Search extends React.Component {
           });
         });
       }
+    } else if (
+      this.state.query.buzzwords === "" &&
+      this.state.query.buzzwords === "" &&
+      this.state.query.technology !== "Any"
+    ) {
+      search = true;
+      q += `+technology:${this.state.query.technology}`;
+    }
+
+    // if one of the conditionals above was met
+    // do the search
+    if (search) {
       // set lunr search to query
       const f = this.props.index.search(q);
       // set the search results for the dropdown list
@@ -253,7 +260,7 @@ class Search extends React.Component {
 
     const extraM = {
       marginBottom: "10px",
-      marginTop: "7.35px",
+      marginTop: "6.5px",
     };
     return (
       <Row className="justify-content-md-center" style={appStyle}>

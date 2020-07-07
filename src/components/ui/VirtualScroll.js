@@ -5,7 +5,7 @@ const useScrollAware = () => {
   const [scrollTop, setScrollTop] = useState(0);
   const ref = useRef();
 
-  const onScroll = e =>
+  const onScroll = (e) =>
     requestAnimationFrame(() => {
       setScrollTop(e.target.scrollTop);
     });
@@ -27,7 +27,7 @@ const VirtualScroll = ({
   itemCount,
   height,
   childHeight,
-  renderAhread = 20
+  renderAhread = 20,
 }) => {
   const [scrollTop, ref] = useScrollAware();
   const totalHeight = itemCount * childHeight;
@@ -37,6 +37,14 @@ const VirtualScroll = ({
 
   let visibleNodeCount = Math.ceil(height / childHeight) + 2 * renderAhread;
   visibleNodeCount = Math.min(itemCount - startNode, visibleNodeCount);
+
+  // fixes 'Invalid Array Length' error
+  if (visibleNodeCount < 0) {
+    visibleNodeCount = 0;
+  }
+  if (visibleNodeCount >= Math.pow(2, 32)) {
+    visibleNodeCount = Math.pow(2, 32) - 1;
+  }
 
   const offsetY = startNode * childHeight;
 
@@ -58,13 +66,13 @@ const VirtualScroll = ({
           overflow: "hidden",
           willChange: "transform",
           height: totalHeight,
-          position: "relative"
+          position: "relative",
         }}
       >
         <div
           style={{
             willChange: "transform",
-            transform: `translateY(${offsetY}px)`
+            transform: `translateY(${offsetY}px)`,
           }}
         >
           {visibleChildren}
