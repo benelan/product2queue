@@ -16,8 +16,10 @@ class Technology extends React.Component {
       menu: (base) => ({
         ...base,
         marginTop: "21.5px",
-        left: "-19.5px",
+        left: "-20px",
         width: "113%",
+        width: "calc(100% + 40px)",
+        boxShadow: "0.5px 0.5px 0.5px 0.5px lightgray",
         minHeight: "fit-content",
         minWidth: "fit-content",
       }),
