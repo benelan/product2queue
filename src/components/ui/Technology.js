@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Label, Card } from "reactstrap";
+import { Label, Card } from "reactstrap";
 import Select from "react-select";
 
 class Technology extends React.Component {
