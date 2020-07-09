@@ -1,11 +1,7 @@
-
-
 # Product to Queue
-
 This app was created for Esri Support Services to help employees determine which team supports each product.
 
 ## Using the App
-
 To run the web app locally for development, you must have [Node](https://nodejs.org/en/) installed. With Node installed, navigate to the project directory and type:
 ```
 npm install
@@ -32,6 +28,31 @@ This application reads directly from a [spreadsheet](https://github.com/benelan/
 	- Adding a Technology/Buzzword pair should work, but make sure to test before redeploying
 - Removing columns
 - Changing the order of columns
+
+## Developer Doc
+### App.js
+- Loads the CSV
+	- ``getCsvData()``
+	- ``fetchCsv()``
+- Parses the CSV into JSON
+	- ``getData(results)``
+- Creates a search index from the JSON
+	- ``createIndex(documents)``
+- The index is passed to the ``Search`` child component along with the JSON objects
+
+### Search.js
+- The child UI components are rendered
+	- ``Product``
+	- ``Technology``
+	-  ``Results``
+- The change handler functions for the child components create a query string
+	- ``handleProductChange(e)``
+	- ``handleBuzzwordsChange(e)``
+	- ``handleTechnologyChange(e)``
+- The search runs and displays the matches in a ``VirtualScroll`` in the ``Product`` component
+	- ``startSearch()``
+- When one of the matches is clicked on, it finds the info for the product and displays it in the ``Results``
+	- ``findResult(item)``
 
 ## Reporting Issues
 Issues with the application can be reported to Ben Elan or Lingtao Xie. If the spreadsheet needs to be edited in a way that requires changes to the code, feel free to reach out to us as well. We would be happy to help get the application working with the necessary changes.

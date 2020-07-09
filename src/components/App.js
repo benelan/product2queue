@@ -20,13 +20,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getCsvData();
-    // no scrubs up in here
-    // jk will add error boundaries soon
-    // https://reactjs.org/docs/error-boundaries.html
     // window.onerror = function errorHandlingIsForScrubs() {
     //   document.location.reload();
     //   return false;
     // };
+    // jk will add error boundaries soon
+    // https://reactjs.org/docs/error-boundaries.html
   }
 
   async getCsvData() {
