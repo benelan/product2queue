@@ -95,7 +95,7 @@ class App extends React.Component {
         object["queue"] = strippedQ;
         object["supportMethod"] = row[15];
         // if there is a reference and it is an email address
-        if (row[16] && row[16].includes("@")) {
+        if (row[9] && row[9].includes("@")) {
           // set it to the value of email
           object["email"] = row[16];
         } else {
