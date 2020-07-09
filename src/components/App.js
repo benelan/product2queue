@@ -20,13 +20,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getCsvData();
-    // no scrubs up in here
-    // jk will add error boundaries soon
-    // https://reactjs.org/docs/error-boundaries.html
     // window.onerror = function errorHandlingIsForScrubs() {
     //   document.location.reload();
     //   return false;
     // };
+    // jk will add error boundaries soon
+    // https://reactjs.org/docs/error-boundaries.html
   }
 
   async getCsvData() {
@@ -96,7 +95,7 @@ class App extends React.Component {
         object["queue"] = strippedQ;
         object["supportMethod"] = row[15];
         // if there is a reference and it is an email address
-        if (row[9] && row[9].includes("@")) {
+        if (row[16] && row[16].includes("@")) {
           // set it to the value of email
           object["email"] = row[16];
         } else {
