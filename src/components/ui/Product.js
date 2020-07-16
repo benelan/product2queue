@@ -15,13 +15,6 @@ import classnames from "classnames";
 import VirtualScroll from "./VirtualScroll";
 
 class Product extends React.Component {
-  constructor(props) {
-    super(props);
-    // create a ref to store the textInput DOM element
-    this.inputProd = React.createRef();
-
-  }
-
   state = {
     activeTab: "1", // the active tab for mobile phones
   };
@@ -31,13 +24,7 @@ class Product extends React.Component {
   };
 
   clear = () => {
-    console.log("calling the clear() function...");
     this.inputProd.value = "";
-    setTimeout(() => {     
-      console.log(this.inputProd);
-      console.log(this.inputProd.value);
-    }, 2000);
-
   }
 
 
@@ -120,7 +107,7 @@ class Product extends React.Component {
           <TabPane tabId="1">
             <Card style={{ height: "82px" }} body>
               <Input
-                ref={this.inputProd}
+                innerRef={input => this.inputProd = input}
                 type="search"
                 name="searchProduct"
                 className="input"
