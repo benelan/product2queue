@@ -22,6 +22,19 @@ class Product extends React.Component {
     if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
   };
 
+  clearProd = () => {
+    this.inputProd.value = "";
+  }
+
+  clearBuzz = () => {
+    this.inputBuzz.value = "";
+  }
+
+  clear = () => {
+    this.clearProd();
+    this.clearBuzz();
+  }
+
   render() {
     const lgi = {
       height: "70px",
@@ -37,8 +50,6 @@ class Product extends React.Component {
       height: "40px",
       background: "#F7F9FA"
     };
-
-
 
     const Item = memo(({ index }) => (
       <ListGroupItem
@@ -69,7 +80,8 @@ class Product extends React.Component {
                   },
                 };
                 this.props.onProductChange(val);
-                document.getElementById("productInput").value = "";
+                // document.getElementById("productInput").value = "";
+                this.clearProd();
                 this.toggle("1");
               }}
             >
@@ -89,7 +101,8 @@ class Product extends React.Component {
                   },
                 };
                 this.props.onBuzzwordsChange(val);
-                document.getElementById("buzzwordsInput").value = "";
+                // document.getElementById("buzzwordsInput").value = "";
+                this.clearBuzz();
                 this.toggle("2");
               }}
             >
@@ -99,8 +112,9 @@ class Product extends React.Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            <Card style={{height: "82px"}} body>
+            <Card style={{ height: "82px" }} body>
               <Input
+                innerRef={input => this.inputProd = input}
                 type="search"
                 name="searchProduct"
                 className="input"
@@ -112,8 +126,9 @@ class Product extends React.Component {
             </Card>
           </TabPane>
           <TabPane tabId="2">
-            <Card style={{height: "82px"}} body>
+            <Card style={{ height: "82px" }} body>
               <Input
+                innerRef={input => this.inputBuzz = input}
                 type="search"
                 name="searchBuzzwords"
                 className="input"

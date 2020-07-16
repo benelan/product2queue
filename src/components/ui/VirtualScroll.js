@@ -39,13 +39,9 @@ const VirtualScroll = ({
   visibleNodeCount = Math.min(itemCount - startNode, visibleNodeCount);
 
   // fixes 'Invalid Array Length' error
-  if (visibleNodeCount < 0) {
-    visibleNodeCount = 0;
-  }
-  if (visibleNodeCount >= Math.pow(2, 32)) {
-    visibleNodeCount = Math.pow(2, 32) - 1;
-  }
-
+  visibleNodeCount = Math.max(0, visibleNodeCount);
+  visibleNodeCount = Math.min(Math.pow(2, 32) - 1, visibleNodeCount)
+ 
   const offsetY = startNode * childHeight;
 
   const visibleChildren = useMemo(
