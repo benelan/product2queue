@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import Product from "./ui/Product";
 import Technology from "./ui/Technology";
 import Result from "./ui/Result";
@@ -10,6 +10,8 @@ class Search extends React.Component {
     this.handleProductChange = this.handleProductChange.bind(this);
     this.handleBuzzwordsChange = this.handleBuzzwordsChange.bind(this);
     this.handleTechnologyChange = this.handleTechnologyChange.bind(this);
+    this.clearInput1 = this.clearInput1.bind(this);
+
     this.state = {
       filtered: [],
       query: {
@@ -46,6 +48,7 @@ class Search extends React.Component {
     this.setState({ query: q });
     this.startSearch();
   }
+
 
   handleBuzzwordsChange(e) {
     // clear the dropdown and results
@@ -249,6 +252,19 @@ class Search extends React.Component {
     this.setState({ results: [qs] });
   };
 
+  clearInput1() {
+    this.setState({
+      filtered: [],
+      query: {
+        product: "",
+        technology: "Any",
+        buzzwords: "",
+      },
+      results: []
+    });
+    this.inputProd.clear();
+  }
+
   render() {
     const mBot = {
       marginBottom: "10px",
@@ -262,54 +278,72 @@ class Search extends React.Component {
       marginBottom: "10px",
       marginTop: "6.5px",
     };
+
     return (
-      <Row className="justify-content-md-center" style={appStyle}>
-        {this.state.mobile ? ( // if the devie is mobile use tabs to divide the map/list
-          <React.Fragment>
-            <Col style={extraM} md={{ size: 4, offset: 0 }}>
-              <Result results={this.state.results} />
-            </Col>
+      <div>
+        {/* {this.state.query.product || this.state.query.buzzwords || this.state.query.technology !== "Any" ? ( */}
+        <Row className="justify-content-md-center" style={appStyle}>
+          <Button outline color="secondary" size="md" block
+            // onClick={() => this.clearSearch()}
+            onClick={this.clearInput1.bind(this)}
+          >Clear</Button>
+        </Row>
+        {/* ) : ( */}
+        {/* "" */}
+        {/* )} */}
 
-            <Col style={extraM} md={{ size: 3, offset: 0 }}>
-              <Technology
-                onTechnologyChange={this.handleTechnologyChange}
-                techList={this.props.techList}
-              />
-            </Col>
+        <Row className="justify-content-md-center" style={appStyle}>
+          {this.state.mobile ? ( // if the devie is mobile use tabs to divide the map/list
+            <React.Fragment>
+              <Col style={extraM} md={{ size: 4, offset: 0 }}>
+                <Result results={this.state.results} />
+              </Col>
 
-            <Col style={mBot} md={{ size: 5, offset: 0 }}>
-              <Product
-                filtered={this.state.filtered}
-                onProductChange={this.handleProductChange}
-                onBuzzwordsChange={this.handleBuzzwordsChange}
-                onResult={this.findResult}
-              />
-            </Col>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <Col style={mBot} md={{ size: 5, offset: 0 }}>
-              <Product
-                filtered={this.state.filtered}
-                onProductChange={this.handleProductChange}
-                onBuzzwordsChange={this.handleBuzzwordsChange}
-                onResult={this.findResult}
-              />
-            </Col>
+              <Col style={extraM} md={{ size: 3, offset: 0 }}>
+                <Technology
+                  onTechnologyChange={this.handleTechnologyChange}
+                  techList={this.props.techList}
+                />
+              </Col>
 
-            <Col style={extraM} md={{ size: 3, offset: 0 }}>
-              <Technology
-                onTechnologyChange={this.handleTechnologyChange}
-                techList={this.props.techList}
-              />
-            </Col>
+              <Col style={mBot} md={{ size: 5, offset: 0 }}>
+                <Product
+                  // ref={inputProd => this.inputProd = inputProd}
 
-            <Col style={extraM} md={{ size: 4, offset: 0 }}>
-              <Result results={this.state.results} />
-            </Col>
-          </React.Fragment>
-        )}
-      </Row>
+                  filtered={this.state.filtered}
+                  onProductChange={this.handleProductChange}
+                  onBuzzwordsChange={this.handleBuzzwordsChange}
+                  onResult={this.findResult}
+                />
+              </Col>
+            </React.Fragment>
+          ) : (
+              <React.Fragment>
+
+                <Col style={mBot} md={{ size: 5, offset: 0 }}>
+                  <Product
+                    // ref={inputProd => this.inputProd = inputProd}
+                    filtered={this.state.filtered}
+                    onProductChange={this.handleProductChange}
+                    onBuzzwordsChange={this.handleBuzzwordsChange}
+                    onResult={this.findResult}
+                  />
+                </Col>
+
+                <Col style={extraM} md={{ size: 3, offset: 0 }}>
+                  <Technology
+                    onTechnologyChange={this.handleTechnologyChange}
+                    techList={this.props.techList}
+                  />
+                </Col>
+
+                <Col style={extraM} md={{ size: 4, offset: 0 }}>
+                  <Result results={this.state.results} />
+                </Col>
+              </React.Fragment>
+            )}
+        </Row>
+      </div>
     );
   }
 }

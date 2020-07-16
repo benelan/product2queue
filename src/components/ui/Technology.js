@@ -55,6 +55,7 @@ class Technology extends React.Component {
         </Label>
         <Card style={{ height: "82px" }} body>
           <Select
+            // id="technologySelect"
             defaultValue={items[0]}
             label="Select Technology"
             options={items}

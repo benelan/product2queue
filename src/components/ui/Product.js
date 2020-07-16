@@ -8,12 +8,20 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card
+  Card,
+  Button
 } from "reactstrap";
 import classnames from "classnames";
 import VirtualScroll from "./VirtualScroll";
 
 class Product extends React.Component {
+  constructor(props) {
+    super(props);
+    // create a ref to store the textInput DOM element
+    this.inputProd = React.createRef();
+
+  }
+
   state = {
     activeTab: "1", // the active tab for mobile phones
   };
@@ -21,6 +29,17 @@ class Product extends React.Component {
   toggle = (tab) => {
     if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
   };
+
+  clear = () => {
+    console.log("calling the clear() function...");
+    this.inputProd.value = "";
+    setTimeout(() => {     
+      console.log(this.inputProd);
+      console.log(this.inputProd.value);
+    }, 2000);
+
+  }
+
 
   render() {
     const lgi = {
@@ -99,8 +118,9 @@ class Product extends React.Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            <Card style={{height: "82px"}} body>
+            <Card style={{ height: "82px" }} body>
               <Input
+                ref={this.inputProd}
                 type="search"
                 name="searchProduct"
                 className="input"
@@ -112,7 +132,7 @@ class Product extends React.Component {
             </Card>
           </TabPane>
           <TabPane tabId="2">
-            <Card style={{height: "82px"}} body>
+            <Card style={{ height: "82px" }} body>
               <Input
                 type="search"
                 name="searchBuzzwords"
@@ -125,6 +145,10 @@ class Product extends React.Component {
             </Card>
           </TabPane>
         </TabContent>
+        <Button outline color="secondary" size="md" block
+          // onClick={() => this.clearSearch()}
+          onClick={this.clear}
+        >Clear</Button>
 
         <ListGroup>
           <VirtualScroll
