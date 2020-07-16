@@ -10,7 +10,6 @@ class Search extends React.Component {
     this.handleProductChange = this.handleProductChange.bind(this);
     this.handleBuzzwordsChange = this.handleBuzzwordsChange.bind(this);
     this.handleTechnologyChange = this.handleTechnologyChange.bind(this);
-    this.clearInput1 = this.clearInput1.bind(this);
 
     this.state = {
       filtered: [],
@@ -252,7 +251,7 @@ class Search extends React.Component {
     this.setState({ results: [qs] });
   };
 
-  clearInput1() {
+  clear = () => {
     this.setState({
       filtered: [],
       query: {
@@ -262,7 +261,9 @@ class Search extends React.Component {
       },
       results: []
     });
+
     this.inputProd.clear();
+    this.inputTech.clear();
   }
 
   render() {
@@ -279,18 +280,15 @@ class Search extends React.Component {
       marginTop: "6.5px",
     };
 
+    let buttonDisabled = this.state.query.product || this.state.query.buzzwords || this.state.query.technology !== "Any" ? false : true
+
     return (
       <div>
-        {/* {this.state.query.product || this.state.query.buzzwords || this.state.query.technology !== "Any" ? ( */}
         <Row className="justify-content-md-center" style={appStyle}>
-          <Button outline color="secondary" size="md" block
-            // onClick={() => this.clearSearch()}
-            onClick={this.clearInput1.bind(this)}
+          <Button outline color="secondary" size="md" block disabled={buttonDisabled}
+            onClick={this.clear}
           >Clear</Button>
         </Row>
-        {/* ) : ( */}
-        {/* "" */}
-        {/* )} */}
 
         <Row className="justify-content-md-center" style={appStyle}>
           {this.state.mobile ? ( // if the devie is mobile use tabs to divide the map/list
@@ -301,6 +299,7 @@ class Search extends React.Component {
 
               <Col style={extraM} md={{ size: 3, offset: 0 }}>
                 <Technology
+                  ref={input => this.inputTech = input}
                   onTechnologyChange={this.handleTechnologyChange}
                   techList={this.props.techList}
                 />
@@ -308,8 +307,7 @@ class Search extends React.Component {
 
               <Col style={mBot} md={{ size: 5, offset: 0 }}>
                 <Product
-                  // ref={inputProd => this.inputProd = inputProd}
-
+                  ref={input => this.inputProd = input}
                   filtered={this.state.filtered}
                   onProductChange={this.handleProductChange}
                   onBuzzwordsChange={this.handleBuzzwordsChange}
@@ -322,7 +320,7 @@ class Search extends React.Component {
 
                 <Col style={mBot} md={{ size: 5, offset: 0 }}>
                   <Product
-                    // ref={inputProd => this.inputProd = inputProd}
+                    ref={input => this.inputProd = input}
                     filtered={this.state.filtered}
                     onProductChange={this.handleProductChange}
                     onBuzzwordsChange={this.handleBuzzwordsChange}
@@ -332,6 +330,7 @@ class Search extends React.Component {
 
                 <Col style={extraM} md={{ size: 3, offset: 0 }}>
                   <Technology
+                    ref={input => this.inputTech = input}
                     onTechnologyChange={this.handleTechnologyChange}
                     techList={this.props.techList}
                   />

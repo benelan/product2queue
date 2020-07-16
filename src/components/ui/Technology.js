@@ -3,6 +3,10 @@ import { Label, Card } from "reactstrap";
 import Select from "react-select";
 
 class Technology extends React.Component {
+  clear = () => {
+    this.inputTech.state.value = { target: { value: "Any" }, label: "Any" };
+  }
+
   render() {
     const colourStyles = {
       control: (styles) => ({
@@ -55,7 +59,8 @@ class Technology extends React.Component {
         </Label>
         <Card style={{ height: "82px" }} body>
           <Select
-            // id="technologySelect"
+            // innerRef={input => this.inputTech = input}
+            ref={input => this.inputTech = input}
             defaultValue={items[0]}
             label="Select Technology"
             options={items}
