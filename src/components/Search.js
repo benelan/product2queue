@@ -48,7 +48,6 @@ class Search extends React.Component {
     this.startSearch();
   }
 
-
   handleBuzzwordsChange(e) {
     // clear the dropdown and results
     this.setState({ filtered: [], results: [] });
@@ -259,12 +258,12 @@ class Search extends React.Component {
         technology: "Any",
         buzzwords: "",
       },
-      results: []
+      results: [],
     });
 
     this.inputProd.clear();
     this.inputTech.clear();
-  }
+  };
 
   render() {
     const mBot = {
@@ -272,22 +271,35 @@ class Search extends React.Component {
     };
 
     const appStyle = {
-      margin: "20px",
+      marginLeft: "5px",
+      marginRight: "5px"
     };
 
     const extraM = {
       marginBottom: "10px",
-      marginTop: "6.5px",
+      marginTop: "6px",
     };
 
-    let buttonDisabled = this.state.query.product || this.state.query.buzzwords || this.state.query.technology !== "Any" ? false : true
+    let buttonDisabled =
+      this.state.query.product ||
+      this.state.query.buzzwords ||
+      this.state.query.technology !== "Any"
+        ? false
+        : true;
 
     return (
       <div>
-        <Row className="justify-content-md-center" style={appStyle}>
-          <Button outline color="secondary" size="md" block disabled={buttonDisabled}
-            onClick={this.clear}
-          >Clear</Button>
+        <Row style={{ marginTop: "10px", marginRight: "1px", marginBottom: "0px" }}>
+          <Col md={{ size: 1, offset: 11 }}>
+            <Button
+              className="float-right"
+              outline
+              color="secondary"
+              size="sm"
+              disabled={buttonDisabled}
+              onClick={this.clear}
+            >clear</Button>
+          </Col>
         </Row>
 
         <Row className="justify-content-md-center" style={appStyle}>
@@ -296,18 +308,16 @@ class Search extends React.Component {
               <Col style={extraM} md={{ size: 4, offset: 0 }}>
                 <Result results={this.state.results} />
               </Col>
-
               <Col style={extraM} md={{ size: 3, offset: 0 }}>
                 <Technology
-                  ref={input => this.inputTech = input}
+                  ref={(input) => (this.inputTech = input)}
                   onTechnologyChange={this.handleTechnologyChange}
                   techList={this.props.techList}
                 />
               </Col>
-
               <Col style={mBot} md={{ size: 5, offset: 0 }}>
                 <Product
-                  ref={input => this.inputProd = input}
+                  ref={(input) => (this.inputProd = input)}
                   filtered={this.state.filtered}
                   onProductChange={this.handleProductChange}
                   onBuzzwordsChange={this.handleBuzzwordsChange}
@@ -316,31 +326,30 @@ class Search extends React.Component {
               </Col>
             </React.Fragment>
           ) : (
-              <React.Fragment>
+            <React.Fragment>
+              <Col style={mBot} md={{ size: 5, offset: 0 }}>
+                <Product
+                  ref={(input) => (this.inputProd = input)}
+                  filtered={this.state.filtered}
+                  onProductChange={this.handleProductChange}
+                  onBuzzwordsChange={this.handleBuzzwordsChange}
+                  onResult={this.findResult}
+                />
+              </Col>
 
-                <Col style={mBot} md={{ size: 5, offset: 0 }}>
-                  <Product
-                    ref={input => this.inputProd = input}
-                    filtered={this.state.filtered}
-                    onProductChange={this.handleProductChange}
-                    onBuzzwordsChange={this.handleBuzzwordsChange}
-                    onResult={this.findResult}
-                  />
-                </Col>
+              <Col style={extraM} md={{ size: 3, offset: 0 }}>
+                <Technology
+                  ref={(input) => (this.inputTech = input)}
+                  onTechnologyChange={this.handleTechnologyChange}
+                  techList={this.props.techList}
+                />
+              </Col>
 
-                <Col style={extraM} md={{ size: 3, offset: 0 }}>
-                  <Technology
-                    ref={input => this.inputTech = input}
-                    onTechnologyChange={this.handleTechnologyChange}
-                    techList={this.props.techList}
-                  />
-                </Col>
-
-                <Col style={extraM} md={{ size: 4, offset: 0 }}>
-                  <Result results={this.state.results} />
-                </Col>
-              </React.Fragment>
-            )}
+              <Col style={extraM} md={{ size: 4, offset: 0 }}>
+                <Result results={this.state.results} />
+              </Col>
+            </React.Fragment>
+          )}
         </Row>
       </div>
     );
