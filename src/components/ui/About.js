@@ -14,11 +14,22 @@ const About = (props) => {
 
   return (
     <div>
-      <NavLink color="link" onClick={toggle} style={{cursor: "pointer"}}>{buttonLabel}</NavLink>
+      <NavLink color="link" onClick={toggle} style={{ cursor: "pointer" }}>{buttonLabel}</NavLink>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>About</ModalHeader>
         <ModalBody>
-        This app was created for Esri Support Services to help employees determine which team supports each product. 
+          The Product to Queue app is a browser-based tool created by Esri Support Services to help employees
+          determine the appropriate team to handle a support case according to product names or buzzwords.<br />
+
+          <ul>
+            <li>To use the app, fill in the product name or buzzword in the search field, select a technology,
+          then the results will be returned on the right of the web page.</li>
+            <li>You can reset the search field and technology by clicking the "clear" button on the top-right corner. </li>
+            <li>Please make sure to review the transfer resources before transferring a case.</li>
+          </ul>
+
+          If you have any questions or comments about this app, please do not hesitate to contact xxx@esri.com. <br />
+
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>Okay</Button>{' '}
