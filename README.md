@@ -16,7 +16,9 @@ npm run build
 This application reads directly from a [spreadsheet](https://github.com/benelan/product2queue/blob/master/public/data/product_queue.csv). The spreadsheet must be a csv file named 'product_queue'.
 
 The csv file must be in the following format:
-``Product, Tech1, Tech1 Buzzwords, Tech2, Tech2 Buzzwords, .... Tech99, Tech99 Buzzwords, Support Method, Reference``
+```
+Product, Tech1, Tech1 Buzzwords, Tech2, Tech2 Buzzwords, .... Tech99, Tech99 Buzzwords, Support Method, Reference
+```
 
 ### Data that can be edited without changes to code
 - The text value of any cell
