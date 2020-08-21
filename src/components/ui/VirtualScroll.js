@@ -51,7 +51,7 @@ const VirtualScroll = ({
         .map((_, index) => (
           <Item key={index + startNode} index={index + startNode} />
         )),
-    [startNode, visibleNodeCount, Item]
+    [startNode, visibleNodeCount]
   );
 
   return (
