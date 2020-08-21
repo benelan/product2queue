@@ -55,14 +55,15 @@ class App extends React.Component {
     let tech = {}; // final json of tech to queue
     let techList = []; // for populating the dropdown menu
     const header = result.data[0]; // the header of the csv
-    for (let i = 1; i < 15; i += 2) {
+
+    const len = header.length - 1;
+    for (let i = 1; i < len - 2; i += 2) {
       // iterate through the technologies
       // init the json of technologies to queues
       const t = header[i].replace(/\s/g, "");
       tech[t] = [];
       techList.push(header[i]);
     }
-
     // iterate through the rows
     result.data.forEach((row, index) => {
       if (index !== 0) {
@@ -71,7 +72,7 @@ class App extends React.Component {
         object["product"] = row[0]; // set the product to the value
         let t = ""; // init tech string
         let q = ""; // init queue string
-        for (let i = 1; i < 15; i += 2) {
+        for (let i = 1; i < len - 2; i += 2) {
           // iterate through the technologies
           if (row[i]) {
             // if the queue isn't blank
@@ -93,14 +94,14 @@ class App extends React.Component {
         // set the queue, tech, and support method values
         object["technology"] = strippedT;
         object["queue"] = strippedQ;
-        object["supportMethod"] = row[15];
+        object["supportMethod"] = row[len - 1];
         // if there is a reference and it is an email address
-        if (row[16] && row[16].includes("@")) {
+        if (row[len] && row[len].includes("@")) {
           // set it to the value of email
-          object["email"] = row[16];
+          object["email"] = row[len];
         } else {
           // otherwise set it to the value of url
-          object["url"] = row[16];
+          object["url"] = row[len];
         }
         prod.push(object); // add the prod object to the array of products
       }
@@ -136,7 +137,6 @@ class App extends React.Component {
         this.add(doc);
       }, this);
     });
-
     this.setState({ index: idx });
   }
   render() {

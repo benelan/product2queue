@@ -45,6 +45,7 @@ const Navb = (props) => {
                       margin: 0,
                     }}
                     target="_blank"
+                    rel="noopener noreferrer"
                     href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view"
                   >
                     Data Management
@@ -60,6 +61,7 @@ const Navb = (props) => {
                       margin: 0,
                     }}
                     target="_blank"
+                    rel="noopener noreferrer"
                     href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view"
                   >
                     SDK
