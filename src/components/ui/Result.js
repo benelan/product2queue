@@ -29,7 +29,7 @@ class Result extends React.Component {
               </ListGroupItem>
               {this.props.results[0].url ? (
                 <ListGroupItem>
-                  <a target="_blank" style={linkStyle} href={this.props.results[0].url}>
+                  <a target="_blank" rel="noopener noreferrer" style={linkStyle} href={this.props.results[0].url}>
                     <b>Reference</b>
                   </a>
                 </ListGroupItem>
@@ -48,14 +48,14 @@ class Result extends React.Component {
                 )}
               {this.props.results[0].visibleQueue.includes("Data") ? (
                 <ListGroupItem>
-                  Please review <a target="_blank" style={linkStyle} href={geoData}>this documentation</a> before transferring to Data Management.
+                  Please review <a target="_blank" rel="noopener noreferrer" style={linkStyle} href={geoData}>this documentation</a> before transferring to Data Management.
                 </ListGroupItem>
               ) : (
                   ""
                 )}
               {this.props.results[0].visibleQueue.includes("SDK") ? (
                 <ListGroupItem>
-                  Please review <a target="_blank" style={linkStyle} href={sdk}>this documentation</a> before transferring to SDK.
+                  Please review <a target="_blank" rel="noopener noreferrer" style={linkStyle} href={sdk}>this documentation</a> before transferring to SDK.
                 </ListGroupItem>
               ) : (
                   ""

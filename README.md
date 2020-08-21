@@ -15,6 +15,9 @@ npm run build
 ## Changing the Data
 This application reads directly from a [spreadsheet](https://github.com/benelan/product2queue/blob/master/public/data/product_queue.csv). The spreadsheet must be a csv file named 'product_queue'.
 
+The csv file must be in the following format:
+``Product, Tech1, Tech1 Buzzwords, Tech2, Tech2 Buzzwords, .... Tech99, Tech99 Buzzwords, Support Method, Reference``
+
 ### Data that can be edited without changes to code
 - The text value of any cell
 	- Changing the name of a Technology/Unit
@@ -22,12 +25,13 @@ This application reads directly from a [spreadsheet](https://github.com/benelan/
 	- changing the reference, etc
 - Adding rows (Products)
 - Removing rows
+- Adding Technology/Buzzword pairs (maintaining the format above)
+- Removing T/B pairs
   
 ### Data that requires changes to code after editing
-- Adding new columns to display new information
-	- Adding a Technology/Buzzword pair should work, but make sure to test before redeploying
-- Removing columns
-- Changing the order of columns
+- Adding new column (other than T/B pairs)
+- Removing columns (other than T/B pairs)
+- Changing the order of columns (other than T/B pairs)
 
 ## Developer Doc
 ### App.js
@@ -58,7 +62,9 @@ This application reads directly from a [spreadsheet](https://github.com/benelan/
 Issues with the application can be reported to Ben Elan or Lingtao Xie. If the spreadsheet needs to be edited in a way that requires changes to the code, feel free to reach out to us as well. We would be happy to help get the application working with the necessary changes.
 
 ## Built With
-*  [React](https://reactjs.org/) - Frontend Framework
-*  [Reactstrap](https://reactstrap.github.io/) - Bootstrap for React
-*  [Lunr](https://lunrjs.com/) - Search Engine
-*  [PapaParse](https://www.papaparse.com) - CSV Parser
+* [React](https://reactjs.org/) - Frontend Framework
+* [Reactstrap](https://reactstrap.github.io/) - Bootstrap for React
+* [React-Select](https://react-select.com/home) - React Dropdown
+* [Lunr](https://lunrjs.com/) - Search Engine
+* [PapaParse](https://www.papaparse.com) - CSV Parser
+
