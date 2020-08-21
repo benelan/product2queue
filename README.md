@@ -17,7 +17,7 @@ This application reads directly from a [spreadsheet](https://github.com/benelan/
 
 The csv file must be in the following format:
 ```
-Product, Tech1, Tech1 Buzzwords, Tech2, Tech2 Buzzwords, .... Tech99, Tech99 Buzzwords, Support Method, Reference
+Product, Tech_n, Tech_n Buzzwords, .... Tech_n+1, Tech_n+1 Buzzwords, Support Method, Reference
 ```
 
 ### Data that can be edited without changes to code
