@@ -15,7 +15,7 @@ import VirtualScroll from "./VirtualScroll";
 
 class Product extends React.Component {
   state = {
-    activeTab: "1", // the active tab for mobile phones
+    activeTab: "1",
   };
 
   toggle = (tab) => {
@@ -80,7 +80,6 @@ class Product extends React.Component {
                   },
                 };
                 this.props.onProductChange(val);
-                // document.getElementById("productInput").value = "";
                 this.clearProd();
                 this.toggle("1");
               }}
@@ -101,7 +100,6 @@ class Product extends React.Component {
                   },
                 };
                 this.props.onBuzzwordsChange(val);
-                // document.getElementById("buzzwordsInput").value = "";
                 this.clearBuzz();
                 this.toggle("2");
               }}
@@ -140,7 +138,6 @@ class Product extends React.Component {
             </Card>
           </TabPane>
         </TabContent>
-
         <ListGroup>
           <VirtualScroll
             itemCount={this.props.filtered.length}

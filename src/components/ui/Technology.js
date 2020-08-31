@@ -21,7 +21,6 @@ class Technology extends React.Component {
         ...base,
         marginTop: "21.5px",
         left: "-20px",
-        width: "113%",
         width: "calc(100% + 40px)",
         boxShadow: "0.5px 0.5px 0.5px 0.5px lightgray",
         minHeight: "fit-content",
@@ -59,7 +58,6 @@ class Technology extends React.Component {
         </Label>
         <Card style={{ height: "82px" }} body>
           <Select
-            // innerRef={input => this.inputTech = input}
             ref={input => this.inputTech = input}
             defaultValue={items[0]}
             label="Select Technology"
@@ -69,22 +67,6 @@ class Technology extends React.Component {
               this.props.onTechnologyChange(selectedOption)
             }
           />
-          {/* <Input
-            type="select"
-            name="select"
-            id="technologySelect"
-            style={{height:"40px", background: "#F7F9FA", cursor: "pointer"}}
-            onChange={this.props.onTechnologyChange}
-          >
-            <option value={"Any"}>Any</option>
-            {this.props.techList.map((tech, i) => {
-              return (
-                <option key={i} value={tech}>
-                  {tech}
-                </option>
-              );
-            })}
-          </Input> */}
         </Card>
       </React.Fragment>
     );

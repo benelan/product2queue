@@ -20,10 +20,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getCsvData();
-    // window.onerror = function errorHandlingIsForScrubs() {
-    //   document.location.reload();
-    //   return false;
-    // };
+    window.onerror = function errorHandlingIsForScrubs() {
+      document.location.reload();
+      return false;
+    };
     // jk will add error boundaries soon
     // https://reactjs.org/docs/error-boundaries.html
   }

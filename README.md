@@ -1,5 +1,5 @@
 # Product to Queue
-This app was created for Esri Support Services to help employees determine which team supports each product.
+A browser-based tool created by Esri Support Services to help employees determine the appropriate team to handle a support case according to product names or buzzwords.
 
 ## Using the App
 To run the web app locally for development, you must have [Node](https://nodejs.org/en/) installed. With Node installed, navigate to the project directory and type:
