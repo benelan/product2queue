@@ -283,7 +283,8 @@ class Search extends React.Component {
     let buttonDisabled =
       this.state.query.product ||
       this.state.query.buzzwords ||
-      this.state.query.technology !== "Any"
+      this.state.query.technology !== "Any" ||
+      this.state.results
         ? false
         : true;
 
