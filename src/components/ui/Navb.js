@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   Collapse,
   Navbar,
@@ -11,13 +11,13 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from "reactstrap";
-import About from "./About";
+} from 'reactstrap'
+import About from './About'
 
-const Navb = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Navb = () => {
+  const [isOpen, setIsOpen] = useState(false)
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () => setIsOpen(!isOpen)
 
   return (
     <div>
@@ -39,8 +39,8 @@ const Navb = (props) => {
                 <DropdownItem>
                   <NavLink
                     style={{
-                      color: "black",
-                      fontSize: "16px",
+                      color: 'black',
+                      fontSize: '16px',
                       padding: 0,
                       margin: 0,
                     }}
@@ -55,8 +55,8 @@ const Navb = (props) => {
                 <DropdownItem>
                   <NavLink
                     style={{
-                      color: "black",
-                      fontSize: "16px",
+                      color: 'black',
+                      fontSize: '16px',
                       padding: 0,
                       margin: 0,
                     }}
@@ -73,7 +73,7 @@ const Navb = (props) => {
         </Collapse>
       </Navbar>
     </div>
-  );
-};
+  )
+}
 
-export default Navb;
+export default Navb

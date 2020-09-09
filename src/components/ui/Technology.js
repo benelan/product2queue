@@ -1,62 +1,64 @@
-import React from "react";
-import { Label, Card } from "reactstrap";
-import Select from "react-select";
+import React from 'react'
+import { Label, Card } from 'reactstrap'
+import Select from 'react-select'
 
 class Technology extends React.Component {
-  clear = () => {
-    this.inputTech.state.value = { target: { value: "Any" }, label: "Any" };
+  clear() {
+    this.inputTech.state.value = { target: { value: 'Any' }, label: 'Any' }
   }
 
   render() {
     const colourStyles = {
       control: (styles) => ({
         ...styles,
-        backgroundColor: "#F7F9FA",
-        cursor: "pointer",
-        boxShadow: "none",
-        minHeight: "40px",
-        height: "40px",
+        backgroundColor: '#F7F9FA',
+        cursor: 'pointer',
+        boxShadow: 'none',
+        minHeight: '40px',
+        height: '40px',
       }),
       menu: (base) => ({
         ...base,
-        marginTop: "21.5px",
-        left: "-20px",
-        width: "calc(100% + 40px)",
-        boxShadow: "0.5px 0.5px 0.5px 0.5px lightgray",
-        minHeight: "fit-content",
-        minWidth: "fit-content",
+        marginTop: '21.5px',
+        left: '-20px',
+        width: 'calc(100% + 40px)',
+        boxShadow: '0.5px 0.5px 0.5px 0.5px lightgray',
+        minHeight: 'fit-content',
+        minWidth: 'fit-content',
       }),
+      // eslint-disable-next-line
       option: (styles, { data, isDisabled, isFocused, isSelected }) => {
         return {
           ...styles,
-          backgroundColor: isFocused ? "whitesmoke" : "white",
-          ":active": {
-            ...styles[":active"],
-            backgroundColor: "lightgrey",
+          backgroundColor: isFocused ? 'whitesmoke' : 'white',
+          ':active': {
+            ...styles[':active'],
+            backgroundColor: 'lightgrey',
           },
-          color: "black",
-          cursor: "pointer",
-          minHeight: "fit-content",
-          minWidth: "fit-content",
-          paddingTop: "6px",
-          paddingBottom: "6px",
-          fontSize: "16px",
-        };
+          color: 'black',
+          cursor: 'pointer',
+          minHeight: 'fit-content',
+          minWidth: 'fit-content',
+          paddingTop: '6px',
+          paddingBottom: '6px',
+          fontSize: '16px',
+        }
       },
-    };
+    }
 
-    let items = this.props.techList.map((tech, i) => {
-      return { target: { value: tech }, label: tech };
-    });
+    // eslint-disable-next-line
+    const items = this.props.techList.map((tech, i) => {
+      return { target: { value: tech }, label: tech }
+    })
 
-    items.unshift({ target: { value: "Any" }, label: "Any" });
+    items.unshift({ target: { value: 'Any' }, label: 'Any' })
 
     return (
       <React.Fragment>
-        <Label style={{ marginBottom: "11px" }} for="exampleSelect">
+        <Label style={{ marginBottom: '11px' }} for="exampleSelect">
           Technology
         </Label>
-        <Card style={{ height: "82px" }} body>
+        <Card style={{ height: '82px' }} body>
           <Select
             ref={input => this.inputTech = input}
             defaultValue={items[0]}
@@ -64,13 +66,14 @@ class Technology extends React.Component {
             options={items}
             styles={colourStyles}
             onChange={(selectedOption) =>
+              // eslint-disable-next-line
               this.props.onTechnologyChange(selectedOption)
             }
           />
         </Card>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default Technology;
+export default Technology

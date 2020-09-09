@@ -1,4 +1,5 @@
-import React, { memo } from "react";
+/* eslint-disable react/prop-types */
+import React, { memo } from 'react'
 import {
   Input,
   ListGroup,
@@ -9,48 +10,52 @@ import {
   NavItem,
   NavLink,
   Card
-} from "reactstrap";
-import classnames from "classnames";
-import VirtualScroll from "./VirtualScroll";
+} from 'reactstrap'
+import classnames from 'classnames'
+import VirtualScroll from './VirtualScroll'
 
 class Product extends React.Component {
-  state = {
-    activeTab: "1",
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeTab: '1',
+    }
 
-  toggle = (tab) => {
-    if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
-  };
+    this.toggle = (tab) => {
+      if (this.state.activeTab !== tab) this.setState({ activeTab: tab })
+    }
 
-  clearProd = () => {
-    this.inputProd.value = "";
-  }
+    this.clearProd = () => {
+      this.inputProd.value = ''
+    }
 
-  clearBuzz = () => {
-    this.inputBuzz.value = "";
-  }
+    this.clearBuzz = () => {
+      this.inputBuzz.value = ''
+    }
 
-  clear = () => {
-    this.clearProd();
-    this.clearBuzz();
+    this.clear = () => {
+      this.clearProd()
+      this.clearBuzz()
+    }
   }
 
   render() {
     const lgi = {
-      height: "70px",
-      color: "black",
-      fontSize: "16px"
-    };
+      height: '70px',
+      color: 'black',
+      fontSize: '16px'
+    }
 
     const navlinkStyle = {
-      cursor: "pointer"
+      cursor: 'pointer'
     }
 
     const inputStyle = {
-      height: "40px",
-      background: "#F7F9FA"
-    };
+      height: '40px',
+      background: '#F7F9FA'
+    }
 
+    // eslint-disable-next-line react/display-name
     const Item = memo(({ index }) => (
       <ListGroupItem
         key={index}
@@ -61,27 +66,27 @@ class Product extends React.Component {
       >
         {this.props.filtered[index].ref}
       </ListGroupItem>
-    ));
+    ))
 
     return (
       <React.Fragment>
         <Nav tabs
-          style={{ color: "#ADC5CC", border: "transparent" }}>
+          style={{ color: '#ADC5CC', border: 'transparent' }}>
           <NavItem>
             <NavLink
               style={navlinkStyle}
               className={classnames({
-                active: this.state.activeTab === "1",
+                active: this.state.activeTab === '1',
               })}
               onClick={() => {
                 const val = {
                   target: {
-                    value: "",
+                    value: '',
                   },
-                };
-                this.props.onProductChange(val);
-                this.clearProd();
-                this.toggle("1");
+                }
+                this.props.onProductChange(val)
+                this.clearProd()
+                this.toggle('1')
               }}
             >
               Product
@@ -91,17 +96,17 @@ class Product extends React.Component {
             <NavLink
               style={navlinkStyle}
               className={classnames({
-                active: this.state.activeTab === "2",
+                active: this.state.activeTab === '2',
               })}
               onClick={() => {
                 const val = {
                   target: {
-                    value: "",
+                    value: '',
                   },
-                };
-                this.props.onBuzzwordsChange(val);
-                this.clearBuzz();
-                this.toggle("2");
+                }
+                this.props.onBuzzwordsChange(val)
+                this.clearBuzz()
+                this.toggle('2')
               }}
             >
               Buzzwords
@@ -110,7 +115,7 @@ class Product extends React.Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            <Card style={{ height: "82px" }} body>
+            <Card style={{ height: '82px' }} body>
               <Input
                 innerRef={input => this.inputProd = input}
                 type="search"
@@ -124,7 +129,7 @@ class Product extends React.Component {
             </Card>
           </TabPane>
           <TabPane tabId="2">
-            <Card style={{ height: "82px" }} body>
+            <Card style={{ height: '82px' }} body>
               <Input
                 innerRef={input => this.inputBuzz = input}
                 type="search"
@@ -147,8 +152,8 @@ class Product extends React.Component {
           />
         </ListGroup>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default Product;
+export default Product

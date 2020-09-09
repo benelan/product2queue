@@ -1,143 +1,142 @@
-import React from "react";
-import Papa from "papaparse";
-import lunr from "lunr";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Search from "./Search";
-import Navb from "./ui/Navb";
+import React from 'react'
+import Papa from 'papaparse'
+import lunr from 'lunr'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Search from './Search'
+import Navb from './ui/Navb'
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       index: null,
       prod: [],
       tech: {},
       techList: [],
-    };
-    this.getData = this.getData.bind(this);
+    }
+    this.getData = this.getData.bind(this)
   }
 
   componentDidMount() {
-    this.getCsvData();
-    window.onerror = function errorHandlingIsForScrubs() {
-      document.location.reload();
-      return false;
-    };
+    this.getCsvData()
+    // window.onerror = function errorHandlingIsForScrubs() {
+    //   document.location.reload()
+    //   return false
+    // }
     // jk will add error boundaries soon
     // https://reactjs.org/docs/error-boundaries.html
   }
 
+  
   async getCsvData() {
     // fetch the csv
-    let csvData = await this.fetchCsv();
+    const csvData = await this.fetchCsv()
 
     // parse the csv
     Papa.parse(csvData, {
       complete: this.getData, // run getData function on completion
-    });
+    })
   }
 
   // fetches and decodes and then returns the csv data
-  fetchCsv() {
-    return fetch("/data/product_queue.csv").then(function (response) {
-      let reader = response.body.getReader();
-      let decoder = new TextDecoder("utf-8");
-
-      return reader.read().then(function (result) {
-        return decoder.decode(result.value);
-      });
-    });
+  async fetchCsv() {
+    const response = await fetch('/data/product_queue.csv')
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder('utf-8')
+    const result = await reader.read()
+    return decoder.decode(result.value)
   }
 
-  getData(result) {
-    let prod = []; // final json of products
-    let tech = {}; // final json of tech to queue
-    let techList = []; // for populating the dropdown menu
-    const header = result.data[0]; // the header of the csv
 
-    const len = header.length - 1;
+  getData(result) {
+    let prod = [] // final json of products
+    let tech = {} // final json of tech to queue
+    let techList = [] // for populating the dropdown menu
+    const header = result.data[0] // the header of the csv
+
+    const len = header.length - 1
     for (let i = 1; i < len - 2; i += 2) {
       // iterate through the technologies
       // init the json of technologies to queues
-      const t = header[i].replace(/\s/g, "");
-      tech[t] = [];
-      techList.push(header[i]);
+      const t = header[i].replace(/\s/g, '')
+      tech[t] = []
+      techList.push(header[i])
     }
     // iterate through the rows
     result.data.forEach((row, index) => {
       if (index !== 0) {
         // if the row is not the header
-        let object = {}; // init the product object
-        object["product"] = row[0]; // set the product to the value
-        let t = ""; // init tech string
-        let q = ""; // init queue string
+        let object = {} // init the product object
+        object['product'] = row[0] // set the product to the value
+        let t = '' // init tech string
+        let q = '' // init queue string
         for (let i = 1; i < len - 2; i += 2) {
           // iterate through the technologies
           if (row[i]) {
             // if the queue isn't blank
-            q += row[i] + ", "; // add the queue to the product's list
-            t += header[i] + ", "; // add the tech to the product's list
+            q += row[i] + ', ' // add the queue to the product's list
+            t += header[i] + ', ' // add the tech to the product's list
             // adds the buzzwords for each tech
             // removes spaces in tech like 'Data Management'
             // for the new buzzword variable name
-            object[`b_${header[i].replace(/\s/g, "")}`] = row[i + 1];
-            if (!tech[header[i].replace(/\s/g, "")].includes(row[i])) {
+            object[`b_${header[i].replace(/\s/g, '')}`] = row[i + 1]
+            if (!tech[header[i].replace(/\s/g, '')].includes(row[i])) {
               // if the queue hasn't already been added to the tech object
-              tech[header[i].replace(/\s/g, "")].push(row[i]); // add it
+              tech[header[i].replace(/\s/g, '')].push(row[i]) // add it
             }
           }
         }
         // regex strips trailing comma from the queue and tech strings
-        const strippedT = t.replace(/(^[,\s]+)|([,\s]+$)/g, "");
-        const strippedQ = q.replace(/(^[,\s]+)|([,\s]+$)/g, "");
+        const strippedT = t.replace(/(^[,\s]+)|([,\s]+$)/g, '')
+        const strippedQ = q.replace(/(^[,\s]+)|([,\s]+$)/g, '')
         // set the queue, tech, and support method values
-        object["technology"] = strippedT;
-        object["queue"] = strippedQ;
-        object["supportMethod"] = row[len - 1];
+        object['technology'] = strippedT
+        object['queue'] = strippedQ
+        object['supportMethod'] = row[len - 1]
         // if there is a reference and it is an email address
-        if (row[len] && row[len].includes("@")) {
+        if (row[len] && row[len].includes('@')) {
           // set it to the value of email
-          object["email"] = row[len];
+          object['email'] = row[len]
         } else {
           // otherwise set it to the value of url
-          object["url"] = row[len];
+          object['url'] = row[len]
         }
-        prod.push(object); // add the prod object to the array of products
+        prod.push(object) // add the prod object to the array of products
       }
-    });
+    })
     // after creating the jsons set them to state
-    this.setState({ prod: prod });
-    this.setState({ tech: tech });
-    this.setState({ techList: techList });
+    this.setState({ prod: prod })
+    this.setState({ tech: tech })
+    this.setState({ techList: techList })
     // create the lunr index
-    this.createIndex(prod);
+    this.createIndex(prod)
   }
 
   // creates the lunr index
   createIndex(documents) {
-    let that = this;
+    const that = this
     var idx = lunr(function () {
       //stemming causes issues when doing wildcard searches
-      this.pipeline.remove(lunr.stemmer);
-      this.searchPipeline.remove(lunr.stemmer);
+      this.pipeline.remove(lunr.stemmer)
+      this.searchPipeline.remove(lunr.stemmer)
       // the ref is the unique identifier
-      this.ref("product");
+      this.ref('product')
       // the fields are for searching
-      this.field("product");
-      this.field("technology");
+      this.field('product')
+      this.field('technology')
 
       // this makes the buzzword fields for each tech searchable
       // buzzwords in the form of b_Online, b_SDK, etc
       that.state.techList.forEach((t) => {
-        this.field(`b_${t.replace(/\s/g, "")}`);
-      });
+        this.field(`b_${t.replace(/\s/g, '')}`)
+      })
 
       documents.forEach(function (doc) {
-        this.add(doc);
-      }, this);
-    });
-    this.setState({ index: idx });
+        this.add(doc)
+      }, this)
+    })
+    this.setState({ index: idx })
   }
   render() {
     return (
@@ -150,8 +149,8 @@ class App extends React.Component {
           techList={this.state.techList}
         />
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default App;
+export default App
