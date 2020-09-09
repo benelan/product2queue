@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, { memo, useMemo, useRef, useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 // Generic hook for detecting scroll:
 const useScrollAware = () => {
@@ -77,6 +77,15 @@ const VirtualScroll = ({
       </div>
     </div>
   )
+}
+
+VirtualScroll.propTypes = {
+  Item: PropTypes.element,
+  itemCount: PropTypes.number,
+  height: PropTypes.number,
+  childHeight: PropTypes.number,
+  renderAhread: PropTypes.number,
+  children: PropTypes.any
 }
 
 export default memo(VirtualScroll)

@@ -1,5 +1,6 @@
-/* eslint-disable react/prop-types */
+/*global Set*/
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Row, Col, Button } from 'reactstrap'
 import Product from './ui/Product'
 import Technology from './ui/Technology'
@@ -224,7 +225,6 @@ class Search extends React.Component {
         !!this.state.query.buzzwords &&
         this.state.query.technology === 'Any'
       ) {
-        // eslint-disable-next-line no-undef
         const buzzTechs = new Set() // init Set
         // iterate through all of the buzzwords
         // eslint-disable-next-line
@@ -289,9 +289,9 @@ class Search extends React.Component {
 
     const buttonDisabled =
       this.state.query.product ||
-      this.state.query.buzzwords ||
-      this.state.query.technology !== 'Any' ||
-      this.state.results.length > 0
+        this.state.query.buzzwords ||
+        this.state.query.technology !== 'Any' ||
+        this.state.results.length > 0
         ? false
         : true
 
@@ -362,6 +362,15 @@ class Search extends React.Component {
       </div>
     )
   }
+}
+
+Search.propTypes = {
+  index: PropTypes.object,
+  prod: PropTypes.array,
+  tech: PropTypes.object,
+  techList: PropTypes.array,
+  children: PropTypes.any,
+  onClickOut: PropTypes.func,
 }
 
 export default Search

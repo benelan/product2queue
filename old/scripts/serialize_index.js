@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/*global require*/
 var lunr = require('lunr'),
   fs = require('fs-extra')
 

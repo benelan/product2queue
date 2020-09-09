@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Label, ListGroup, ListGroupItem } from 'reactstrap'
-
 
 class Result extends React.Component {
   render() {
@@ -69,6 +68,11 @@ class Result extends React.Component {
       </div>
     )
   }
+}
+
+Result.propTypes = {
+  results: PropTypes.array,
+  children: PropTypes.any
 }
 
 export default Result

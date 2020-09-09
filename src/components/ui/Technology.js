@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Label, Card } from 'reactstrap'
 import Select from 'react-select'
 
@@ -46,8 +47,8 @@ class Technology extends React.Component {
       },
     }
 
-    // eslint-disable-next-line
-    const items = this.props.techList.map((tech, i) => {
+
+    const items = this.props.techList.map((tech) => {
       return { target: { value: tech }, label: tech }
     })
 
@@ -66,7 +67,6 @@ class Technology extends React.Component {
             options={items}
             styles={colourStyles}
             onChange={(selectedOption) =>
-              // eslint-disable-next-line
               this.props.onTechnologyChange(selectedOption)
             }
           />
@@ -74,6 +74,12 @@ class Technology extends React.Component {
       </React.Fragment>
     )
   }
+}
+
+Technology.propTypes = {
+  onTechnologyChange: PropTypes.func,
+  techList: PropTypes.array,
+  children: PropTypes.any
 }
 
 export default Technology

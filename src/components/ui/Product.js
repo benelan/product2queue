@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, { memo } from 'react'
+import PropTypes from 'prop-types'
 import {
   Input,
   ListGroup,
@@ -40,6 +40,7 @@ class Product extends React.Component {
   }
 
   render() {
+    // list group item style
     const lgi = {
       height: '70px',
       color: 'black',
@@ -55,7 +56,6 @@ class Product extends React.Component {
       background: '#F7F9FA'
     }
 
-    // eslint-disable-next-line react/display-name
     const Item = memo(({ index }) => (
       <ListGroupItem
         key={index}
@@ -67,7 +67,8 @@ class Product extends React.Component {
         {this.props.filtered[index].ref}
       </ListGroupItem>
     ))
-
+    Item.displayName = 'Item'
+  
     return (
       <React.Fragment>
         <Nav tabs
@@ -154,6 +155,15 @@ class Product extends React.Component {
       </React.Fragment>
     )
   }
+}
+
+Product.propTypes = {
+  onProductChange: PropTypes.func,
+  onBuzzwordsChange: PropTypes.func,
+  onResult: PropTypes.func,
+  filtered: PropTypes.array,
+  index: PropTypes.any,
+  children: PropTypes.any
 }
 
 export default Product

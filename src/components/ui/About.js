@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink } from 'reactstrap'
 
 const About = (props) => {
@@ -36,6 +36,12 @@ const About = (props) => {
       </Modal>
     </div>
   )
+}
+
+About.propTypes = {
+  buttonLabel: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.any
 }
 
 export default About
