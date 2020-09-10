@@ -39,9 +39,8 @@ Product, Tech_n, Tech_n Buzzwords, .... Tech_n+1, Tech_n+1 Buzzwords, Support Me
 ### App.js
 - Loads the CSV
 	- ``getCsvData()``
-	- ``fetchCsv()``
 - Parses the CSV into JSON
-	- ``getData(results)``
+	- ``parseData(results)``
 - Creates a search index from the JSON
 	- ``createIndex(documents)``
 - The index is passed to the ``Search`` child component along with the JSON objects
