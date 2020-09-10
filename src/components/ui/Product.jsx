@@ -9,7 +9,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card
+  Card,
 } from 'reactstrap'
 import classnames from 'classnames'
 import VirtualScroll from './VirtualScroll'
@@ -22,7 +22,7 @@ class Product extends React.Component {
     }
 
     this.toggle = (tab) => {
-      if (this.state.activeTab !== tab) this.setState({ activeTab: tab })
+      if (this.activeTab !== tab) this.setState({ activeTab: tab })
     }
 
     this.clearProd = () => {
@@ -40,44 +40,50 @@ class Product extends React.Component {
   }
 
   render() {
+    const {
+      onBuzzwordsChange, onProductChange, onResult, filtered,
+    } = this.props
+    const { activeTab } = this.state
     // list group item style
     const lgi = {
       height: '70px',
       color: 'black',
-      fontSize: '16px'
+      fontSize: '16px',
     }
 
     const navlinkStyle = {
-      cursor: 'pointer'
+      cursor: 'pointer',
     }
 
     const inputStyle = {
       height: '40px',
-      background: '#F7F9FA'
+      background: '#F7F9FA',
     }
 
     const Item = memo(({ index }) => (
       <ListGroupItem
         key={index}
         style={lgi}
-        onClick={() => this.props.onResult(this.props.filtered[index])}
+        onClick={() => onResult(filtered[index])}
         tag="button"
         action
       >
-        {this.props.filtered[index].ref}
+        {filtered[index].ref}
       </ListGroupItem>
     ))
     Item.displayName = 'Item'
-  
+
     return (
-      <React.Fragment>
-        <Nav tabs
-          style={{ color: '#ADC5CC', border: 'transparent' }}>
+      <>
+        <Nav
+          tabs
+          style={{ color: '#ADC5CC', border: 'transparent' }}
+        >
           <NavItem>
             <NavLink
               style={navlinkStyle}
               className={classnames({
-                active: this.state.activeTab === '1',
+                active: activeTab === '1',
               })}
               onClick={() => {
                 const val = {
@@ -85,7 +91,7 @@ class Product extends React.Component {
                     value: '',
                   },
                 }
-                this.props.onProductChange(val)
+                onProductChange(val)
                 this.clearProd()
                 this.toggle('1')
               }}
@@ -97,7 +103,7 @@ class Product extends React.Component {
             <NavLink
               style={navlinkStyle}
               className={classnames({
-                active: this.state.activeTab === '2',
+                active: activeTab === '2',
               })}
               onClick={() => {
                 const val = {
@@ -105,7 +111,7 @@ class Product extends React.Component {
                     value: '',
                   },
                 }
-                this.props.onBuzzwordsChange(val)
+                onBuzzwordsChange(val)
                 this.clearBuzz()
                 this.toggle('2')
               }}
@@ -114,17 +120,17 @@ class Product extends React.Component {
             </NavLink>
           </NavItem>
         </Nav>
-        <TabContent activeTab={this.state.activeTab}>
+        <TabContent activeTab={activeTab}>
           <TabPane tabId="1">
             <Card style={{ height: '82px' }} body>
               <Input
-                innerRef={input => this.inputProd = input}
+                innerRef={(input) => { this.inputProd = input; return input }}
                 type="search"
                 name="searchProduct"
                 className="input"
                 id="productInput"
                 style={inputStyle}
-                onChange={this.props.onProductChange}
+                onChange={onProductChange}
                 placeholder="Search by Product"
               />
             </Card>
@@ -132,13 +138,13 @@ class Product extends React.Component {
           <TabPane tabId="2">
             <Card style={{ height: '82px' }} body>
               <Input
-                innerRef={input => this.inputBuzz = input}
+                innerRef={(input) => { this.inputBuzz = input; return input }}
                 type="search"
                 name="searchBuzzwords"
                 className="input"
                 id="buzzwordsInput"
                 style={inputStyle}
-                onChange={this.props.onBuzzwordsChange}
+                onChange={onBuzzwordsChange}
                 placeholder="Search by Buzzwords"
               />
             </Card>
@@ -146,24 +152,23 @@ class Product extends React.Component {
         </TabContent>
         <ListGroup>
           <VirtualScroll
-            itemCount={this.props.filtered.length}
+            itemCount={filtered.length}
             height={300}
             childHeight={70}
             Item={Item}
           />
         </ListGroup>
-      </React.Fragment>
+      </>
     )
   }
 }
 
 Product.propTypes = {
-  onProductChange: PropTypes.func,
-  onBuzzwordsChange: PropTypes.func,
-  onResult: PropTypes.func,
-  filtered: PropTypes.array,
-  index: PropTypes.any,
-  children: PropTypes.any
+  onProductChange: PropTypes.func.isRequired,
+  onBuzzwordsChange: PropTypes.func.isRequired,
+  onResult: PropTypes.func.isRequired,
+  filtered: PropTypes.instanceOf(Array).isRequired,
+  index: PropTypes.number.isRequired,
 }
 
 export default Product

@@ -1,9 +1,9 @@
 import React from 'react'
 import Papa from 'papaparse'
 import lunr from 'lunr'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import Search from './Search'
 import Navb from './ui/Navb'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class App extends React.Component {
       tech: {},
       techList: [],
     }
-    this.getData = this.getData.bind(this)
+    this.parseData = this.parseData.bind(this)
   }
 
   componentDidMount() {
@@ -28,31 +28,24 @@ class App extends React.Component {
     // https://reactjs.org/docs/error-boundaries.html
   }
 
-  
   async getCsvData() {
     // fetch the csv
-    const csvData = await this.fetchCsv()
-
-    // parse the csv
-    Papa.parse(csvData, {
-      complete: this.getData, // run getData function on completion
-    })
-  }
-
-  // fetches and decodes and then returns the csv data
-  async fetchCsv() {
     const response = await fetch('/data/product_queue.csv')
     const reader = response.body.getReader()
     const decoder = new TextDecoder('utf-8')
     const result = await reader.read()
-    return decoder.decode(result.value)
+    const csvData = decoder.decode(result.value)
+
+    // parse the csv
+    Papa.parse(csvData, {
+      complete: this.parseData, // run parseData function on completion
+    })
   }
 
-
-  getData(result) {
-    let prod = [] // final json of products
-    let tech = {} // final json of tech to queue
-    let techList = [] // for populating the dropdown menu
+  parseData(result) {
+    const prod = [] // final json of products
+    const tech = {} // final json of tech to queue
+    const techList = [] // for populating the dropdown menu
     const header = result.data[0] // the header of the csv
 
     const len = header.length - 1
@@ -65,18 +58,19 @@ class App extends React.Component {
     }
     // iterate through the rows
     result.data.forEach((row, index) => {
+      // if the row is not the header
       if (index !== 0) {
-        // if the row is not the header
-        let object = {} // init the product object
-        object['product'] = row[0] // set the product to the value
+        // init the product object
+        const object = { product: row[0] } // set the product to the value
+
         let t = '' // init tech string
         let q = '' // init queue string
         for (let i = 1; i < len - 2; i += 2) {
           // iterate through the technologies
           if (row[i]) {
             // if the queue isn't blank
-            q += row[i] + ', ' // add the queue to the product's list
-            t += header[i] + ', ' // add the tech to the product's list
+            q += `${row[i]}, ` // add the queue to the product's list
+            t += `${header[i]}, ` // add the tech to the product's list
             // adds the buzzwords for each tech
             // removes spaces in tech like 'Data Management'
             // for the new buzzword variable name
@@ -91,24 +85,24 @@ class App extends React.Component {
         const strippedT = t.replace(/(^[,\s]+)|([,\s]+$)/g, '')
         const strippedQ = q.replace(/(^[,\s]+)|([,\s]+$)/g, '')
         // set the queue, tech, and support method values
-        object['technology'] = strippedT
-        object['queue'] = strippedQ
-        object['supportMethod'] = row[len - 1]
+        object.technology = strippedT
+        object.queue = strippedQ
+        object.supportMethod = row[len - 1]
         // if there is a reference and it is an email address
         if (row[len] && row[len].includes('@')) {
           // set it to the value of email
-          object['email'] = row[len]
+          object.email = row[len]
         } else {
           // otherwise set it to the value of url
-          object['url'] = row[len]
+          object.url = row[len]
         }
         prod.push(object) // add the prod object to the array of products
       }
     })
     // after creating the jsons set them to state
-    this.setState({ prod: prod })
-    this.setState({ tech: tech })
-    this.setState({ techList: techList })
+    this.setState({ prod })
+    this.setState({ tech })
+    this.setState({ techList })
     // create the lunr index
     this.createIndex(prod)
   }
@@ -116,8 +110,8 @@ class App extends React.Component {
   // creates the lunr index
   createIndex(documents) {
     const that = this
-    var idx = lunr(function () {
-      //stemming causes issues when doing wildcard searches
+    const idx = lunr(function () {
+      // stemming causes issues when doing wildcard searches
       this.pipeline.remove(lunr.stemmer)
       this.searchPipeline.remove(lunr.stemmer)
       // the ref is the unique identifier
@@ -132,23 +126,27 @@ class App extends React.Component {
         this.field(`b_${t.replace(/\s/g, '')}`)
       })
 
-      documents.forEach(function (doc) {
+      documents.forEach((doc) => {
         this.add(doc)
       }, this)
     })
     this.setState({ index: idx })
   }
+
   render() {
+    const {
+      index, prod, tech, techList,
+    } = this.state
     return (
-      <React.Fragment>
+      <>
         <Navb />
         <Search
-          index={this.state.index}
-          prod={this.state.prod}
-          tech={this.state.tech}
-          techList={this.state.techList}
+          index={index}
+          prod={prod}
+          tech={tech}
+          techList={techList}
         />
-      </React.Fragment>
+      </>
     )
   }
 }

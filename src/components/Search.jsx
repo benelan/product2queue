@@ -1,4 +1,4 @@
-/*global Set*/
+/* eslint-disable react/destructuring-assignment */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col, Button } from 'reactstrap'
@@ -33,10 +33,10 @@ class Search extends React.Component {
     // device detection
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
-        navigator.userAgent
-      ) ||
-      /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw(n|u)|c55\/|capi|ccwa|cdm|cell|chtm|cldc|cmd|co(mp|nd)|craw|da(it|ll|ng)|dbte|dcs|devi|dica|dmob|do(c|p)o|ds(12|d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(|_)|g1 u|g560|gene|gf5|gmo|go(\.w|od)|gr(ad|un)|haie|hcit|hd(m|p|t)|hei|hi(pt|ta)|hp( i|ip)|hsc|ht(c(| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i(20|go|ma)|i230|iac( ||\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|[a-w])|libw|lynx|m1w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|mcr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|([1-8]|c))|phil|pire|pl(ay|uc)|pn2|po(ck|rt|se)|prox|psio|ptg|qaa|qc(07|12|21|32|60|[2-7]|i)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h|oo|p)|sdk\/|se(c(|0|1)|47|mc|nd|ri)|sgh|shar|sie(|m)|sk0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h|v|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl|tdg|tel(i|m)|tim|tmo|to(pl|sh)|ts(70|m|m3|m5)|tx9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas|your|zeto|zte/i.test(
-        navigator.userAgent.substr(0, 4)
+        navigator.userAgent,
+      )
+      || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw(n|u)|c55\/|capi|ccwa|cdm|cell|chtm|cldc|cmd|co(mp|nd)|craw|da(it|ll|ng)|dbte|dcs|devi|dica|dmob|do(c|p)o|ds(12|d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(|_)|g1 u|g560|gene|gf5|gmo|go(\.w|od)|gr(ad|un)|haie|hcit|hd(m|p|t)|hei|hi(pt|ta)|hp( i|ip)|hsc|ht(c(| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i(20|go|ma)|i230|iac( ||\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|[a-w])|libw|lynx|m1w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|mcr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|([1-8]|c))|phil|pire|pl(ay|uc)|pn2|po(ck|rt|se)|prox|psio|ptg|qaa|qc(07|12|21|32|60|[2-7]|i)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h|oo|p)|sdk\/|se(c(|0|1)|47|mc|nd|ri)|sgh|shar|sie(|m)|sk0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h|v|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl|tdg|tel(i|m)|tim|tmo|to(pl|sh)|ts(70|m|m3|m5)|tx9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas|your|zeto|zte/i.test(
+        navigator.userAgent.substr(0, 4),
       )
     ) {
       this.setState({ mobile: true })
@@ -47,7 +47,8 @@ class Search extends React.Component {
     // clear the dropdown and results
     this.setState({ filtered: [], results: [] })
     // set the state to the product input value
-    let q = this.state.query
+    // eslint-disable-next-line react/no-access-state-in-setstate
+    const q = this.state.query
     q.product = e.target.value.replace(/[^a-zA-Z ]/g, ' ')
     q.buzzwords = '' // clear buzzword search value
     this.setState({ query: q })
@@ -58,7 +59,8 @@ class Search extends React.Component {
     // clear the dropdown and results
     this.setState({ filtered: [], results: [] })
     // set the state to the product input value
-    let q = this.state.query
+    // eslint-disable-next-line react/no-access-state-in-setstate
+    const q = this.state.query
     q.buzzwords = e.target.value.replace(/[^a-zA-Z ]/g, ' ')
     q.product = '' // clear product search value
     this.setState({ query: q })
@@ -66,7 +68,8 @@ class Search extends React.Component {
   }
 
   handleTechnologyChange(e) {
-    let q = this.state.query
+    // eslint-disable-next-line react/no-access-state-in-setstate
+    const q = this.state.query
     q.technology = e.target.value
     this.setState({ query: q })
 
@@ -76,7 +79,7 @@ class Search extends React.Component {
       // set original results
       const or = this.state.results[0]
       // set the list of original techs
-      var ort = or.technology.split(',').map((item) => item.trim())
+      const ort = or.technology.split(',').map((item) => item.trim())
       // set the state to the technology input value
       // if the original result includes the selected tech
       // we will narrow down the visible queues
@@ -85,17 +88,17 @@ class Search extends React.Component {
         // which is what will be visible
         let temp = ''
         // create the list of queues in the original results
-        let orq = or.queue.split(',')
+        const orq = or.queue.split(',')
         // iterate through the queues
-        orq.forEach((q) => {
+        orq.forEach((query) => {
           // if the queue belongs to the selected tech
           if (
             this.props.tech[e.target.value.replace(/\s/g, '')].includes(
-              q.trim()
+              query.trim(),
             )
           ) {
             // add it to the temp string
-            temp += q.trim()
+            temp += query.trim()
           }
         })
         // set the temp string to the visible results
@@ -128,7 +131,7 @@ class Search extends React.Component {
     if (this.state.query.product !== '') {
       search = true
       // split search words
-      let products = this.state.query.product.split(' ')
+      const products = this.state.query.product.split(' ')
       // iterate through search words
       // adding them all to product field search
       products.forEach((prod) => {
@@ -143,18 +146,18 @@ class Search extends React.Component {
     } else if (this.state.query.buzzwords !== '') {
       search = true
       // split search words
-      let buzzwords = this.state.query.buzzwords.split(' ')
+      const buzzwords = this.state.query.buzzwords.split(' ')
       // add tech field search value
       // if selected from dropdown
       if (this.state.query.technology !== 'Any') {
-        q += ' +technology:' + this.state.query.technology
+        q += ` +technology:${this.state.query.technology}`
         // iterate through the buzzwords
         // adding them to the search value
         // for the tech specified in the dropdown
         buzzwords.forEach((buzz) => {
           q += ` +b_${this.state.query.technology.replace(
             /\s/g,
-            ''
+            '',
           )}:*${buzz}*`
         })
       } else {
@@ -169,9 +172,9 @@ class Search extends React.Component {
         })
       }
     } else if (
-      this.state.query.buzzwords === '' &&
-      this.state.query.buzzwords === '' &&
-      this.state.query.technology !== 'Any'
+      this.state.query.buzzwords === ''
+      && this.state.query.buzzwords === ''
+      && this.state.query.technology !== 'Any'
     ) {
       search = true
       q += `+technology:${this.state.query.technology}`
@@ -193,9 +196,9 @@ class Search extends React.Component {
 
   findResult(item) {
     // match the index ref to the full data struct to get all of the info
-    let qs = this.props.prod.find((res) => item.ref === res.product)
+    const qs = this.props.prod.find((res) => item.ref === res.product)
     // create an array of queues
-    const qa = qs.queue.split(',').map((item) => item.trim())
+    const qa = qs.queue.split(',').map((entry) => entry.trim())
     // create a seperate list of queues that will be visible in the results
     qs.visibleQueue = qs.queue
 
@@ -222,18 +225,18 @@ class Search extends React.Component {
 
       // if we are doing a buzzword search and Technology is Any
       if (
-        !!this.state.query.buzzwords &&
-        this.state.query.technology === 'Any'
+        !!this.state.query.buzzwords
+        && this.state.query.technology === 'Any'
       ) {
         const buzzTechs = new Set() // init Set
         // iterate through all of the buzzwords
         // eslint-disable-next-line
         for (const [_, tech] of Object.entries(item.matchData.metadata)) {
           // iterate through the techs that each buzzword matches
-          for (const [o] of Object.entries(tech)) {
+          Object.keys(tech).forEach((o) => {
             // add the tech to the Set
             buzzTechs.add(o.substr(2)) // removing the "b_"
-          }
+          })
         }
 
         // iterate through the queues
@@ -243,7 +246,7 @@ class Search extends React.Component {
             // if the queue belongs to the tech
             if (this.props.tech[t].includes(q.trim())) {
               // add it to the list
-              temp += q.trim() + ', '
+              temp += `${q.trim()}, `
             }
           })
         })
@@ -273,13 +276,19 @@ class Search extends React.Component {
   }
 
   render() {
+    const {
+      query, results, mobile, filtered,
+    } = this.state
+
+    const { techList } = this.props
+
     const mBot = {
       marginBottom: '10px',
     }
 
     const appStyle = {
       marginLeft: '5px',
-      marginRight: '5px'
+      marginRight: '5px',
     }
 
     const extraM = {
@@ -287,13 +296,10 @@ class Search extends React.Component {
       marginTop: '6px',
     }
 
-    const buttonDisabled =
-      this.state.query.product ||
-        this.state.query.buzzwords ||
-        this.state.query.technology !== 'Any' ||
-        this.state.results.length > 0
-        ? false
-        : true
+    const buttonDisabled = !(query.product
+        || query.buzzwords
+        || query.technology !== 'Any'
+        || results.length > 0)
 
     return (
       <div>
@@ -306,39 +312,41 @@ class Search extends React.Component {
               size="sm"
               disabled={buttonDisabled}
               onClick={this.clear}
-            >clear</Button>
+            >
+              clear
+            </Button>
           </Col>
         </Row>
 
         <Row className="justify-content-md-center" style={appStyle}>
-          {this.state.mobile ? ( // if the devie is mobile use tabs to divide the map/list
-            <React.Fragment>
+          {mobile ? ( // if the devie is mobile use tabs to divide the map/list
+            <>
               <Col style={extraM} md={{ size: 4, offset: 0 }}>
-                <Result results={this.state.results} />
+                <Result results={results} />
               </Col>
               <Col style={extraM} md={{ size: 3, offset: 0 }}>
                 <Technology
-                  ref={(input) => (this.inputTech = input)}
+                  ref={(input) => { this.inputTech = input; return input }}
                   onTechnologyChange={this.handleTechnologyChange}
-                  techList={this.props.techList}
+                  techList={techList}
                 />
               </Col>
               <Col style={mBot} md={{ size: 5, offset: 0 }}>
                 <Product
-                  ref={(input) => (this.inputProd = input)}
-                  filtered={this.state.filtered}
+                  ref={(input) => { this.inputProd = input; return input }}
+                  filtered={filtered}
                   onProductChange={this.handleProductChange}
                   onBuzzwordsChange={this.handleBuzzwordsChange}
                   onResult={this.findResult}
                 />
               </Col>
-            </React.Fragment>
+            </>
           ) : (
-            <React.Fragment>
+            <>
               <Col style={mBot} md={{ size: 5, offset: 0 }}>
                 <Product
-                  ref={(input) => (this.inputProd = input)}
-                  filtered={this.state.filtered}
+                  ref={(input) => { this.inputProd = input; return input }}
+                  filtered={filtered}
                   onProductChange={this.handleProductChange}
                   onBuzzwordsChange={this.handleBuzzwordsChange}
                   onResult={this.findResult}
@@ -347,16 +355,16 @@ class Search extends React.Component {
 
               <Col style={extraM} md={{ size: 3, offset: 0 }}>
                 <Technology
-                  ref={(input) => (this.inputTech = input)}
+                  ref={(input) => { this.inputTech = input; return input }}
                   onTechnologyChange={this.handleTechnologyChange}
-                  techList={this.props.techList}
+                  techList={techList}
                 />
               </Col>
 
               <Col style={extraM} md={{ size: 4, offset: 0 }}>
-                <Result results={this.state.results} />
+                <Result results={results} />
               </Col>
-            </React.Fragment>
+            </>
           )}
         </Row>
       </div>
@@ -365,12 +373,10 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-  index: PropTypes.object,
-  prod: PropTypes.array,
-  tech: PropTypes.object,
-  techList: PropTypes.array,
-  children: PropTypes.any,
-  onClickOut: PropTypes.func,
+  index: PropTypes.instanceOf(Object).isRequired,
+  prod: PropTypes.instanceOf(Array).isRequired,
+  tech: PropTypes.instanceOf(Object).isRequired,
+  techList: PropTypes.instanceOf(Array).isRequired,
 }
 
 export default Search

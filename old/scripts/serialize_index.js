@@ -1,13 +1,13 @@
-/*global require*/
-var lunr = require('lunr'),
-  fs = require('fs-extra')
+const lunr = require('lunr')
+// eslint-disable-next-line import/no-extraneous-dependencies
+const fs = require('fs-extra')
 
 // read in the data structure
-let data = fs.readFileSync('../data/product_tech_queue.json')
+const data = fs.readFileSync('../data/product_tech_queue.json')
 // parse the data into JSON
-let documents = JSON.parse(data)
+const documents = JSON.parse(data)
 
-var idx = lunr(function () {
+const idx = lunr(() => {
   this.pipeline.remove(lunr.stemmer)
   this.searchPipeline.remove(lunr.stemmer)
   // the ref is the unique identifier
@@ -15,15 +15,15 @@ var idx = lunr(function () {
   // the fields are for searching
   this.field('product')
   this.field('technology')
-  documents.forEach(function (doc) {
+  documents.forEach((doc) => {
     this.add(doc)
   }, this)
 })
 
 // path for export
-var file = '../data/idx.json'
+const file = '../data/idx.json'
 
-var output = JSON.stringify(idx)
+const output = JSON.stringify(idx)
 
 // export
 fs.outputFile(file, output)

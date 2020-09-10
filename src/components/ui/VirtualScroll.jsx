@@ -1,4 +1,6 @@
-import React, { memo, useMemo, useRef, useState, useEffect } from 'react'
+import React, {
+  memo, useMemo, useRef, useState, useEffect,
+} from 'react'
 import PropTypes from 'prop-types'
 
 // Generic hook for detecting scroll:
@@ -6,10 +8,9 @@ const useScrollAware = () => {
   const [scrollTop, setScrollTop] = useState(0)
   const ref = useRef()
 
-  const onScroll = (e) =>
-    requestAnimationFrame(() => {
-      setScrollTop(e.target.scrollTop)
-    })
+  const onScroll = (e) => requestAnimationFrame(() => {
+    setScrollTop(e.target.scrollTop)
+  })
 
   useEffect(() => {
     const scrollContainer = ref.current
@@ -41,18 +42,17 @@ const VirtualScroll = ({
 
   // fixes 'Invalid Array Length' error
   visibleNodeCount = Math.max(0, visibleNodeCount)
-  visibleNodeCount = Math.min(Math.pow(2, 32) - 1, visibleNodeCount)
- 
+  visibleNodeCount = Math.min(32 ** 2 - 1, visibleNodeCount)
+
   const offsetY = startNode * childHeight
 
   const visibleChildren = useMemo(
-    () =>
-      new Array(visibleNodeCount)
-        .fill(null)
-        .map((_, index) => (
-          <Item key={index + startNode} index={index + startNode} />
-        )),
-    [startNode, visibleNodeCount]
+    () => new Array(visibleNodeCount)
+      .fill(null)
+      .map((_, index) => (
+        <Item key={index.toString() + startNode} index={index + startNode} />
+      )),
+    [startNode, visibleNodeCount],
   )
 
   return (
@@ -80,12 +80,11 @@ const VirtualScroll = ({
 }
 
 VirtualScroll.propTypes = {
-  Item: PropTypes.element,
-  itemCount: PropTypes.number,
-  height: PropTypes.number,
-  childHeight: PropTypes.number,
-  renderAhread: PropTypes.number,
-  children: PropTypes.any
+  Item: PropTypes.element.isRequired,
+  itemCount: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  childHeight: PropTypes.number.isRequired,
+  renderAhread: PropTypes.number.isRequired,
 }
 
 export default memo(VirtualScroll)

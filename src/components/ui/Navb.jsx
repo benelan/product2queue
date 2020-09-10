@@ -34,7 +34,9 @@ const Navb = () => {
                 Transfer Resources
               </DropdownToggle>
               <DropdownMenu
-                style={{ top: 35, left: +8, padding: 0, margin: 0 }}
+                style={{
+                  top: 35, left: +8, padding: 0, margin: 0,
+                }}
               >
                 <DropdownItem>
                   <NavLink
