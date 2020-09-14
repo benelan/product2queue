@@ -77,20 +77,20 @@ class Search extends React.Component {
     // when the technology dropdown is changed
     if (this.state.results.length > 0) {
       // set original results
-      const or = this.state.results[0]
+      const originalResults = [...this.state.results][0]
       // set the list of original techs
-      const ort = or.technology.split(',').map((item) => item.trim())
+      const originalTech = originalResults.technology.split(',').map((item) => item.trim())
       // set the state to the technology input value
       // if the original result includes the selected tech
       // we will narrow down the visible queues
-      if (ort.includes(e.target.value)) {
+      if (originalTech.includes(e.target.value)) {
         // set the temp string of queues
         // which is what will be visible
         let temp = ''
         // create the list of queues in the original results
-        const orq = or.queue.split(',')
+        const originalQueues = originalResults.queue.split(',')
         // iterate through the queues
-        orq.forEach((query) => {
+        originalQueues.forEach((query) => {
           // if the queue belongs to the selected tech
           if (
             this.props.tech[e.target.value.replace(/\s/g, '')].includes(
@@ -102,11 +102,11 @@ class Search extends React.Component {
           }
         })
         // set the temp string to the visible results
-        or.visibleQueue = temp
+        originalResults.visibleQueue = temp
 
-        this.setState({ results: [or] })
+        this.setState({ results: [originalResults] })
       } else if (e.target.value === 'Any') {
-        or.visibleQueue = or.queue
+        originalResults.visibleQueue = originalResults.queue
       } else {
         // clear the dropdown and results
         this.setState({ filtered: [], results: [] })
@@ -196,20 +196,20 @@ class Search extends React.Component {
 
   findResult(item) {
     // match the index ref to the full data struct to get all of the info
-    const qs = this.props.prod.find((res) => item.ref === res.product)
+    const matches = this.props.prod.find((res) => item.ref === res.product)
     // create an array of queues
-    const qa = qs.queue.split(',').map((entry) => entry.trim())
+    const queueArray = matches.queue.split(',').map((entry) => entry.trim())
     // create a seperate list of queues that will be visible in the results
-    qs.visibleQueue = qs.queue
+    matches.visibleQueue = matches.queue
 
     // if there is more than one queue
-    if (qa.length > 1) {
+    if (queueArray.length > 1) {
       let temp = ''
 
       // if a technology is selected
       if (this.state.query.technology !== 'Any') {
         // iterate through the queues
-        qa.forEach((q) => {
+        queueArray.forEach((q) => {
           // check if the queue is in the selected technology
           if (
             this.props.tech[
@@ -220,7 +220,7 @@ class Search extends React.Component {
             temp += q.trim()
           }
         })
-        qs.visibleQueue = temp
+        matches.visibleQueue = temp
       }
 
       // if we are doing a buzzword search and Technology is Any
@@ -240,7 +240,7 @@ class Search extends React.Component {
         }
 
         // iterate through the queues
-        qa.forEach((q) => {
+        queueArray.forEach((q) => {
           // iterate through the technologies that the buzzword matches
           buzzTechs.forEach((t) => {
             // if the queue belongs to the tech
@@ -252,12 +252,12 @@ class Search extends React.Component {
         })
         // set the visible queues
         // removing trailing comma
-        qs.visibleQueue = temp.replace(/(^[,\s]+)|([,\s]+$)/g, '')
+        matches.visibleQueue = temp.replace(/(^[,\s]+)|([,\s]+$)/g, '')
       }
     }
 
     // set the state to the result info
-    this.setState({ results: [qs] })
+    this.setState({ results: [matches] })
   }
 
   clear() {
@@ -297,12 +297,12 @@ class Search extends React.Component {
     }
 
     const buttonDisabled = !(query.product
-        || query.buzzwords
-        || query.technology !== 'Any'
-        || results.length > 0)
+      || query.buzzwords
+      || query.technology !== 'Any'
+      || results.length > 0)
 
     return (
-      <div>
+      <>
         <Row style={{ marginTop: '10px', marginRight: '1px', marginBottom: '0px' }}>
           <Col md={{ size: 1, offset: 11 }}>
             <Button
@@ -367,13 +367,17 @@ class Search extends React.Component {
             </>
           )}
         </Row>
-      </div>
+      </>
     )
   }
 }
 
+Search.defaultProps = {
+  index: null,
+}
+
 Search.propTypes = {
-  index: PropTypes.instanceOf(Object).isRequired,
+  index: PropTypes.instanceOf(Object),
   prod: PropTypes.instanceOf(Array).isRequired,
   tech: PropTypes.instanceOf(Object).isRequired,
   techList: PropTypes.instanceOf(Array).isRequired,

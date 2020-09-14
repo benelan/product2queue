@@ -13,7 +13,7 @@ class Result extends React.PureComponent {
 
     const { results } = this.props
     return (
-      <div>
+      <>
         {results.length > 0 ? (
           <div>
             <Label style={{ marginBottom: '11px' }} for="res">Results</Label>
@@ -79,7 +79,7 @@ class Result extends React.PureComponent {
         ) : (
           ''
         )}
-      </div>
+      </>
     )
   }
 }

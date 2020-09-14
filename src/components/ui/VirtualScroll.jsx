@@ -29,15 +29,15 @@ const VirtualScroll = ({
   itemCount,
   height,
   childHeight,
-  renderAhread = 20,
+  renderAhead = 20,
 }) => {
   const [scrollTop, ref] = useScrollAware()
   const totalHeight = itemCount * childHeight
 
-  let startNode = Math.floor(scrollTop / childHeight) - renderAhread
+  let startNode = Math.floor(scrollTop / childHeight) - renderAhead
   startNode = Math.max(0, startNode)
 
-  let visibleNodeCount = Math.ceil(height / childHeight) + 2 * renderAhread
+  let visibleNodeCount = Math.ceil(height / childHeight) + 2 * renderAhead
   visibleNodeCount = Math.min(itemCount - startNode, visibleNodeCount)
 
   // fixes 'Invalid Array Length' error
@@ -79,12 +79,16 @@ const VirtualScroll = ({
   )
 }
 
+VirtualScroll.defaultProps = {
+  renderAhead: undefined,
+}
+
 VirtualScroll.propTypes = {
-  Item: PropTypes.element.isRequired,
+  Item: PropTypes.instanceOf(Object).isRequired,
   itemCount: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   childHeight: PropTypes.number.isRequired,
-  renderAhread: PropTypes.number.isRequired,
+  renderAhead: PropTypes.number,
 }
 
 export default memo(VirtualScroll)

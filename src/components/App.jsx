@@ -110,6 +110,7 @@ class App extends React.Component {
   // creates the lunr index
   createIndex(documents) {
     const that = this
+    // eslint-disable-next-line func-names
     const idx = lunr(function () {
       // stemming causes issues when doing wildcard searches
       this.pipeline.remove(lunr.stemmer)

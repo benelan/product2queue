@@ -163,12 +163,16 @@ class Product extends React.Component {
   }
 }
 
+Product.defaultProps = {
+  index: undefined,
+}
+
 Product.propTypes = {
   onProductChange: PropTypes.func.isRequired,
   onBuzzwordsChange: PropTypes.func.isRequired,
   onResult: PropTypes.func.isRequired,
   filtered: PropTypes.instanceOf(Array).isRequired,
-  index: PropTypes.number.isRequired,
+  index: PropTypes.number,
 }
 
 export default Product
