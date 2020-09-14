@@ -1,8 +1,8 @@
 # Product to Queue
-A browser-based tool created by Esri Support Services to help employees determine the appropriate team to handle a support case according to product names or buzzwords.
+The Product to Queue app is a browser-based tool created by Esri Support Services to assists in determing the appropriate team/queue to own a case based on product names or buzzwords.
 
 ## Using the App
-To run the web app locally for development, you must have [Node](https://nodejs.org/en/) installed. With Node installed, navigate to the project directory and type:
+To run the web app locally for development, you must have [Node](https://nodejs.org/en/) installed. With Node installed, use the command line to navigate to the project directory and type:
 ```
 npm install
 npm start
@@ -17,7 +17,7 @@ This application reads directly from a [spreadsheet](https://github.com/benelan/
 
 The csv file must be in the following format:
 ```
-Product, Tech_n, Tech_n Buzzwords, .... Tech_n+1, Tech_n+1 Buzzwords, Support Method, Reference
+Product, Tech_1, Tech_1 Buzzwords, ..., Tech_n, Tech_n Buzzwords, Tech_n+1, Tech_n+1 Buzzwords, Support Method, Reference
 ```
 
 ### Data that can be edited without changes to code
