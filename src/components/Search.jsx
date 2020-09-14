@@ -6,17 +6,155 @@ import Product from './ui/Product'
 import Technology from './ui/Technology'
 import Result from './ui/Result'
 
+/**
+ * Loads CSV data, parses it to JSON, and creates a search index
+ * @author Ben Elan
+ * @parent App
+ * @child Product, Technology, Result
+ */
 class Search extends React.Component {
+  /**
+    * Formulates a search string for use in Lunr
+    * @param  {Object} query - the selected items to search for
+    * @param  {Object} techList - the full list of technologies
+    * @return {String} - the search string for Lunr
+  */
+  static createSearchString(query, techList) {
+    // * wildcard means anything can be
+    // before or behind the search value
+    // ie *at* would include 'attack', 'fat', 'matter', etc
+    // + means it must contain the value
+    let q = '' // init query string
+    let search = false
+    // ---- FOR PRODUCT SEARCHES  ---- \\
+    if (query.product !== '') {
+      search = true
+      // split search words
+      const products = query.product.split(' ')
+      // iterate through search words
+      // adding them all to product field search
+      products.forEach((prod) => {
+        q += ` +product:*${prod}*`
+      })
+      // add tech field search value
+      // if selected from dropdown
+      if (query.technology !== 'Any') {
+        q += ` +technology:${query.technology}`
+      }
+      // ---- FOR BUZZWORD SEARCHES  ---- \\
+    } else if (query.buzzwords !== '') {
+      search = true
+      // split search words
+      const buzzwords = query.buzzwords.split(' ')
+      // add tech field search value
+      // if selected from dropdown
+      if (query.technology !== 'Any') {
+        q += ` +technology:${query.technology}`
+        // iterate through the buzzwords
+        // adding them to the search value
+        // for the tech specified in the dropdown
+        buzzwords.forEach((buzz) => {
+          q += ` +b_${query.technology.replace(
+            /\s/g,
+            '',
+          )}:*${buzz}*`
+        })
+      } else {
+        // if a tech isn't specified
+        // iterate through the buzzwords
+        // adding them to the search value
+        // for all techs
+        techList.forEach((t) => {
+          buzzwords.forEach((buzz) => {
+            q += ` b_${t.replace(/\s/g, '')}:*${buzz}*`
+          })
+        })
+      }
+    } else if (
+      query.buzzwords === ''
+      && query.buzzwords === ''
+      && query.technology !== 'Any'
+    ) {
+      search = true
+      q += `+technology:${query.technology}`
+    }
+
+    // if one of the conditionals above was met
+    // do the search
+    if (search) {
+      return q
+    }
+    return null
+  }
+
+  static findResult(item, query, prod, tech) {
+    // match the index ref to the full data struct to get all of the info
+    const matches = prod.find((res) => item.ref === res.product)
+    // create an array of queues
+    const queueArray = matches.queue.split(',').map((entry) => entry.trim())
+    // create a seperate list of queues that will be visible in the results
+    matches.visibleQueue = matches.queue
+
+    // if there is more than one queue
+    if (queueArray.length > 1) {
+      let temp = ''
+
+      // if a technology is selected
+      if (query.technology !== 'Any') {
+        // iterate through the queues
+        queueArray.forEach((q) => {
+          // check if the queue is in the selected technology
+          if (
+            tech[
+              query.technology.replace(/\s/g, '')
+            ].includes(q.trim())
+          ) {
+            // if it is, add it to the visible list
+            temp += q.trim()
+          }
+        })
+        matches.visibleQueue = temp
+      }
+
+      // if we are doing a buzzword search and Technology is Any
+      if (
+        !!query.buzzwords
+        && query.technology === 'Any'
+      ) {
+        const buzzTechs = new Set() // init Set
+        // iterate through all of the buzzwords
+        // eslint-disable-next-line
+        for (const [_, tech] of Object.entries(item.matchData.metadata)) {
+          // iterate through the techs that each buzzword matches
+          Object.keys(tech).forEach((o) => {
+            // add the tech to the Set
+            buzzTechs.add(o.substr(2)) // removing the "b_"
+          })
+        }
+
+        // iterate through the queues
+        queueArray.forEach((q) => {
+          // iterate through the technologies that the buzzword matches
+          buzzTechs.forEach((t) => {
+            // if the queue belongs to the tech
+            if (tech[t].includes(q.trim())) {
+              // add it to the list
+              temp += `${q.trim()}, `
+            }
+          })
+        })
+        // set the visible queues
+        // removing trailing comma
+        matches.visibleQueue = temp.replace(/(^[,\s]+)|([,\s]+$)/g, '')
+      }
+    }
+
+    // set the state to the result info
+    return matches
+  }
+
   constructor(props) {
     super(props)
-    this.handleProductChange = this.handleProductChange.bind(this)
-    this.handleBuzzwordsChange = this.handleBuzzwordsChange.bind(this)
-    this.handleTechnologyChange = this.handleTechnologyChange.bind(this)
-
-    this.startSearch = this.startSearch.bind(this)
-    this.findResult = this.findResult.bind(this)
-    this.clear = this.clear.bind(this)
-
     this.state = {
       filtered: [],
       query: {
@@ -25,22 +163,12 @@ class Search extends React.Component {
         buzzwords: '',
       },
       results: [],
-      mobile: false,
     }
-  }
-
-  componentDidMount() {
-    // device detection
-    if (
-      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
-        navigator.userAgent,
-      )
-      || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw(n|u)|c55\/|capi|ccwa|cdm|cell|chtm|cldc|cmd|co(mp|nd)|craw|da(it|ll|ng)|dbte|dcs|devi|dica|dmob|do(c|p)o|ds(12|d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(|_)|g1 u|g560|gene|gf5|gmo|go(\.w|od)|gr(ad|un)|haie|hcit|hd(m|p|t)|hei|hi(pt|ta)|hp( i|ip)|hsc|ht(c(| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i(20|go|ma)|i230|iac( ||\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|[a-w])|libw|lynx|m1w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|mcr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|([1-8]|c))|phil|pire|pl(ay|uc)|pn2|po(ck|rt|se)|prox|psio|ptg|qaa|qc(07|12|21|32|60|[2-7]|i)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h|oo|p)|sdk\/|se(c(|0|1)|47|mc|nd|ri)|sgh|shar|sie(|m)|sk0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h|v|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl|tdg|tel(i|m)|tim|tmo|to(pl|sh)|ts(70|m|m3|m5)|tx9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas|your|zeto|zte/i.test(
-        navigator.userAgent.substr(0, 4),
-      )
-    ) {
-      this.setState({ mobile: true })
-    }
+    this.handleProductChange = this.handleProductChange.bind(this)
+    this.handleBuzzwordsChange = this.handleBuzzwordsChange.bind(this)
+    this.handleTechnologyChange = this.handleTechnologyChange.bind(this)
+    this.handleFilterClick = this.handleFilterClick.bind(this)
+    this.clear = this.clear.bind(this)
   }
 
   handleProductChange(e) {
@@ -52,7 +180,17 @@ class Search extends React.Component {
     q.product = e.target.value.replace(/[^a-zA-Z ]/g, ' ')
     q.buzzwords = '' // clear buzzword search value
     this.setState({ query: q })
-    this.startSearch()
+    const queryString = Search.createSearchString(this.state.query, this.props.techList)
+    if (queryString) {
+      const f = this.props.index.search(queryString)
+      // set the search results for the dropdown list
+      this.setState({ filtered: f })
+      // if there is only one result display its info
+      if (f.length === 1) {
+        const result = Search.findResult(f[0], this.state.query, this.props.prod, this.props.tech)
+        this.setState({ results: [result] })
+      }
+    }
   }
 
   handleBuzzwordsChange(e) {
@@ -64,7 +202,17 @@ class Search extends React.Component {
     q.buzzwords = e.target.value.replace(/[^a-zA-Z ]/g, ' ')
     q.product = '' // clear product search value
     this.setState({ query: q })
-    this.startSearch()
+    const queryString = Search.createSearchString(this.state.query, this.props.techList)
+    if (queryString) {
+      const f = this.props.index.search(queryString)
+      // set the search results for the dropdown list
+      this.setState({ filtered: f })
+      // if there is only one result display its info
+      if (f.length === 1) {
+        const result = Search.findResult(f[0], this.state.query, this.props.prod, this.props.tech)
+        this.setState({ results: [result] })
+      }
+    }
   }
 
   handleTechnologyChange(e) {
@@ -117,147 +265,22 @@ class Search extends React.Component {
       this.setState({ filtered: [], results: [] })
       // start the search
     }
-    this.startSearch()
-  }
-
-  startSearch() {
-    // * wildcard means anything can be
-    // before or behind the search value
-    // ie *at* would include 'attack', 'fat', 'matter', etc
-    // + means it must contain the value
-    let q = '' // init query string
-    let search = false
-    // ---- FOR PRODUCT SEARCHES  ---- \\
-    if (this.state.query.product !== '') {
-      search = true
-      // split search words
-      const products = this.state.query.product.split(' ')
-      // iterate through search words
-      // adding them all to product field search
-      products.forEach((prod) => {
-        q += ` +product:*${prod}*`
-      })
-      // add tech field search value
-      // if selected from dropdown
-      if (this.state.query.technology !== 'Any') {
-        q += ` +technology:${this.state.query.technology}`
-      }
-      // ---- FOR BUZZWORD SEARCHES  ---- \\
-    } else if (this.state.query.buzzwords !== '') {
-      search = true
-      // split search words
-      const buzzwords = this.state.query.buzzwords.split(' ')
-      // add tech field search value
-      // if selected from dropdown
-      if (this.state.query.technology !== 'Any') {
-        q += ` +technology:${this.state.query.technology}`
-        // iterate through the buzzwords
-        // adding them to the search value
-        // for the tech specified in the dropdown
-        buzzwords.forEach((buzz) => {
-          q += ` +b_${this.state.query.technology.replace(
-            /\s/g,
-            '',
-          )}:*${buzz}*`
-        })
-      } else {
-        // if a tech isn't specified
-        // iterate through the buzzwords
-        // adding them to the search value
-        // for all techs
-        this.props.techList.forEach((t) => {
-          buzzwords.forEach((buzz) => {
-            q += ` b_${t.replace(/\s/g, '')}:*${buzz}*`
-          })
-        })
-      }
-    } else if (
-      this.state.query.buzzwords === ''
-      && this.state.query.buzzwords === ''
-      && this.state.query.technology !== 'Any'
-    ) {
-      search = true
-      q += `+technology:${this.state.query.technology}`
-    }
-
-    // if one of the conditionals above was met
-    // do the search
-    if (search) {
-      // set lunr search to query
-      const f = this.props.index.search(q)
+    const queryString = Search.createSearchString(this.state.query, this.props.techList)
+    if (queryString) {
+      const f = this.props.index.search(queryString)
       // set the search results for the dropdown list
       this.setState({ filtered: f })
       // if there is only one result display its info
       if (f.length === 1) {
-        this.findResult(f[0])
+        const result = Search.findResult(f[0], this.state.query, this.props.prod, this.props.tech)
+        this.setState({ results: [result] })
       }
     }
   }
 
-  findResult(item) {
-    // match the index ref to the full data struct to get all of the info
-    const matches = this.props.prod.find((res) => item.ref === res.product)
-    // create an array of queues
-    const queueArray = matches.queue.split(',').map((entry) => entry.trim())
-    // create a seperate list of queues that will be visible in the results
-    matches.visibleQueue = matches.queue
-
-    // if there is more than one queue
-    if (queueArray.length > 1) {
-      let temp = ''
-
-      // if a technology is selected
-      if (this.state.query.technology !== 'Any') {
-        // iterate through the queues
-        queueArray.forEach((q) => {
-          // check if the queue is in the selected technology
-          if (
-            this.props.tech[
-              this.state.query.technology.replace(/\s/g, '')
-            ].includes(q.trim())
-          ) {
-            // if it is, add it to the visible list
-            temp += q.trim()
-          }
-        })
-        matches.visibleQueue = temp
-      }
-
-      // if we are doing a buzzword search and Technology is Any
-      if (
-        !!this.state.query.buzzwords
-        && this.state.query.technology === 'Any'
-      ) {
-        const buzzTechs = new Set() // init Set
-        // iterate through all of the buzzwords
-        // eslint-disable-next-line
-        for (const [_, tech] of Object.entries(item.matchData.metadata)) {
-          // iterate through the techs that each buzzword matches
-          Object.keys(tech).forEach((o) => {
-            // add the tech to the Set
-            buzzTechs.add(o.substr(2)) // removing the "b_"
-          })
-        }
-
-        // iterate through the queues
-        queueArray.forEach((q) => {
-          // iterate through the technologies that the buzzword matches
-          buzzTechs.forEach((t) => {
-            // if the queue belongs to the tech
-            if (this.props.tech[t].includes(q.trim())) {
-              // add it to the list
-              temp += `${q.trim()}, `
-            }
-          })
-        })
-        // set the visible queues
-        // removing trailing comma
-        matches.visibleQueue = temp.replace(/(^[,\s]+)|([,\s]+$)/g, '')
-      }
-    }
-
-    // set the state to the result info
-    this.setState({ results: [matches] })
+  handleFilterClick(item) {
+    const result = Search.findResult(item, this.state.query, this.props.prod, this.props.tech)
+    this.setState({ results: [result] })
   }
 
   clear() {
@@ -277,10 +300,12 @@ class Search extends React.Component {
 
   render() {
     const {
-      query, results, mobile, filtered,
+      query, results, filtered,
     } = this.state
 
-    const { techList } = this.props
+    const {
+      techList, isMobile,
+    } = this.props
 
     const mBot = {
       marginBottom: '10px',
@@ -319,7 +344,7 @@ class Search extends React.Component {
         </Row>
 
         <Row className="justify-content-md-center" style={appStyle}>
-          {mobile ? ( // if the devie is mobile use tabs to divide the map/list
+          {isMobile ? ( // if the devie is mobile use tabs to divide the map/list
             <>
               <Col style={extraM} md={{ size: 4, offset: 0 }}>
                 <Result results={results} />
@@ -337,7 +362,7 @@ class Search extends React.Component {
                   filtered={filtered}
                   onProductChange={this.handleProductChange}
                   onBuzzwordsChange={this.handleBuzzwordsChange}
-                  onResult={this.findResult}
+                  onResult={this.handleFilterClick}
                 />
               </Col>
             </>
@@ -349,7 +374,7 @@ class Search extends React.Component {
                   filtered={filtered}
                   onProductChange={this.handleProductChange}
                   onBuzzwordsChange={this.handleBuzzwordsChange}
-                  onResult={this.findResult}
+                  onResult={this.handleFilterClick}
                 />
               </Col>
 
@@ -381,6 +406,7 @@ Search.propTypes = {
   prod: PropTypes.instanceOf(Array).isRequired,
   tech: PropTypes.instanceOf(Object).isRequired,
   techList: PropTypes.instanceOf(Array).isRequired,
+  isMobile: PropTypes.bool.isRequired,
 }
 
 export default Search

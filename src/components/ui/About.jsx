@@ -5,12 +5,12 @@ import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink,
 } from 'reactstrap'
 
-const About = (props) => {
-  const {
-    buttonLabel,
-    className,
-  } = props
-
+/**
+ * Provides information about the app in a modal
+ * @author Ben Elan
+ * @parent Navbar
+ */
+const About = ({ buttonLabel, className }) => {
   const [modal, setModal] = useState(false)
 
   const toggle = () => setModal(!modal)

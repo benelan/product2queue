@@ -14,6 +14,12 @@ import {
 } from 'reactstrap'
 import About from './About'
 
+/**
+ * Top information bar
+ * @author Ben Elan
+ * @parent App
+ * @child About
+ */
 const Navb = () => {
   const [isOpen, setIsOpen] = useState(false)
 

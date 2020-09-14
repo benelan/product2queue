@@ -14,6 +14,11 @@ import {
 import classnames from 'classnames'
 import VirtualScroll from './VirtualScroll'
 
+/**
+ * Displays product/buzzword inputs and a virtual scroll search suggestion box
+ * @author Ben Elan & Lingtao Xie
+ * @parent Search
+ */
 class Product extends React.Component {
   constructor(props) {
     super(props)
@@ -21,18 +26,22 @@ class Product extends React.Component {
       activeTab: '1',
     }
 
+    // changes the tab
     this.toggle = (tab) => {
       if (this.activeTab !== tab) this.setState({ activeTab: tab })
     }
 
+    // clears the product input value
     this.clearProd = () => {
       this.inputProd.value = ''
     }
 
+    // clears the buzzword input value
     this.clearBuzz = () => {
       this.inputBuzz.value = ''
     }
 
+    // clears both product and buzzword inputs
     this.clear = () => {
       this.clearProd()
       this.clearBuzz()
@@ -40,10 +49,14 @@ class Product extends React.Component {
   }
 
   render() {
+    // deconstruct props
     const {
       onBuzzwordsChange, onProductChange, onResult, filtered,
     } = this.props
+
+    // deconstruct state
     const { activeTab } = this.state
+
     // list group item style
     const lgi = {
       height: '70px',
@@ -51,15 +64,18 @@ class Product extends React.Component {
       fontSize: '16px',
     }
 
+    // navlink style
     const navlinkStyle = {
       cursor: 'pointer',
     }
 
+    // product/buzzword input style
     const inputStyle = {
       height: '40px',
       background: '#F7F9FA',
     }
 
+    // Item for VirtualScroll component
     const Item = memo(({ index }) => (
       <ListGroupItem
         key={index}
@@ -85,15 +101,15 @@ class Product extends React.Component {
               className={classnames({
                 active: activeTab === '1',
               })}
-              onClick={() => {
+              onClick={() => { // when clicking on Product tab
                 const val = {
                   target: {
-                    value: '',
+                    value: '', // clear product value
                   },
                 }
-                onProductChange(val)
-                this.clearProd()
-                this.toggle('1')
+                onProductChange(val) // pass value to parent
+                this.clearBuzz() // clear the buzzword input ref
+                this.toggle('1') // set product to active tab
               }}
             >
               Product
@@ -105,15 +121,15 @@ class Product extends React.Component {
               className={classnames({
                 active: activeTab === '2',
               })}
-              onClick={() => {
+              onClick={() => { // when clicking on Buzzword tab
                 const val = {
                   target: {
-                    value: '',
+                    value: '', // clear buzzword value
                   },
                 }
-                onBuzzwordsChange(val)
-                this.clearBuzz()
-                this.toggle('2')
+                onBuzzwordsChange(val) // pass value to parent
+                this.clearProd() // clear the product input ref
+                this.toggle('2') // set buzzword to active tab
               }}
             >
               Buzzwords

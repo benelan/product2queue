@@ -3,15 +3,23 @@ import PropTypes from 'prop-types'
 import { Label, Card } from 'reactstrap'
 import Select from 'react-select'
 
+/**
+ * Displays dropdown input for Technologies
+ * @author Ben Elan & Lingtao Xie
+ * @parent Search
+ */
 const Technology = class extends React.Component {
+  // resets the dropdown
   clear() {
     this.inputTech.state.value = { target: { value: 'Any' }, label: 'Any' }
   }
 
   render() {
+    // deconstruct props
     const { techList, onTechnologyChange } = this.props
-    const colourStyles = {
-      control: (styles) => ({
+    // the style for the dropdown
+    const dropdownStyles = {
+      control: (styles) => ({ // unopened dropdown style
         ...styles,
         backgroundColor: '#F7F9FA',
         cursor: 'pointer',
@@ -19,7 +27,7 @@ const Technology = class extends React.Component {
         minHeight: '40px',
         height: '40px',
       }),
-      menu: (base) => ({
+      menu: (base) => ({ // dropdown menu box
         ...base,
         marginTop: '21.5px',
         left: '-20px',
@@ -28,7 +36,7 @@ const Technology = class extends React.Component {
         minHeight: 'fit-content',
         minWidth: 'fit-content',
       }),
-      option: (styles, { isFocused }) => ({
+      option: (styles, { isFocused }) => ({ // individual option elements
         ...styles,
         backgroundColor: isFocused ? 'whitesmoke' : 'white',
         ':active': {
@@ -45,8 +53,10 @@ const Technology = class extends React.Component {
       }),
     }
 
+    // turn the tech list into react-select compatible object
     const items = techList.map((tech) => ({ target: { value: tech }, label: tech }))
 
+    // add 'Any' to the beginning of the list
     items.unshift({ target: { value: 'Any' }, label: 'Any' })
 
     return (
@@ -60,7 +70,7 @@ const Technology = class extends React.Component {
             defaultValue={items[0]}
             label="Select Technology"
             options={items}
-            styles={colourStyles}
+            styles={dropdownStyles}
             onChange={(selectedOption) => onTechnologyChange(selectedOption)}
           />
         </Card>

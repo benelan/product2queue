@@ -55,7 +55,7 @@ Product, Tech_n, Tech_n Buzzwords, .... Tech_n+1, Tech_n+1 Buzzwords, Support Me
 	- ``handleBuzzwordsChange(e)``
 	- ``handleTechnologyChange(e)``
 - The search runs and displays the matches in a ``VirtualScroll`` in the ``Product`` component
-	- ``startSearch()``
+	- ``createSearchString()``
 - When one of the matches is clicked on, it finds the info for the product and displays it in the ``Results``
 	- ``findResult(item)``
 
