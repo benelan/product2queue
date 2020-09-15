@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -6,13 +5,14 @@ import {
 } from 'reactstrap'
 
 /**
- * Provides information about the app in a modal
+ * Provides information about the app in a reactstrap modal
  * @author Ben Elan
  * @parent Navbar
  */
+/* eslint-disable max-len */
 const About = ({ buttonLabel, className }) => {
+  // state for opening/closing modal
   const [modal, setModal] = useState(false)
-
   const toggle = () => setModal(!modal)
 
   return (
@@ -21,11 +21,9 @@ const About = ({ buttonLabel, className }) => {
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>About</ModalHeader>
         <ModalBody>
-          The Product to Queue app is a browser-based tool created by Esri Support Services to assists in determing the appropriate team/queue to own a case based on product names or buzzwords.
+          The Product to Queue app is a browser-based tool which helps determine the appropriate team/queue to route a case based on product names or buzzwords.
           <br />
-          {' '}
           <br />
-
           <ul>
             <li>
               To use the app, fill in the product name or buzzword in the search field and click on a product.

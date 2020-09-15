@@ -11,7 +11,7 @@ import Select from 'react-select'
 const Technology = class extends React.Component {
   // resets the dropdown
   clear() {
-    this.inputTech.state.value = { target: { value: 'Any' }, label: 'Any' }
+    this.inputTech.state.value = { value: 'Any', label: 'Any' }
   }
 
   render() {
@@ -54,10 +54,10 @@ const Technology = class extends React.Component {
     }
 
     // turn the tech list into react-select compatible object
-    const items = techList.map((tech) => ({ target: { value: tech }, label: tech }))
+    const items = techList.map((tech) => ({ value: tech, label: tech }))
 
     // add 'Any' to the beginning of the list
-    items.unshift({ target: { value: 'Any' }, label: 'Any' })
+    items.unshift({ value: 'Any', label: 'Any' })
 
     return (
       <>
@@ -71,7 +71,7 @@ const Technology = class extends React.Component {
             label="Select Technology"
             options={items}
             styles={dropdownStyles}
-            onChange={(selectedOption) => onTechnologyChange(selectedOption)}
+            onChange={(e) => onTechnologyChange(e.value)}
           />
         </Card>
       </>

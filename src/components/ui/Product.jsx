@@ -102,12 +102,7 @@ class Product extends React.Component {
                 active: activeTab === '1',
               })}
               onClick={() => { // when clicking on Product tab
-                const val = {
-                  target: {
-                    value: '', // clear product value
-                  },
-                }
-                onProductChange(val) // pass value to parent
+                onProductChange('') // pass empty value to parent
                 this.clearBuzz() // clear the buzzword input ref
                 this.toggle('1') // set product to active tab
               }}
@@ -122,12 +117,7 @@ class Product extends React.Component {
                 active: activeTab === '2',
               })}
               onClick={() => { // when clicking on Buzzword tab
-                const val = {
-                  target: {
-                    value: '', // clear buzzword value
-                  },
-                }
-                onBuzzwordsChange(val) // pass value to parent
+                onBuzzwordsChange('') // pass empty value to parent
                 this.clearProd() // clear the product input ref
                 this.toggle('2') // set buzzword to active tab
               }}
@@ -146,7 +136,7 @@ class Product extends React.Component {
                 className="input"
                 id="productInput"
                 style={inputStyle}
-                onChange={onProductChange}
+                onChange={(e) => onProductChange(e.target.value.replace(/[^a-zA-Z ]/g, ' '))}
                 placeholder="Search by Product"
               />
             </Card>
@@ -160,7 +150,7 @@ class Product extends React.Component {
                 className="input"
                 id="buzzwordsInput"
                 style={inputStyle}
-                onChange={onBuzzwordsChange}
+                onChange={(e) => onBuzzwordsChange(e.target.value.replace(/[^a-zA-Z ]/g, ' '))}
                 placeholder="Search by Buzzwords"
               />
             </Card>

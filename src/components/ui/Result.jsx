@@ -22,30 +22,30 @@ class Result extends React.PureComponent {
     return (
       <>
         { // if there are results, display them
-          results.length > 0 ? (
+          results.product ? (
             <div>
               <Label style={{ marginBottom: '11px' }} for="res">Results</Label>
               <ListGroup>
                 <ListGroupItem>
                   <b>Product:</b>
                   {' '}
-                  {results[0].product}
+                  {results.product}
                 </ListGroupItem>
                 <ListGroupItem>
                   <b>Queue:</b>
                   {' '}
-                  {results[0].visibleQueue}
+                  {results.visibleQueue}
                 </ListGroupItem>
                 <ListGroupItem>
                   <b>Support Method:</b>
                   {' '}
-                  {results[0].supportMethod}
+                  {results.supportMethod}
                 </ListGroupItem>
 
                 { // display reference url if there is one
-                  results[0].url ? (
+                  results.url ? (
                     <ListGroupItem>
-                      <a target="_blank" rel="noopener noreferrer" style={linkStyle} href={results[0].url}>
+                      <a target="_blank" rel="noopener noreferrer" style={linkStyle} href={results.url}>
                         <b>Reference</b>
                       </a>
                     </ListGroupItem>
@@ -54,11 +54,11 @@ class Result extends React.PureComponent {
                   )
                 }
                 { // display email if there is one
-                  results[0].email ? (
+                  results.email ? (
                     <ListGroupItem>
                       <b>Contact: </b>
-                      <a style={linkStyle} href={`mailto:${results[0].email}`}>
-                        {results[0].email}
+                      <a style={linkStyle} href={`mailto:${results.email}`}>
+                        {results.email}
                       </a>
                     </ListGroupItem>
                   ) : (
@@ -66,7 +66,7 @@ class Result extends React.PureComponent {
                   )
                 }
                 { // display data transfer resource if the data queue in results
-                  results[0].visibleQueue.includes('Data') ? (
+                  results.visibleQueue.includes('Data') ? (
                     <ListGroupItem>
                       Please review
                       {' '}
@@ -79,7 +79,7 @@ class Result extends React.PureComponent {
                   )
                 }
                 { // display sdk transfer resource if the sdk queue in results
-                  results[0].visibleQueue.includes('SDK') ? (
+                  results.visibleQueue.includes('SDK') ? (
                     <ListGroupItem>
                       Please review
                       {' '}
@@ -103,7 +103,7 @@ class Result extends React.PureComponent {
 }
 
 Result.propTypes = {
-  results: PropTypes.instanceOf(Array).isRequired,
+  results: PropTypes.instanceOf(Object).isRequired,
 }
 
 export default Result

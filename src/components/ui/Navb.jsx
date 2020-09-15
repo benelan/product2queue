@@ -25,6 +25,13 @@ const Navb = () => {
 
   const toggle = () => setIsOpen(!isOpen)
 
+  const linkStyle = {
+    color: 'black',
+    fontSize: '16px',
+    padding: 0,
+    margin: 0,
+  }
+
   return (
     <Navbar dark color="dark" expand="md">
       <NavbarBrand href="/">Product to Queue</NavbarBrand>
@@ -45,12 +52,7 @@ const Navb = () => {
             >
               <DropdownItem>
                 <NavLink
-                  style={{
-                    color: 'black',
-                    fontSize: '16px',
-                    padding: 0,
-                    margin: 0,
-                  }}
+                  style={linkStyle}
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view"
@@ -61,12 +63,7 @@ const Navb = () => {
               {/* <DropdownItem divider /> */}
               <DropdownItem>
                 <NavLink
-                  style={{
-                    color: 'black',
-                    fontSize: '16px',
-                    padding: 0,
-                    margin: 0,
-                  }}
+                  style={linkStyle}
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view"

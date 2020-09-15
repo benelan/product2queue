@@ -1,8 +1,8 @@
 import React from 'react'
 import Papa from 'papaparse'
 import lunr from 'lunr'
-import Search from './Search'
-import Navb from './ui/Navb'
+import Search from './components/Search'
+import Navb from './components/ui/Navb'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 /**
@@ -11,6 +11,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
  * @child Navbar, Search
  */
 class App extends React.Component {
+  /**
+   * Checks if the device is mobile based on user agent
+   * The UI renders differently on mobile for readability
+   * @return {Boolean} - is it a mobile device?
+   */
   static checkIsMobile() {
     // device detection
     return !!((
@@ -41,7 +46,7 @@ class App extends React.Component {
   /**
     * Parses csv data into format needed by Lunr
     * @param  {Object} jsonData - the JSON data parsed from the csv
-    * @return {Object} prod - the product key/value pairs to search
+    * @return {Array} prod - the product key/value pairs to search
     * @return {Object} tech - the key technologies and their queues
       @return {Array} techList - list of technologies for dropdown
   */
@@ -145,7 +150,7 @@ class App extends React.Component {
 
   /** @constructor state
     * @member {Object} index - the lunr search index
-    * @member {Object} prod - the product key/value pairs to search
+    * @member {Array} prod - the product key/value pairs to search
     * @member {Object} tech - the key technologies and their queues
     * @member {Array} techList - list of technologies for dropdown
     * @member {Boolean} isMobile - is device mobile?
@@ -174,12 +179,13 @@ class App extends React.Component {
     // create the search index
     const index = App.createIndex(prod, techList)
 
+    const isMobile = App.checkIsMobile()
+
     // set all of the values to state
-    this.setState({ prod })
-    this.setState({ tech })
-    this.setState({ techList })
-    this.setState({ index })
-    this.setState({ isMobile: App.checkIsMobile() })
+    this.setState({
+      prod, tech, techList, index, isMobile,
+    })
+
     /* beautiful code which reloads the page if there is an error
      * jk will add error boundaries soon
      * https://reactjs.org/docs/error-boundaries.html
