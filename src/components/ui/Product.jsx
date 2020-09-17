@@ -16,6 +16,7 @@ import VirtualScroll from './VirtualScroll'
 
 /**
  * Displays product/buzzword inputs and a virtual scroll search suggestion box
+ * @component
  * @author Ben Elan & Lingtao Xie
  * @parent Search
  */
@@ -174,10 +175,15 @@ Product.defaultProps = {
 }
 
 Product.propTypes = {
+  /** event handler for product input */
   onProductChange: PropTypes.func.isRequired,
+  /** event handler for technology input */
   onBuzzwordsChange: PropTypes.func.isRequired,
+  /** event handler for clicking on a suggestion */
   onResult: PropTypes.func.isRequired,
+  /** list of search suggestions */
   filtered: PropTypes.instanceOf(Array).isRequired,
+  /** index for creating the virtual scroll */
   index: PropTypes.number,
 }
 

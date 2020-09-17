@@ -23,7 +23,10 @@ const useScrollAware = () => {
   return [scrollTop, ref]
 }
 
-// VirtualScroll component
+/**
+ * Virtual Scroll UI component
+ * @component
+ */
 const VirtualScroll = ({
   Item,
   itemCount,
@@ -80,14 +83,19 @@ const VirtualScroll = ({
 }
 
 VirtualScroll.defaultProps = {
-  renderAhead: undefined,
+  renderAhead: 20,
 }
 
 VirtualScroll.propTypes = {
+  /** the item to display */
   Item: PropTypes.instanceOf(Object).isRequired,
+  /** the number of items to display */
   itemCount: PropTypes.number.isRequired,
+  /** the height of the virtual scroll div */
   height: PropTypes.number.isRequired,
+  /** the height of each item */
   childHeight: PropTypes.number.isRequired,
+  /** how many items to render ahead as you scroll */
   renderAhead: PropTypes.number,
 }
 

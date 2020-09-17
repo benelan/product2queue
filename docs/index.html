@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Home</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Product2Queue Doc</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p></p>
+                </header>
+                
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Product to Queue</h1>
+<p>The Product to Queue app is a browser-based tool which helps determine the appropriate team/queue to route a case based on product names or buzzwords.</p>
+<h2>Using the App</h2>
+<p>To run the web app locally for development, you must have <a href="https://nodejs.org/en/">Node</a> installed. With Node installed, use the command line to navigate to the project directory and type:</p>
+<pre class="prettyprint source"><code>npm install
+npm start
+</code></pre>
+<p>To build this app for deployment, type:</p>
+<pre class="prettyprint source"><code>npm run build
+</code></pre>
+<h2>Changing the Data</h2>
+<p>This application reads directly from a <a href="https://github.com/benelan/product2queue/blob/master/public/data/product_queue.csv">spreadsheet</a>. The spreadsheet must be a csv file named 'product_queue'.</p>
+<p>The csv file must be in the following format:</p>
+<pre class="prettyprint source"><code>Product, Tech_1, Tech_1 Buzzwords, ..., Tech_n, Tech_n Buzzwords, Support Method, Reference
+</code></pre>
+<h3>Data that can be edited without changes to code</h3>
+<ul>
+<li>The text value of any cell
+<ul>
+<li>Changing the name of a Technology/Unit</li>
+<li>Changing which queue a product belongs in</li>
+<li>changing the reference, etc</li>
+</ul>
+</li>
+<li>Adding rows (Products)</li>
+<li>Removing rows</li>
+<li>Adding Technology/Buzzword pairs (maintaining the format above)</li>
+<li>Removing T/B pairs</li>
+</ul>
+<h3>Data that requires changes to code after editing</h3>
+<ul>
+<li>Adding new column (other than T/B pairs)</li>
+<li>Removing columns (other than T/B pairs)</li>
+<li>Changing the order of columns (other than T/B pairs)</li>
+</ul>
+<h2>Developer Doc</h2>
+<h3>App.js</h3>
+<ul>
+<li>Loads and decodes the CSV
+<ul>
+<li><code>getCsvData(path)</code></li>
+</ul>
+</li>
+<li>Parses the CSV into the objects/arrays needed for the app
+<ul>
+<li><code>parseData(results)</code></li>
+</ul>
+</li>
+<li>Creates a search index from the parsed JSON
+<ul>
+<li><code>createIndex(documents)</code></li>
+</ul>
+</li>
+<li>The index is passed to the <code>Search</code> child component along with the other objects</li>
+<li><code>Navbar</code> is also rendered</li>
+</ul>
+<h3>Search.js</h3>
+<ul>
+<li>The child UI components are rendered
+<ul>
+<li><code>Product</code></li>
+<li><code>Technology</code></li>
+<li><code>Result</code></li>
+</ul>
+</li>
+<li>The input change handler functions for the child components mutate state
+<ul>
+<li><code>handleProductChange(newProd)</code> - searches</li>
+<li><code>handleBuzzwordsChange(newBuzz)</code> - searches</li>
+<li><code>handleTechnologyChange(newTech)</code> - searches</li>
+<li><code>handleFilterClick(item)</code> - finds item properties</li>
+</ul>
+</li>
+<li>Searching creates a Lunr query string using the <code>createSearchString</code> static method. It then performs the search and displays the matches in a <code>VirtualScroll</code> in the <code>Product</code> component
+<ul>
+<li><code>doSearch()</code></li>
+</ul>
+</li>
+<li>If there is only one match, or a match is clicked on: the static method <code>findResult</code> is used to retrieve the product info for display in <code>Result</code></li>
+</ul>
+<h2>Reporting Issues</h2>
+<p>Issues with the application can be reported to Ben Elan or Lingtao Xie. If the spreadsheet needs to be edited in a way that requires changes to the code, feel free to reach out to us as well. We would be happy to help get the application working with the necessary changes.</p>
+<h2>Built With</h2>
+<ul>
+<li><a href="https://reactjs.org/">React</a> - Frontend Framework</li>
+<li><a href="https://reactstrap.github.io/">Reactstrap</a> - Bootstrap for React</li>
+<li><a href="https://react-select.com/home">React-Select</a> - React Dropdown</li>
+<li><a href="https://lunrjs.com/">Lunr</a> - Search Engine</li>
+<li><a href="https://www.papaparse.com">PapaParse</a> - CSV Parser</li>
+</ul></article>
+    </section>
+
+
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.5</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/ui/Product.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Product2Queue Doc</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/ui/Product.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { memo } from 'react'
+import PropTypes from 'prop-types'
+import {
+  Input,
+  ListGroup,
+  ListGroupItem,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Card,
+} from 'reactstrap'
+import classnames from 'classnames'
+import VirtualScroll from './VirtualScroll'
+
+/**
+ * Displays product/buzzword inputs and a virtual scroll search suggestion box
+ * @component
+ * @author Ben Elan &amp; Lingtao Xie
+ * @parent Search
+ */
+class Product extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeTab: '1',
+    }
+
+    // changes the tab
+    this.toggle = (tab) => {
+      if (this.activeTab !== tab) this.setState({ activeTab: tab })
+    }
+
+    // clears the product input value
+    this.clearProd = () => {
+      this.inputProd.value = ''
+    }
+
+    // clears the buzzword input value
+    this.clearBuzz = () => {
+      this.inputBuzz.value = ''
+    }
+
+    // clears both product and buzzword inputs
+    this.clear = () => {
+      this.clearProd()
+      this.clearBuzz()
+    }
+  }
+
+  render() {
+    // deconstruct props
+    const {
+      onBuzzwordsChange, onProductChange, onResult, filtered,
+    } = this.props
+
+    // deconstruct state
+    const { activeTab } = this.state
+
+    // list group item style
+    const lgi = {
+      height: '70px',
+      color: 'black',
+      fontSize: '16px',
+    }
+
+    // navlink style
+    const navlinkStyle = {
+      cursor: 'pointer',
+    }
+
+    // product/buzzword input style
+    const inputStyle = {
+      height: '40px',
+      background: '#F7F9FA',
+    }
+
+    // Item for VirtualScroll component
+    const Item = memo(({ index }) => (
+      &lt;ListGroupItem
+        key={index}
+        style={lgi}
+        onClick={() => onResult(filtered[index])}
+        tag="button"
+        action
+      >
+        {filtered[index].ref}
+      &lt;/ListGroupItem>
+    ))
+    Item.displayName = 'Item'
+
+    return (
+      &lt;>
+        &lt;Nav
+          tabs
+          style={{ color: '#ADC5CC', border: 'transparent' }}
+        >
+          &lt;NavItem>
+            &lt;NavLink
+              style={navlinkStyle}
+              className={classnames({
+                active: activeTab === '1',
+              })}
+              onClick={() => { // when clicking on Product tab
+                onProductChange('') // pass empty value to parent
+                this.clearBuzz() // clear the buzzword input ref
+                this.toggle('1') // set product to active tab
+              }}
+            >
+              Product
+            &lt;/NavLink>
+          &lt;/NavItem>
+          &lt;NavItem>
+            &lt;NavLink
+              style={navlinkStyle}
+              className={classnames({
+                active: activeTab === '2',
+              })}
+              onClick={() => { // when clicking on Buzzword tab
+                onBuzzwordsChange('') // pass empty value to parent
+                this.clearProd() // clear the product input ref
+                this.toggle('2') // set buzzword to active tab
+              }}
+            >
+              Buzzwords
+            &lt;/NavLink>
+          &lt;/NavItem>
+        &lt;/Nav>
+        &lt;TabContent activeTab={activeTab}>
+          &lt;TabPane tabId="1">
+            &lt;Card style={{ height: '82px' }} body>
+              &lt;Input
+                innerRef={(input) => { this.inputProd = input; return input }}
+                type="search"
+                name="searchProduct"
+                className="input"
+                id="productInput"
+                style={inputStyle}
+                onChange={(e) => onProductChange(e.target.value.replace(/[^a-zA-Z ]/g, ' '))}
+                placeholder="Search by Product"
+              />
+            &lt;/Card>
+          &lt;/TabPane>
+          &lt;TabPane tabId="2">
+            &lt;Card style={{ height: '82px' }} body>
+              &lt;Input
+                innerRef={(input) => { this.inputBuzz = input; return input }}
+                type="search"
+                name="searchBuzzwords"
+                className="input"
+                id="buzzwordsInput"
+                style={inputStyle}
+                onChange={(e) => onBuzzwordsChange(e.target.value.replace(/[^a-zA-Z ]/g, ' '))}
+                placeholder="Search by Buzzwords"
+              />
+            &lt;/Card>
+          &lt;/TabPane>
+        &lt;/TabContent>
+        &lt;ListGroup>
+          &lt;VirtualScroll
+            itemCount={filtered.length}
+            height={300}
+            childHeight={70}
+            Item={Item}
+          />
+        &lt;/ListGroup>
+      &lt;/>
+    )
+  }
+}
+
+Product.defaultProps = {
+  index: undefined,
+}
+
+Product.propTypes = {
+  /** event handler for product input */
+  onProductChange: PropTypes.func.isRequired,
+  /** event handler for technology input */
+  onBuzzwordsChange: PropTypes.func.isRequired,
+  /** event handler for clicking on a suggestion */
+  onResult: PropTypes.func.isRequired,
+  /** list of search suggestions */
+  filtered: PropTypes.instanceOf(Array).isRequired,
+  /** index for creating the virtual scroll */
+  index: PropTypes.number,
+}
+
+export default Product
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.5</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

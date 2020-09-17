@@ -15,7 +15,8 @@ import {
 import About from './About'
 
 /**
- * Top information bar
+ * Reactstrap navigation menu
+ * @component
  * @author Ben Elan
  * @parent App
  * @child About

@@ -18,12 +18,15 @@
     "reactstrap": "^8.4.1"
   },
   "devDependencies": {
+    "better-docs": "^2.3.2",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jsx-a11y": "^6.3.0",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.0"
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "jsdoc": "^3.6.5",
+    "parcel": "^1.12.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,7 +34,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint \"**/*.js\" \"**/*.jsx\" --ignore-pattern node_modules/ --ignore-pattern build/\"",
-    "lint-fix": "eslint --fix \"**/*.js\" \"**/*.jsx\" --ignore-pattern node_modules/ --ignore-pattern build/\""
+    "lint-fix": "eslint --fix \"**/*.js\" \"**/*.jsx\" --ignore-pattern node_modules/ --ignore-pattern build/\"",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "eslintConfig": {
     "extends": "react-app"

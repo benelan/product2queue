@@ -4,6 +4,7 @@ import { Label, ListGroup, ListGroupItem } from 'reactstrap'
 
 /**
  * Displays selected product information
+ * @component
  * @author Ben Elan & Lingtao Xie
  * @parent Search
  */
@@ -103,6 +104,7 @@ class Result extends React.PureComponent {
 }
 
 Result.propTypes = {
+  /** Result object to display */
   results: PropTypes.instanceOf(Object).isRequired,
 }
 

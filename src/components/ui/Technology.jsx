@@ -5,6 +5,7 @@ import Select from 'react-select'
 
 /**
  * Displays dropdown input for Technologies
+ * @component
  * @author Ben Elan & Lingtao Xie
  * @parent Search
  */
@@ -80,7 +81,9 @@ const Technology = class extends React.Component {
 }
 
 Technology.propTypes = {
+  /** event handler for technology input */
   onTechnologyChange: PropTypes.func.isRequired,
+  /** Array of technologies */
   techList: PropTypes.instanceOf(Array).isRequired,
 }
 

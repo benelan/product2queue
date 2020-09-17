@@ -1,4 +1,95 @@
-import React from 'react'
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/Search.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Product2Queue Doc</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/Search.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col, Button } from 'reactstrap'
 import Product from './ui/Product'
@@ -29,7 +120,7 @@ class Search extends React.Component {
     let q = '' // init query string
     let search = false
     // ---- FOR PRODUCT SEARCHES  ---- \\
-    if (query.product && query.product !== '') {
+    if (query.product &amp;&amp; query.product !== '') {
       search = true
       // split search words
       const products = query.product.split(' ')
@@ -44,7 +135,7 @@ class Search extends React.Component {
         q += ` +technology:${query.technology}`
       }
       // ---- FOR BUZZWORD SEARCHES  ---- \\
-    } else if (query.buzzwords && query.buzzwords !== '') {
+    } else if (query.buzzwords &amp;&amp; query.buzzwords !== '') {
       search = true
       // split search words
       const buzzwords = query.buzzwords.split(' ')
@@ -74,8 +165,8 @@ class Search extends React.Component {
       }
     } else if (
       query.buzzwords === ''
-      && query.buzzwords === ''
-      && query.technology !== 'Any'
+      &amp;&amp; query.buzzwords === ''
+      &amp;&amp; query.technology !== 'Any'
     ) {
       search = true
       q += `+technology:${query.technology}`
@@ -132,7 +223,7 @@ class Search extends React.Component {
       // if we are doing a buzzword search and Technology is Any
       if (
         !!query.buzzwords
-        && query.technology === 'Any'
+        &amp;&amp; query.technology === 'Any'
       ) {
         const buzzTechs = new Set() // init Set
         // iterate through all of the buzzwords
@@ -355,10 +446,10 @@ class Search extends React.Component {
       || results.length > 0)
 
     return (
-      <>
-        <Row className="mt-2 mr-1">
-          <Col md={{ size: 1, offset: 11 }}>
-            <Button
+      &lt;>
+        &lt;Row className="mt-2 mr-1">
+          &lt;Col md={{ size: 1, offset: 11 }}>
+            &lt;Button
               className="float-right"
               outline
               color="secondary"
@@ -367,58 +458,58 @@ class Search extends React.Component {
               onClick={this.clear}
             >
               clear
-            </Button>
-          </Col>
-        </Row>
+            &lt;/Button>
+          &lt;/Col>
+        &lt;/Row>
 
         {isMobile ? ( // if the device is mobile put the product dropdown on the bottom
-          <Row className="justify-content-md-center ml-2 mr-2">
-            <Col className="mb-2 mt-1" md={{ size: 4, offset: 0 }}>
-              <Result results={results} />
-            </Col>
-            <Col className="mb-2 mt-1" md={{ size: 3, offset: 0 }}>
-              <Technology
+          &lt;Row className="justify-content-md-center ml-2 mr-2">
+            &lt;Col className="mb-2 mt-1" md={{ size: 4, offset: 0 }}>
+              &lt;Result results={results} />
+            &lt;/Col>
+            &lt;Col className="mb-2 mt-1" md={{ size: 3, offset: 0 }}>
+              &lt;Technology
                 ref={(input) => { this.inputTech = input; return input }}
                 onTechnologyChange={this.handleTechnologyChange}
                 techList={techList}
               />
-            </Col>
-            <Col className="mb-1" md={{ size: 5, offset: 0 }}>
-              <Product
+            &lt;/Col>
+            &lt;Col className="mb-1" md={{ size: 5, offset: 0 }}>
+              &lt;Product
                 ref={(input) => { this.inputProd = input; return input }}
                 filtered={filtered}
                 onProductChange={this.handleProductChange}
                 onBuzzwordsChange={this.handleBuzzwordsChange}
                 onResult={this.handleFilterClick}
               />
-            </Col>
-          </Row>
+            &lt;/Col>
+          &lt;/Row>
         ) : (
-          <Row className="justify-content-md-center ml-2 mr-2">
-            <Col className="mb-1" md={{ size: 5, offset: 0 }}>
-              <Product
+          &lt;Row className="justify-content-md-center ml-2 mr-2">
+            &lt;Col className="mb-1" md={{ size: 5, offset: 0 }}>
+              &lt;Product
                 ref={(input) => { this.inputProd = input; return input }}
                 filtered={filtered}
                 onProductChange={this.handleProductChange}
                 onBuzzwordsChange={this.handleBuzzwordsChange}
                 onResult={this.handleFilterClick}
               />
-            </Col>
+            &lt;/Col>
 
-            <Col className="mb-2 mt-1" md={{ size: 3, offset: 0 }}>
-              <Technology
+            &lt;Col className="mb-2 mt-1" md={{ size: 3, offset: 0 }}>
+              &lt;Technology
                 ref={(input) => { this.inputTech = input; return input }}
                 onTechnologyChange={this.handleTechnologyChange}
                 techList={techList}
               />
-            </Col>
+            &lt;/Col>
 
-            <Col className="mb-2 mt-1" md={{ size: 4, offset: 0 }}>
-              <Result results={results} />
-            </Col>
-          </Row>
+            &lt;Col className="mb-2 mt-1" md={{ size: 4, offset: 0 }}>
+              &lt;Result results={results} />
+            &lt;/Col>
+          &lt;/Row>
         )}
-      </>
+      &lt;/>
     )
   }
 }
@@ -441,3 +532,32 @@ Search.propTypes = {
 }
 
 export default Search
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.5</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

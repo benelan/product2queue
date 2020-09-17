@@ -6,6 +6,7 @@ import {
 
 /**
  * Provides information about the app in a reactstrap modal
+ * @component
  * @author Ben Elan
  * @parent Navbar
  */
@@ -63,7 +64,9 @@ About.defaultProps = {
 }
 
 About.propTypes = {
+  /** label for the button that opens the modal */
   buttonLabel: PropTypes.string.isRequired,
+  /** class name for styling */
   className: PropTypes.string,
 }
 
