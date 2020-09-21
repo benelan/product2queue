@@ -65,8 +65,8 @@ class App extends React.Component {
     const header = jsonData.data[0] // the header of the csv
 
     const len = header.length - 1
+    // iterate through the technology/buzzword pairs
     for (let i = 1; i < len - 2; i += 2) {
-      // iterate through the technologies
       // init the json of technologies to queues
       const t = header[i].replace(/\s/g, '')
       tech[t] = []
@@ -88,8 +88,7 @@ class App extends React.Component {
             q += `${row[i]}, ` // add the queue to the product's list
             t += `${header[i]}, ` // add the tech to the product's list
             // adds the buzzwords for each tech
-            // removes spaces in tech like 'Data Management'
-            // for the new buzzword variable name
+            // removes spaces in tech like 'Data Management' for the new buzzword variable name
             object[`b_${header[i].replace(/\s/g, '')}`] = row[i + 1]
             if (!tech[header[i].replace(/\s/g, '')].includes(row[i])) {
               // if the queue hasn't already been added to the tech object
@@ -189,8 +188,7 @@ class App extends React.Component {
 
     /* beautiful code which reloads the page if there is an error
      * jk will add error boundaries soon
-     * https://reactjs.org/docs/error-boundaries.html
-    */
+     * https://reactjs.org/docs/error-boundaries.html */
     /*
     window.onerror = function errorHandlingIsForScrubs() {
       document.location.reload()
