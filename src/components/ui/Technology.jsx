@@ -39,10 +39,10 @@ const Technology = class extends React.Component {
       }),
       option: (styles, { isFocused }) => ({ // individual option elements
         ...styles,
-        backgroundColor: isFocused ? 'whitesmoke' : 'white',
+        backgroundColor: isFocused ? '#bfdcae' : 'white',
         ':active': {
           ...styles[':active'],
-          backgroundColor: 'lightgrey',
+          backgroundColor: '#5cb85c',
         },
         color: 'black',
         cursor: 'pointer',

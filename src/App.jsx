@@ -3,7 +3,6 @@ import Papa from 'papaparse'
 import lunr from 'lunr'
 import Search from './components/Search'
 import Navb from './components/ui/Navb'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 /**
  * Loads CSV data, parses it to JSON, and creates a search index

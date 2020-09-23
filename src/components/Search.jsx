@@ -350,7 +350,7 @@ class Search extends React.Component {
             <Button
               className="float-right"
               outline
-              color="secondary"
+              color="success"
               size="sm"
               disabled={buttonDisabled}
               onClick={this.clear}

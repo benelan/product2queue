@@ -1,15 +1,15 @@
-:root {
-  --color-0: #d9e5e8; /* Main Primary color */
-  --color-1: #ffffff;
-  --color-2: #f7f9fa;
-  --color-3: #adc5cc;
-  --color-4: black;
+
+.productStyle:hover {
+  background: #bfdcae;
+}
+.productStyle:active {
+  background: #5cb85c;
 }
 
 html,
 #root {
-  background-color: var(--color-2);
-  color: var(--color-4);
+  color: black;
+  background: #f1f1e8;
 }
 
 body {

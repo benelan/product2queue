@@ -34,7 +34,7 @@ const Navb = () => {
   }
 
   return (
-    <Navbar dark color="dark" expand="md">
+    <Navbar dark style={{ backgroundColor: '#206a5d' }} expand="md">
       <NavbarBrand href="/">Product to Queue</NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
