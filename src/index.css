@@ -2,6 +2,9 @@
 .highlightStyle:hover {
   background: #bfdcae;
 }
+.highlightStyle:focus {
+  background: #F0F0F0;
+}
 .highlightStyle:active {
   background: #5cb85c;
 }
