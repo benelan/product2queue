@@ -62,7 +62,7 @@ const Technology = class extends React.Component {
 
     return (
       <>
-        <Label style={{ marginBottom: '11px' }} for="exampleSelect">
+        <Label style={{ marginBottom: '13px' }} for="exampleSelect">
           Technology
         </Label>
         <Card style={{ height: '82px' }} body>

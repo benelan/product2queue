@@ -25,7 +25,7 @@ class Result extends React.PureComponent {
         { // if there are results, display them
           results.product ? (
             <div>
-              <Label style={{ marginBottom: '11px' }} for="res">Results</Label>
+              <Label style={{ marginBottom: '12px' }} for="res">Results</Label>
               <ListGroup>
                 <ListGroupItem>
                   <b>Product:</b>
