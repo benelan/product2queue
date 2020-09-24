@@ -12,7 +12,7 @@ class Result extends React.PureComponent {
   render() {
     // hyperlink color
     const linkStyle = {
-      color: '#738CA6',
+      color: '#5cb85c',
     }
 
     // URLs for transfer resources
