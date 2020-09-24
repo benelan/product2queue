@@ -52,7 +52,7 @@ const About = ({ buttonLabel, className }) => {
           .
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={toggle}>Okay</Button>
+          <Button color="success" onClick={toggle}>Okay</Button>
         </ModalFooter>
       </Modal>
     </>

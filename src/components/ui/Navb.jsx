@@ -51,7 +51,7 @@ const Navb = () => {
                 top: 35, left: +8, padding: 0, margin: 0,
               }}
             >
-              <DropdownItem>
+              <DropdownItem className="highlightStyle">
                 <NavLink
                   style={linkStyle}
                   target="_blank"
@@ -62,7 +62,7 @@ const Navb = () => {
                 </NavLink>
               </DropdownItem>
               {/* <DropdownItem divider /> */}
-              <DropdownItem>
+              <DropdownItem className="highlightStyle">
                 <NavLink
                   style={linkStyle}
                   target="_blank"

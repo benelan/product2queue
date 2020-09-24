@@ -81,7 +81,7 @@ class Product extends React.Component {
       <ListGroupItem
         key={index}
         style={lgi}
-        className="productStyle"
+        className="highlightStyle"
         onClick={() => onResult(filtered[index])}
         tag="button"
         action

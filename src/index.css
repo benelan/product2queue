@@ -1,8 +1,8 @@
 
-.productStyle:hover {
+.highlightStyle:hover {
   background: #bfdcae;
 }
-.productStyle:active {
+.highlightStyle:active {
   background: #5cb85c;
 }
 
