@@ -35,7 +35,12 @@ const Navb = () => {
 
   return (
     <Navbar dark style={{ backgroundColor: '#206a5d' }} expand="md">
-      <NavbarBrand href="/">Product to Queue</NavbarBrand>
+      <NavbarBrand href="/">
+        {' '}
+        <img src={`${process.env.PUBLIC_URL}/esri.png`} style={{ width: 30, height: 30 }} alt="" />
+        {' '}
+        Product to Queue
+      </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mr-auto" navbar>
