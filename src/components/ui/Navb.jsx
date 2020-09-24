@@ -37,7 +37,7 @@ const Navb = () => {
     <Navbar dark style={{ backgroundColor: '#206a5d' }} expand="md">
       <NavbarBrand href="/">
         {' '}
-        <img src={`${process.env.PUBLIC_URL}/esri.png`} style={{ width: 30, height: 30 }} alt="" />
+        <img src={`${process.env.PUBLIC_URL}/esri.png`} style={{ width: 25, height: 25 }} alt="" />
         {' '}
         Product to Queue
       </NavbarBrand>
