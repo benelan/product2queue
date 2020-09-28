@@ -47,6 +47,14 @@ const Navb = () => {
           <NavItem>
             <About buttonLabel="About" />
           </NavItem>
+          <NavItem>
+            <NavLink
+              rel="noopener noreferrer"
+              href="mailto:JMallinckrodt@esri.com?subject=Product%20App%20Feedback"
+            >
+              Provide Feedback
+            </NavLink>
+          </NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               Transfer Resources
