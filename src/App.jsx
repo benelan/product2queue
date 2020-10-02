@@ -3,6 +3,7 @@ import Papa from 'papaparse'
 import lunr from 'lunr'
 import Search from './components/Search'
 import Navb from './components/ui/Navb'
+import ErrorBoundary from './components/ErrorBoundary'
 
 /**
  * Loads CSV data, parses it to JSON, and creates a search index
@@ -202,14 +203,17 @@ class App extends React.Component {
     } = this.state
     return (
       <>
-        <Navb />
-        <Search
-          index={index}
-          prod={prod}
-          tech={tech}
-          techList={techList}
-          isMobile={isMobile}
-        />
+        <ErrorBoundary>
+          <Navb />
+          <Search
+            index={index}
+            prod={prod}
+            tech={tech}
+            techList={techList}
+            isMobile={isMobile}
+          />
+        </ErrorBoundary>
+
       </>
     )
   }

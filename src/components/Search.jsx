@@ -4,6 +4,7 @@ import { Row, Col, Button } from 'reactstrap'
 import Product from './ui/Product'
 import Technology from './ui/Technology'
 import Result from './ui/Result'
+import ErrorBoundary from './ErrorBoundary'
 
 /**
  * Handles input change events from child UI components,
@@ -172,6 +173,7 @@ class Search extends React.Component {
     this.handleTechnologyChange = this.handleTechnologyChange.bind(this)
     this.handleFilterClick = this.handleFilterClick.bind(this)
     this.clear = this.clear.bind(this)
+    this.resetState = this.resetState.bind(this)
   }
 
   /** Performs the lunr search using state/props and static methods */
@@ -304,7 +306,6 @@ class Search extends React.Component {
   handleFilterClick(item) {
     const { prod, tech } = this.props
     const { query } = this.state
-
     const results = Search.findResult({
       item, query, prod, tech,
     })
@@ -327,6 +328,18 @@ class Search extends React.Component {
     this.inputTech.clear()
   }
 
+  resetState() {
+    this.setState({
+      filtered: [],
+      query: {
+        product: '',
+        technology: 'Any',
+        buzzwords: '',
+      },
+      results: {},
+    })
+  }
+
   render() {
     // deconstruct state
     const {
@@ -344,7 +357,7 @@ class Search extends React.Component {
       || results.length > 0)
 
     return (
-      <>
+      <ErrorBoundary resetState={this.resetState}>
         <Row className="mt-2 mr-1">
           <Col md={{ size: 1, offset: 11 }}>
             <Button
@@ -407,7 +420,7 @@ class Search extends React.Component {
             </Col>
           </Row>
         )}
-      </>
+      </ErrorBoundary>
     )
   }
 }
