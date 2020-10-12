@@ -24,22 +24,19 @@ class Result extends React.PureComponent {
       <>
         { // if there are results, display them
           results.product ? (
-            <div>
-              <Label style={{ marginBottom: '12px' }} for="res">Results</Label>
-              <ListGroup>
+            <>
+              <Label style={{ marginBottom: '13px' }} for="res">Results</Label>
+              <ListGroup id="res">
                 <ListGroupItem>
-                  <b>Product:</b>
-                  {' '}
+                  <b>Product: </b>
                   {results.product}
                 </ListGroupItem>
                 <ListGroupItem>
-                  <b>Queue:</b>
-                  {' '}
+                  <b>Queue: </b>
                   {results.visibleQueue}
                 </ListGroupItem>
                 <ListGroupItem>
-                  <b>Support Method:</b>
-                  {' '}
+                  <b>Support Method: </b>
                   {results.supportMethod}
                 </ListGroupItem>
 
@@ -50,9 +47,7 @@ class Result extends React.PureComponent {
                         <b>Reference</b>
                       </a>
                     </ListGroupItem>
-                  ) : (
-                    ''
-                  )
+                  ) : ('')
                 }
                 { // display email if there is one
                   results.email ? (
@@ -62,9 +57,7 @@ class Result extends React.PureComponent {
                         {results.email}
                       </a>
                     </ListGroupItem>
-                  ) : (
-                    ''
-                  )
+                  ) : ('')
                 }
                 { // display data transfer resource if the data queue in results
                   results.visibleQueue.includes('Data') ? (
@@ -75,9 +68,7 @@ class Result extends React.PureComponent {
                       {' '}
                       before transferring to Data Management.
                     </ListGroupItem>
-                  ) : (
-                    ''
-                  )
+                  ) : ('')
                 }
                 { // display sdk transfer resource if the sdk queue in results
                   results.visibleQueue.includes('SDK') ? (
@@ -86,17 +77,13 @@ class Result extends React.PureComponent {
                       {' '}
                       <a target="_blank" rel="noopener noreferrer" style={linkStyle} href={sdk}>this documentation</a>
                       {' '}
-                      before transferring to SDK.
+                      before transferring to Develper Products.
                     </ListGroupItem>
-                  ) : (
-                    ''
-                  )
+                  ) : ('')
                 }
               </ListGroup>
-            </div>
-          ) : ( // display nothing if there are no results
-            ''
-          )
+            </>
+          ) : ('') // display nothing if there are no results
         }
       </>
     )

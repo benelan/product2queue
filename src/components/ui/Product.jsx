@@ -25,7 +25,10 @@ class Product extends React.Component {
     super(props)
     this.state = {
       activeTab: '1',
+      height: 0,
     }
+
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
 
     // changes the tab
     this.toggle = (tab) => {
@@ -49,6 +52,19 @@ class Product extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  updateWindowDimensions() {
+    this.setState({ height: window.innerHeight })
+  }
+
   render() {
     // deconstruct props
     const {
@@ -56,31 +72,17 @@ class Product extends React.Component {
     } = this.props
 
     // deconstruct state
-    const { activeTab } = this.state
-
-    // list group item style
-    const lgi = {
-      height: '70px',
-      color: 'black',
-      fontSize: '16px',
-    }
-
-    // navlink style
-    const navlinkStyle = {
-      cursor: 'pointer',
-    }
-
-    // product/buzzword input style
-    const inputStyle = {
-      height: '40px',
-      background: '#F7F9FA',
-    }
+    const { activeTab, height } = this.state
 
     // Item for VirtualScroll component
     const Item = memo(({ index }) => (
       <ListGroupItem
         key={index}
-        style={lgi}
+        style={{
+          height: '70px',
+          color: 'black',
+          fontSize: '16px',
+        }}
         className="highlightStyle"
         onClick={() => onResult(filtered[index])}
         tag="button"
@@ -93,13 +95,10 @@ class Product extends React.Component {
 
     return (
       <>
-        <Nav
-          tabs
-          style={{ color: '#ADC5CC', border: 'transparent' }}
-        >
+        <Nav tabs style={{ color: '#ADC5CC', border: 'transparent' }}>
           <NavItem>
             <NavLink
-              style={navlinkStyle}
+              style={{ cursor: 'pointer' }}
               className={classnames({
                 active: activeTab === '1',
               })}
@@ -114,7 +113,7 @@ class Product extends React.Component {
           </NavItem>
           <NavItem>
             <NavLink
-              style={navlinkStyle}
+              style={{ cursor: 'pointer' }}
               className={classnames({
                 active: activeTab === '2',
               })}
@@ -137,7 +136,7 @@ class Product extends React.Component {
                 name="searchProduct"
                 className="input"
                 id="productInput"
-                style={inputStyle}
+                style={{ height: '40px', background: '#F7F9FA' }}
                 onChange={(e) => onProductChange(e.target.value.replace(/[^a-zA-Z ]/g, ' '))}
                 placeholder="Search by Product"
               />
@@ -151,7 +150,7 @@ class Product extends React.Component {
                 name="searchBuzzwords"
                 className="input"
                 id="buzzwordsInput"
-                style={inputStyle}
+                style={{ height: '40px', background: '#F7F9FA' }}
                 onChange={(e) => onBuzzwordsChange(e.target.value.replace(/[^a-zA-Z ]/g, ' '))}
                 placeholder="Search by Buzzwords"
               />
@@ -161,7 +160,7 @@ class Product extends React.Component {
         <ListGroup>
           <VirtualScroll
             itemCount={filtered.length}
-            height={300}
+            height={height * 0.6}
             childHeight={70}
             Item={Item}
           />

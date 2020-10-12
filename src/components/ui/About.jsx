@@ -22,9 +22,9 @@ const About = ({ buttonLabel, className }) => {
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>About</ModalHeader>
         <ModalBody>
-          The Product to Queue app is a browser-based tool which helps determine the appropriate team/queue to route a case based on product names or buzzwords.
-          <br />
-          <br />
+          <p>
+            The Product to Queue app is a browser-based tool which helps determine the appropriate team/queue to route a case based on product names or buzzwords.
+          </p>
           <ul>
             <li>
               To use the app, fill in the product name or buzzword in the search field and click on a product.
@@ -44,15 +44,18 @@ const About = ({ buttonLabel, className }) => {
               Please make sure to review the transfer resources before transferring a case.
             </li>
           </ul>
-
-          If you have any questions about the products or queues, feel free to contact the
-          <a style={{ color: '#5cb85c' }} href="mailto:supt-readinessleads@esri.com?subject=Product%20Supportability%20Question"> Readiness Leads</a>
-          . Additionally, please report any issues or bugs to the
-          <a style={{ color: '#5cb85c' }} href="mailto:belan@esri.com?cc=lxie@esri.com&subject=Product%20App%20Issue"> Developers</a>
-          .
+          <p>
+            If you have any questions about the products or queues, feel free to contact the
+            {' '}
+            <a style={{ color: '#5cb85c' }} href="mailto:supt-readinessleads@esri.com?subject=Product%20Supportability%20Question">Readiness Leads</a>
+            . Additionally, please report any issues or bugs to the
+            {' '}
+            <a style={{ color: '#5cb85c' }} href="mailto:lxie@esri.com?cc=belan@esri.com&subject=Product%20App%20Issue">Developers</a>
+            .
+          </p>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={toggle}>Okay</Button>
+          <Button color="success" outline onClick={toggle}>Okay</Button>
         </ModalFooter>
       </Modal>
     </>
