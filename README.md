@@ -37,6 +37,8 @@ Product, Tech_1, Tech_1 Buzzwords, ..., Tech_n, Tech_n Buzzwords, Support Method
 - Changing the order of columns (other than T/B pairs)
 
 ## Developer Doc
+Full documentation can be found [here](https://benelan.github.io/product2queue/).
+
 ### App.js
 - Loads and decodes the CSV
 	- ``getCsvData(path)``
