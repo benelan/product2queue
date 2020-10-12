@@ -82,7 +82,7 @@ const Navb = () => {
                   rel="noopener noreferrer"
                   href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view"
                 >
-                  SDK
+                  Developer Products
                 </NavLink>
               </DropdownItem>
             </DropdownMenu>
