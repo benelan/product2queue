@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="ErrorBoundary.html">ErrorBoundary</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
                 
             </nav>
         </div>
@@ -103,7 +103,7 @@ class Result extends React.PureComponent {
   render() {
     // hyperlink color
     const linkStyle = {
-      color: '#738CA6',
+      color: '#5cb85c',
     }
 
     // URLs for transfer resources
@@ -116,7 +116,7 @@ class Result extends React.PureComponent {
         { // if there are results, display them
           results.product ? (
             &lt;div>
-              &lt;Label style={{ marginBottom: '11px' }} for="res">Results&lt;/Label>
+              &lt;Label style={{ marginBottom: '12px' }} for="res">Results&lt;/Label>
               &lt;ListGroup>
                 &lt;ListGroupItem>
                   &lt;b>Product:&lt;/b>
@@ -208,7 +208,9 @@ export default Result
 
 
             </div>
-          
+            
+            
+            
         </div>
         <div id="side-nav" class="side-nav">
         </div>

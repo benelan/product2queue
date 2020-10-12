@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/ui/Technology.jsx</title>
+  <title> components/ErrorBoundary.jsx</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>components/ui/Technology.jsx</h1>
+                    <h1>components/ErrorBoundary.jsx</h1>
                 </header>
                 
 
@@ -91,94 +91,67 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react'
 import PropTypes from 'prop-types'
-import { Label, Card } from 'reactstrap'
-import Select from 'react-select'
 
 /**
- * Displays dropdown input for Technologies
+ * Error Boundary resets the state or refreshes the page if no resetState function is provided
  * @component
- * @author Ben Elan &amp; Lingtao Xie
- * @parent Search
  */
-const Technology = class extends React.Component {
-  // resets the dropdown
-  clear() {
-    this.inputTech.state.value = { value: 'Any', label: 'Any' }
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+    this.resetComponentState = this.resetComponentState.bind(this)
+  }
+
+  static getDerivedStateFromError() {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.log(error, errorInfo)
+  }
+
+  resetComponentState() {
+    const { resetState } = this.props
+    if (resetState) resetState()
+    else document.location.reload()
+    this.setState({ hasError: false })
   }
 
   render() {
-    // deconstruct props
-    const { techList, onTechnologyChange } = this.props
-    // the style for the dropdown
-    const dropdownStyles = {
-      control: (styles) => ({ // unopened dropdown style
-        ...styles,
-        backgroundColor: '#F7F9FA',
-        cursor: 'pointer',
-        boxShadow: 'none',
-        minHeight: '40px',
-        height: '40px',
-      }),
-      menu: (base) => ({ // dropdown menu box
-        ...base,
-        marginTop: '21.5px',
-        left: '-20px',
-        width: 'calc(100% + 40px)',
-        boxShadow: '0.5px 0.5px 0.5px 0.5px lightgray',
-        minHeight: 'fit-content',
-        minWidth: 'fit-content',
-      }),
-      option: (styles, { isFocused }) => ({ // individual option elements
-        ...styles,
-        backgroundColor: isFocused ? '#bfdcae' : 'white',
-        ':active': {
-          ...styles[':active'],
-          backgroundColor: '#5cb85c',
-        },
-        color: 'black',
-        cursor: 'pointer',
-        minHeight: 'fit-content',
-        minWidth: 'fit-content',
-        paddingTop: '6px',
-        paddingBottom: '6px',
-        fontSize: '16px',
-      }),
+    const { hasError } = this.state
+    const { children } = this.props
+    if (hasError) {
+      return (
+        &lt;div className="d-flex justify-content-center m-4">
+          &lt;button
+            type="button"
+            className="btn btn-success btn-sm ml-2"
+            onClick={this.resetComponentState}
+          >
+            Something Went Wrong, Click To Reset.
+          &lt;/button>
+        &lt;/div>
+      )
     }
 
-    // turn the tech list into react-select compatible object
-    const items = techList.map((tech) => ({ value: tech, label: tech }))
-
-    // add 'Any' to the beginning of the list
-    items.unshift({ value: 'Any', label: 'Any' })
-
-    return (
-      &lt;>
-        &lt;Label style={{ marginBottom: '13px' }} for="exampleSelect">
-          Technology
-        &lt;/Label>
-        &lt;Card style={{ height: '82px' }} body>
-          &lt;Select
-            ref={(input) => { this.inputTech = input; return input }}
-            defaultValue={items[0]}
-            label="Select Technology"
-            options={items}
-            styles={dropdownStyles}
-            onChange={(e) => onTechnologyChange(e.value)}
-          />
-        &lt;/Card>
-      &lt;/>
-    )
+    return children
   }
 }
 
-Technology.propTypes = {
-  /** event handler for technology input */
-  onTechnologyChange: PropTypes.func.isRequired,
-  /** Array of technologies */
-  techList: PropTypes.instanceOf(Array).isRequired,
+ErrorBoundary.defaultProps = {
+  resetState: null,
 }
 
-export default Technology
+ErrorBoundary.propTypes = {
+  /** the children */
+  children: PropTypes.node.isRequired,
+  /** reset the state of the failed component */
+  resetState: PropTypes.func,
+}
+
+export default ErrorBoundary
 </code></pre>
         </article>
     </section>

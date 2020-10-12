@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="ErrorBoundary.html">ErrorBoundary</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
                 
             </nav>
         </div>
@@ -95,6 +95,7 @@ import { Row, Col, Button } from 'reactstrap'
 import Product from './ui/Product'
 import Technology from './ui/Technology'
 import Result from './ui/Result'
+import ErrorBoundary from './ErrorBoundary'
 
 /**
  * Handles input change events from child UI components,
@@ -263,6 +264,7 @@ class Search extends React.Component {
     this.handleTechnologyChange = this.handleTechnologyChange.bind(this)
     this.handleFilterClick = this.handleFilterClick.bind(this)
     this.clear = this.clear.bind(this)
+    this.resetState = this.resetState.bind(this)
   }
 
   /** Performs the lunr search using state/props and static methods */
@@ -395,7 +397,6 @@ class Search extends React.Component {
   handleFilterClick(item) {
     const { prod, tech } = this.props
     const { query } = this.state
-
     const results = Search.findResult({
       item, query, prod, tech,
     })
@@ -418,6 +419,18 @@ class Search extends React.Component {
     this.inputTech.clear()
   }
 
+  resetState() {
+    this.setState({
+      filtered: [],
+      query: {
+        product: '',
+        technology: 'Any',
+        buzzwords: '',
+      },
+      results: {},
+    })
+  }
+
   render() {
     // deconstruct state
     const {
@@ -435,13 +448,13 @@ class Search extends React.Component {
       || results.length > 0)
 
     return (
-      &lt;>
+      &lt;ErrorBoundary resetState={this.resetState}>
         &lt;Row className="mt-2 mr-1">
           &lt;Col md={{ size: 1, offset: 11 }}>
             &lt;Button
               className="float-right"
               outline
-              color="secondary"
+              color="success"
               size="sm"
               disabled={buttonDisabled}
               onClick={this.clear}
@@ -498,7 +511,7 @@ class Search extends React.Component {
             &lt;/Col>
           &lt;/Row>
         )}
-      &lt;/>
+      &lt;/ErrorBoundary>
     )
   }
 }
@@ -529,7 +542,9 @@ export default Search
 
 
             </div>
-          
+            
+            
+            
         </div>
         <div id="side-nav" class="side-nav">
         </div>

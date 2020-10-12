@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="ErrorBoundary.html">ErrorBoundary</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
                 
             </nav>
         </div>
@@ -122,16 +122,31 @@ const Navb = () => {
     fontSize: '16px',
     padding: 0,
     margin: 0,
+    marginLeft: '-15px',
+    marginRight: '-15px',
   }
 
   return (
-    &lt;Navbar dark color="dark" expand="md">
-      &lt;NavbarBrand href="/">Product to Queue&lt;/NavbarBrand>
+    &lt;Navbar dark style={{ backgroundColor: '#206a5d' }} expand="md">
+      &lt;NavbarBrand href="/">
+        {' '}
+        &lt;img src={`${process.env.PUBLIC_URL}/esri.png`} style={{ width: 25, height: 25 }} alt="" />
+        {' '}
+        Product to Queue
+      &lt;/NavbarBrand>
       &lt;NavbarToggler onClick={toggle} />
       &lt;Collapse isOpen={isOpen} navbar>
         &lt;Nav className="mr-auto" navbar>
           &lt;NavItem>
             &lt;About buttonLabel="About" />
+          &lt;/NavItem>
+          &lt;NavItem>
+            &lt;NavLink
+              rel="noopener noreferrer"
+              href="mailto:JMallinckrodt@esri.com?subject=Product%20App%20Feedback"
+            >
+              Provide Feedback
+            &lt;/NavLink>
           &lt;/NavItem>
           &lt;UncontrolledDropdown nav inNavbar>
             &lt;DropdownToggle nav caret>
@@ -139,10 +154,10 @@ const Navb = () => {
             &lt;/DropdownToggle>
             &lt;DropdownMenu
               style={{
-                top: 35, left: +8, padding: 0, margin: 0,
+                top: 35, left: +8, padding: 0, margin: -2,
               }}
             >
-              &lt;DropdownItem>
+              &lt;DropdownItem className="highlightStyle">
                 &lt;NavLink
                   style={linkStyle}
                   target="_blank"
@@ -153,7 +168,7 @@ const Navb = () => {
                 &lt;/NavLink>
               &lt;/DropdownItem>
               {/* &lt;DropdownItem divider /> */}
-              &lt;DropdownItem>
+              &lt;DropdownItem className="highlightStyle">
                 &lt;NavLink
                   style={linkStyle}
                   target="_blank"
@@ -180,7 +195,9 @@ export default Navb
 
 
             </div>
-          
+            
+            
+            
         </div>
         <div id="side-nav" class="side-nav">
         </div>

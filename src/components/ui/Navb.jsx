@@ -31,6 +31,8 @@ const Navb = () => {
     fontSize: '16px',
     padding: 0,
     margin: 0,
+    marginLeft: -15,
+    marginRight: -15,
   }
 
   return (
@@ -61,7 +63,7 @@ const Navb = () => {
             </DropdownToggle>
             <DropdownMenu
               style={{
-                top: 35, left: +8, padding: 0, margin: 0,
+                top: 35, left: +8, padding: 0, margin: -2,
               }}
             >
               <DropdownItem className="highlightStyle">

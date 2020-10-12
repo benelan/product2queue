@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+/**
+ * Error Boundary resets the state or refreshes the page if no resetState function is provided
+ * @component
+ */
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
