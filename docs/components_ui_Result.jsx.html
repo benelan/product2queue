@@ -115,22 +115,19 @@ class Result extends React.PureComponent {
       &lt;>
         { // if there are results, display them
           results.product ? (
-            &lt;div>
-              &lt;Label style={{ marginBottom: '12px' }} for="res">Results&lt;/Label>
-              &lt;ListGroup>
+            &lt;>
+              &lt;Label style={{ marginBottom: '13px' }} for="res">Results&lt;/Label>
+              &lt;ListGroup id="res">
                 &lt;ListGroupItem>
-                  &lt;b>Product:&lt;/b>
-                  {' '}
+                  &lt;b>Product: &lt;/b>
                   {results.product}
                 &lt;/ListGroupItem>
                 &lt;ListGroupItem>
-                  &lt;b>Queue:&lt;/b>
-                  {' '}
+                  &lt;b>Queue: &lt;/b>
                   {results.visibleQueue}
                 &lt;/ListGroupItem>
                 &lt;ListGroupItem>
-                  &lt;b>Support Method:&lt;/b>
-                  {' '}
+                  &lt;b>Support Method: &lt;/b>
                   {results.supportMethod}
                 &lt;/ListGroupItem>
 
@@ -141,9 +138,7 @@ class Result extends React.PureComponent {
                         &lt;b>Reference&lt;/b>
                       &lt;/a>
                     &lt;/ListGroupItem>
-                  ) : (
-                    ''
-                  )
+                  ) : ('')
                 }
                 { // display email if there is one
                   results.email ? (
@@ -153,9 +148,7 @@ class Result extends React.PureComponent {
                         {results.email}
                       &lt;/a>
                     &lt;/ListGroupItem>
-                  ) : (
-                    ''
-                  )
+                  ) : ('')
                 }
                 { // display data transfer resource if the data queue in results
                   results.visibleQueue.includes('Data') ? (
@@ -166,9 +159,7 @@ class Result extends React.PureComponent {
                       {' '}
                       before transferring to Data Management.
                     &lt;/ListGroupItem>
-                  ) : (
-                    ''
-                  )
+                  ) : ('')
                 }
                 { // display sdk transfer resource if the sdk queue in results
                   results.visibleQueue.includes('SDK') ? (
@@ -177,17 +168,13 @@ class Result extends React.PureComponent {
                       {' '}
                       &lt;a target="_blank" rel="noopener noreferrer" style={linkStyle} href={sdk}>this documentation&lt;/a>
                       {' '}
-                      before transferring to SDK.
+                      before transferring to Develper Products.
                     &lt;/ListGroupItem>
-                  ) : (
-                    ''
-                  )
+                  ) : ('')
                 }
               &lt;/ListGroup>
-            &lt;/div>
-          ) : ( // display nothing if there are no results
-            ''
-          )
+            &lt;/>
+          ) : ('') // display nothing if there are no results
         }
       &lt;/>
     )

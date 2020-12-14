@@ -37,7 +37,7 @@ const Navb = () => {
 
   return (
     <Navbar dark style={{ backgroundColor: '#206a5d' }} expand="md">
-      <NavbarBrand href="/">
+      <NavbarBrand>
         {' '}
         <img src={`${process.env.PUBLIC_URL}/esri.png`} style={{ width: 25, height: 25 }} alt="" />
         {' '}
@@ -49,14 +49,6 @@ const Navb = () => {
           <NavItem>
             <About buttonLabel="About" />
           </NavItem>
-          {/* <NavItem>
-            <NavLink
-              rel="noopener noreferrer"
-              href="mailto:JMallinckrodt@esri.com?subject=Product%20App%20Feedback"
-            >
-              Provide Feedback
-            </NavLink>
-          </NavItem> */}
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
               Transfer Resources
