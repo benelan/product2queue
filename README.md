@@ -40,12 +40,12 @@ Product, Tech_1, Tech_1 Buzzwords, ..., Tech_n, Tech_n Buzzwords, Support Method
 Full documentation can be found [here](https://benelan.github.io/product2queue/).
 
 ### App.js
-- Loads and decodes the CSV
-	- ``getCsvData(path)``
-- Parses the CSV into the objects/arrays needed for the app
-	- ``parseData(results)``
+- Loads the CSV and converts it to JSON
+	- ``getData(pathToCSV)``
+- Parses the JSON into the objects/arrays needed for the app
+	- ``parseData(jsonData)``
 - Creates a search index from the parsed JSON
-	- ``createIndex(documents)``
+	- ``createIndex(documents, techList)``
 - The index is passed to the ``Search`` child component along with the other objects
 - ``Navbar`` is also rendered
 
@@ -60,8 +60,8 @@ Full documentation can be found [here](https://benelan.github.io/product2queue/)
 	- ``handleTechnologyChange(newTech)`` - searches
   - ``handleFilterClick(item)`` - finds item properties
 - Searching creates a Lunr query string using the ``createSearchString`` static method. It then performs the search and displays the matches in a ``VirtualScroll`` in the ``Product`` component
-  - ``doSearch()``
-- If there is only one match, or a match is clicked on: the static method ``findResult`` is used to retrieve the product info for display in ``Result``
+  - ``doLunrSearch()``
+- If there is only one match, or a match is clicked on: the static method ``getSelectedProductInfo`` is used to retrieve the product info for display in ``Result``
 
 ## Reporting Issues
 Issues with the application can be reported to Ben Elan or Lingtao Xie. If the spreadsheet needs to be edited in a way that requires changes to the code, feel free to reach out to us as well. We would be happy to help get the application working with the necessary changes.

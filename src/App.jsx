@@ -32,6 +32,27 @@ class App extends React.Component {
   }
 
   /**
+   * Fetches csv and parses it to json
+   * @method
+   * @static
+   * @param  {String} path - where to fetch csv
+   * @return {Object} parsed json data
+   */
+  static getData(pathToCSV) {
+    return new Promise((resolve, reject) => {
+      Papa.parse(pathToCSV, {
+        download: true,
+        complete(data) {
+          resolve(data)
+        },
+        error(err) {
+          reject(err)
+        },
+      })
+    })
+  }
+
+  /**
     * Parses csv data into format needed by Lunr
     * @method
     * @static
@@ -45,7 +66,7 @@ class App extends React.Component {
     const prod = [] // final json of products
     const tech = {} // final json of tech to queue
     const techList = [] // for populating the dropdown menu
-    const header = jsonData.data[0] // the header of the csv
+    const header = jsonData[0] // the header of the csv
 
     const len = header.length - 1
     // iterate through the technology/buzzword pairs
@@ -56,7 +77,7 @@ class App extends React.Component {
       techList.push(header[i])
     }
     // iterate through the rows
-    jsonData.data.forEach((row, index) => {
+    jsonData.forEach((row, index) => {
       // if the row is not the header
       if (index !== 0) {
         // init the product object
@@ -113,8 +134,7 @@ class App extends React.Component {
    * @return {Object} the search index
    */
   static createIndex(documents, techArray) {
-    // eslint-disable-next-line func-names
-    const idx = lunr(function () {
+    return lunr(function idx() {
       // stemming causes issues when doing wildcard searches
       this.pipeline.remove(lunr.stemmer)
       this.searchPipeline.remove(lunr.stemmer)
@@ -134,8 +154,6 @@ class App extends React.Component {
         this.add(doc)
       }, this)
     })
-
-    return idx
   }
 
   constructor(props) {
@@ -149,27 +167,27 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    const that = this
-    Papa.parse('./data/product_queue.csv', {
-      download: true,
-      complete(data) {
-        // parse the json creating objects/arrays
-        const { prod, tech, techList } = App.parseData(data)
-        // create the search index
-        const index = App.createIndex(prod, techList)
-        // check if the user agent is a mobile device
-        const isMobile = App.checkIsMobile()
-        // set all of the values to state
-        that.setState({
-          prod,
-          tech,
-          techList,
-          index,
-          isMobile,
-        })
-      },
-    })
+  async componentDidMount() {
+    try {
+      // get the csv and convert it to json
+      const response = await App.getData('./data/product_queue.csv')
+      // parse the json creating objects/arrays
+      const { prod, tech, techList } = App.parseData(response.data)
+      // create the search index
+      const index = App.createIndex(prod, techList)
+      // check if the user agent is a mobile device
+      const isMobile = App.checkIsMobile()
+      // set all of the values to state
+      this.setState({
+        prod,
+        tech,
+        techList,
+        index,
+        isMobile,
+      })
+    } catch (err) {
+      console.error('could not parse csv:', err)
+    }
 
     /* beautiful code which reloads the page if there is an error
      * jk will add error boundaries soon
@@ -184,7 +202,7 @@ class App extends React.Component {
     } = this.state
     return (
       <>
-        <ErrorBoundary>
+        <ErrorBoundary buttonClass="btn btn-success btn-sm ml-2">
           <Navb />
           <Search
             index={index}

@@ -141,19 +141,19 @@ npm start
 <p>Full documentation can be found <a href="https://benelan.github.io/product2queue/">here</a>.</p>
 <h3>App.js</h3>
 <ul>
-<li>Loads and decodes the CSV
+<li>Loads the CSV and converts it to JSON
 <ul>
-<li><code>getCsvData(path)</code></li>
+<li><code>getData(pathToCSV)</code></li>
 </ul>
 </li>
-<li>Parses the CSV into the objects/arrays needed for the app
+<li>Parses the JSON into the objects/arrays needed for the app
 <ul>
-<li><code>parseData(results)</code></li>
+<li><code>parseData(jsonData)</code></li>
 </ul>
 </li>
 <li>Creates a search index from the parsed JSON
 <ul>
-<li><code>createIndex(documents)</code></li>
+<li><code>createIndex(documents, techList)</code></li>
 </ul>
 </li>
 <li>The index is passed to the <code>Search</code> child component along with the other objects</li>
@@ -178,10 +178,10 @@ npm start
 </li>
 <li>Searching creates a Lunr query string using the <code>createSearchString</code> static method. It then performs the search and displays the matches in a <code>VirtualScroll</code> in the <code>Product</code> component
 <ul>
-<li><code>doSearch()</code></li>
+<li><code>doLunrSearch()</code></li>
 </ul>
 </li>
-<li>If there is only one match, or a match is clicked on: the static method <code>findResult</code> is used to retrieve the product info for display in <code>Result</code></li>
+<li>If there is only one match, or a match is clicked on: the static method <code>getSelectedProductInfo</code> is used to retrieve the product info for display in <code>Result</code></li>
 </ul>
 <h2>Reporting Issues</h2>
 <p>Issues with the application can be reported to Ben Elan or Lingtao Xie. If the spreadsheet needs to be edited in a way that requires changes to the code, feel free to reach out to us as well. We would be happy to help get the application working with the necessary changes.</p>

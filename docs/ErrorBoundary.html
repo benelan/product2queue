@@ -90,7 +90,7 @@
 <header>
     
         <h2>
-            &ltErrorBoundary <i>children</i> <i>resetState</i> /&gt
+            &ltErrorBoundary <i>children</i> <i>buttonClass</i> <i>buttonText</i> <i>resetState</i> /&gt
         </h2>
         
             <div class="class-description"><p>Error Boundary resets the state or refreshes the page if no resetState function is provided</p></div>
@@ -117,7 +117,7 @@
         
         <span class="code-name">
             
-                &ltErrorBoundary <i>children</i> <i>resetState</i> /&gt
+                &ltErrorBoundary <i>children</i> <i>buttonClass</i> <i>buttonText</i> <i>resetState</i> /&gt
             
         </span>
     </h4>
@@ -157,6 +157,28 @@
             <td>Yes</td>
             <td>the children</td>
             <td></td>
+          </tr>
+          
+    
+          <tr class="deep-level-0">
+            <td class="name"><code>buttonClass</code></td>
+            <td>
+              string
+            </td>
+            <td>No</td>
+            <td>the class of the reload button for css styling</td>
+            <td>'btn btn-outline-secondary btn-sm m-2'</td>
+          </tr>
+          
+    
+          <tr class="deep-level-0">
+            <td class="name"><code>buttonText</code></td>
+            <td>
+              string
+            </td>
+            <td>No</td>
+            <td>the text for the reload button</td>
+            <td>'Something Went Wrong, Click To Reset.'</td>
           </tr>
           
     

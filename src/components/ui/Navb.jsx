@@ -37,7 +37,7 @@ const Navb = () => {
 
   return (
     <Navbar dark style={{ backgroundColor: '#206a5d' }} expand="md">
-      <NavbarBrand>
+      <NavbarBrand style={{ cursor: 'default' }}>
         {' '}
         <img src={`${process.env.PUBLIC_URL}/esri.png`} style={{ width: 25, height: 25 }} alt="" />
         {' '}
