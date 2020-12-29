@@ -67,7 +67,7 @@ const Technology = class extends React.Component {
         </Label>
         <Card style={{ height: '82px' }} body>
           <Select
-            ref={(input) => { this.inputTech = input; return input }}
+            ref={(input) => { this.inputTech = input }}
             defaultValue={items[0]}
             label="Select Technology"
             options={items}

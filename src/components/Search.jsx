@@ -8,7 +8,7 @@ import ErrorBoundary from './ErrorBoundary'
 
 /**
  * Handles input change events from child UI components,
- *  creates and excutes searches, finds resulting data
+ *  creates and executes searches, finds resulting data
  * @author Ben Elan
  * @component
  * @parent App
@@ -16,12 +16,12 @@ import ErrorBoundary from './ErrorBoundary'
  */
 class Search extends React.Component {
   /**
-   * Formulates a search string for use in Lunr
-   * @param {Object} input - contains the properties below
-   * @param  {Object} input.query - the selected items to search for
-   * @param  {Array} input.techList - the full list of technologies
-   * @return {String} the search string for Lunr
-   */
+    * Formulates a search string for use in Lunr
+    * @param {Object} input - contains the properties below
+    * @param  {Object} input.query - the selected items to search for
+    * @param  {Array} input.techList - the full list of technologies
+    * @return {String} the search string for Lunr
+  */
   static createSearchString({ query, techList }) {
     // * wildcard means anything can be  before or behind the search value
     // ie *at* would include 'attack', 'fat', 'matter', etc
@@ -29,7 +29,7 @@ class Search extends React.Component {
     let q = '' // init query string
     let search = false
     // ---- FOR PRODUCT SEARCHES  ---- \\
-    if (query.product !== '') {
+    if (query.product && query.product !== '') {
       search = true
       // split search words
       const products = query.product.split(' ')
@@ -42,7 +42,7 @@ class Search extends React.Component {
         q += ` +technology:${query.technology}`
       }
       // ---- FOR BUZZWORD SEARCHES  ---- \\
-    } else if (query.buzzwords !== '') {
+    } else if (query.buzzwords && query.buzzwords !== '') {
       search = true
       // split search words
       const buzzwords = query.buzzwords.split(' ')
@@ -52,7 +52,10 @@ class Search extends React.Component {
         // iterate through the buzzwords adding them to the
         // search value for the tech specified in the dropdown
         buzzwords.forEach((buzz) => {
-          q += ` +b_${query.technology.replace(/\s/g, '')}:*${buzz}*`
+          q += ` +b_${query.technology.replace(
+            /\s/g,
+            '',
+          )}:*${buzz}*`
         })
       } else {
         // if a tech isn't specified, iterate through the buzzwords
@@ -64,7 +67,6 @@ class Search extends React.Component {
         })
       }
     } else if (
-      // if only the technology is specified
       query.buzzwords === ''
       && query.buzzwords === ''
       && query.technology !== 'Any'
@@ -81,22 +83,22 @@ class Search extends React.Component {
   }
 
   /**
-   * Finds product info after a suggestion is clicked on
-   * @param {Object} input - contains the properties below
-   * @param  {Object} input.item - the selected lunr search index item
-   * @param  {Object} input.query - the selected items to search for
-   * @param  {Array} input.prod - the products key/pair with all info
-   * @param  {Object} input.tech - the tech key/pair with the queues
-   * @return {Object} the product info to display in results
-   */
-  static getSelectedProductInfo({
+    * Finds product info after a suggestion is clicked on
+    * @param {Object} input - contains the properties below
+    * @param  {Object} input.item - the selected lunr search index item
+    * @param  {Object} input.query - the selected items to search for
+    * @param  {Array} input.prod - the products key/pair with all info
+    * @param  {Object} input.tech - the tech key/pair with the queues
+    * @return {Object} the product info to display in results
+  */
+  static findResult({
     item, query, prod, tech,
   }) {
-    // match the index ref to the full data struct to get all of the info
+    // match the index ref to the full data structure to get all of the info
     const matches = prod.find((res) => item.ref === res.product)
     // create an array of queues
     const queueArray = matches.queue.split(',').map((entry) => entry.trim())
-    // create a seperate list of queues that will be visible in the results
+    // create a separate list of queues that will be visible in the results
     matches.visibleQueue = matches.queue
 
     // if there is more than one queue
@@ -108,7 +110,11 @@ class Search extends React.Component {
         // iterate through the queues
         queueArray.forEach((q) => {
           // check if the queue is in the selected technology
-          if (tech[query.technology.replace(/\s/g, '')].includes(q.trim())) {
+          if (
+            tech[
+              query.technology.replace(/\s/g, '')
+            ].includes(q.trim())
+          ) {
             // if it is, add it to the visible list
             temp += q.trim()
           }
@@ -117,7 +123,10 @@ class Search extends React.Component {
       }
 
       // if we are doing a buzzword search and Technology is Any
-      if (!!query.buzzwords && query.technology === 'Any') {
+      if (
+        !!query.buzzwords
+        && query.technology === 'Any'
+      ) {
         const buzzTechs = new Set() // init Set
         // iterate through all of the buzzwords
         Object.values(item.matchData.metadata).forEach((buzz) => {
@@ -168,7 +177,7 @@ class Search extends React.Component {
   }
 
   /** Performs the lunr search using state/props and static methods */
-  doLunrSearch() {
+  doSearch() {
     const {
       prod, tech, techList, index,
     } = this.props
@@ -184,11 +193,8 @@ class Search extends React.Component {
       // if there is only one result display its info
       if (filtered.length === 1) {
         const item = filtered[0]
-        const results = Search.getSelectedProductInfo({
-          item,
-          query,
-          prod,
-          tech,
+        const results = Search.findResult({
+          item, query, prod, tech,
         })
         this.setState({ results })
       }
@@ -196,15 +202,14 @@ class Search extends React.Component {
   }
 
   /**
-   * Event handler for the product input.
-   * Changes state and then starts the search.
-   * @param  {String} newProd - the new product input
-   */
+    * Event handler for the product input.
+    * Changes state and then starts the search.
+    * @param  {String} newProd - the new product input
+  */
   async handleProductChange(newProd) {
     // clear the dropdown and results and change query
     await this.setState((prevState) => ({
-      query: {
-        // object that we want to update
+      query: { // object that we want to update
         ...prevState.query, // keep all other key-value pairs
         product: newProd,
         buzzwords: '',
@@ -212,112 +217,113 @@ class Search extends React.Component {
       filtered: [],
       results: {},
     }))
-    this.doLunrSearch()
+    this.doSearch()
   }
 
   /**
-   * Event handler for the buzzword input.
-   * Changes state and then starts the search.
-   * @param  {String} newBuzz - the new buzzword input
-   */
-  handleBuzzwordsChange(newBuzz) {
+    * Event handler for the buzzword input.
+    * Changes state and then starts the search.
+    * @param  {String} newBuzz - the new buzzword input
+  */
+  async handleBuzzwordsChange(newBuzz) {
     // clear the dropdown and results and change query
-    this.setState(
-      (prevState) => ({
-        query: {
-          // object that we want to update
-          ...prevState.query, // keep all other key-value pairs
-          buzzwords: newBuzz,
-          product: '',
-        },
-        filtered: [],
-        results: {},
-      }),
-      this.doLunrSearch(),
-    )
+    await this.setState((prevState) => ({
+      query: { // object that we want to update
+        ...prevState.query, // keep all other key-value pairs
+        buzzwords: newBuzz,
+        product: '',
+      },
+      filtered: [],
+      results: {},
+    }))
+    this.doSearch()
   }
 
   /**
-   * Event handler for the technology input.
-   * Changes state, manipulates results, and then starts the search.
-   * @param  {String} newTech - the new technology selection
-   */
-  handleTechnologyChange(newTech) {
+    * Event handler for the technology input.
+    * Changes state, manipulates results, and then starts the search.
+    * @param  {String} newTech - the new technology selection
+  */
+  async handleTechnologyChange(newTech) {
     const { results } = this.state
     const { tech } = this.props
 
-    this.setState(
-      (prevState) => ({
-        query: {
-          // object that we want to update
-          ...prevState.query, // keep all other key-value pairs
-          technology: newTech, // update the value of specific key
-        },
-      }),
-      () => {
-        // the section below is for changing the queue/tech in the results
-        // when the technology dropdown is changed
-        if (results.product) {
-          // set original results
-          const resultsClone = { ...results }
-          // set the list of original techs
-          const originalTech = resultsClone.technology
-            .split(',')
-            .map((item) => item.trim())
-          // set the state to the technology input value if the original result
-          // includes the selected tech we will narrow down the visible queues
-          if (originalTech.includes(newTech)) {
-            // set the temp string of queues which is what will be visible
-            let temp = ''
-            // create the list of queues in the original results
-            const originalQueues = resultsClone.queue.split(',')
-            // iterate through the queues
-            originalQueues.forEach((query) => {
-              // if the queue belongs to the selected tech
-              if (tech[newTech.replace(/\s/g, '')].includes(query.trim())) {
-                // add it to the temp string
-                temp += query.trim()
-              }
-            })
-            // set the temp string to the visible results
-            resultsClone.visibleQueue = temp
-
-            this.setState({ results: resultsClone })
-          } else if (newTech === 'Any') {
-            resultsClone.visibleQueue = resultsClone.queue
-          } else {
-            // clear the dropdown and results
-            this.setState({ filtered: [], results: {} })
-          }
-        } else {
-          // clear the dropdown and results
-          this.setState({ filtered: [], results: {} })
-        }
-        this.doLunrSearch()
+    await this.setState((prevState) => ({
+      query: { // object that we want to update
+        ...prevState.query, // keep all other key-value pairs
+        technology: newTech, // update the value of specific key
       },
-    )
+    }))
+
+    // the section below is for changing the queue/tech in the results
+    // when the technology dropdown is changed
+    if (results.product) {
+      // set original results
+      const originalResults = { ...results }
+      // set the list of original techs
+      const originalTech = originalResults.technology.split(',').map((item) => item.trim())
+      // set the state to the technology input value if the original result
+      // includes the selected tech we will narrow down the visible queues
+      if (originalTech.includes(newTech)) {
+        // set the temp string of queues which is what will be visible
+        let temp = ''
+        // create the list of queues in the original results
+        const originalQueues = originalResults.queue.split(',')
+        // iterate through the queues
+        originalQueues.forEach((query) => {
+          // if the queue belongs to the selected tech
+          if (
+            tech[newTech.replace(/\s/g, '')].includes(
+              query.trim(),
+            )
+          ) {
+            // add it to the temp string
+            temp += query.trim()
+          }
+        })
+        // set the temp string to the visible results
+        originalResults.visibleQueue = temp
+
+        this.setState({ results: originalResults })
+      } else if (newTech === 'Any') {
+        originalResults.visibleQueue = originalResults.queue
+      } else {
+        // clear the dropdown and results
+        this.setState({ filtered: [], results: {} })
+      }
+    } else {
+      // clear the dropdown and results
+      this.setState({ filtered: [], results: {} })
+    }
+    this.doSearch()
   }
 
   /**
-   * Event handler for clicking on a search suggestion.
-   * Finds results for the clicked item and sets them to state.
-   * @param  {Object} item - the selected product
-   */
+    * Event handler for clicking on a search suggestion.
+    * Finds results for the clicked item and sets them to state.
+    * @param  {Object} item - the selected product
+  */
   handleFilterClick(item) {
     const { prod, tech } = this.props
     const { query } = this.state
-    const results = Search.getSelectedProductInfo({
-      item,
-      query,
-      prod,
-      tech,
+    const results = Search.findResult({
+      item, query, prod, tech,
     })
     this.setState({ results })
   }
 
   /** resets the state and clears the input UI */
   clear() {
-    this.resetState()
+    this.setState({
+      filtered: [],
+      query: {
+        product: '',
+        technology: 'Any',
+        buzzwords: '',
+      },
+      results: {},
+    })
+
     this.inputProd.clear()
     this.inputTech.clear()
   }
@@ -336,17 +342,19 @@ class Search extends React.Component {
 
   render() {
     // deconstruct state
-    const { query, results, filtered } = this.state
+    const {
+      query, results, filtered,
+    } = this.state
     // deconstruct props
-    const { techList, isMobile } = this.props
+    const {
+      techList, isMobile,
+    } = this.props
 
     // if inputs are empty disable clear button
-    const buttonDisabled = !(
-      query.product
+    const buttonDisabled = !(query.product
       || query.buzzwords
       || query.technology !== 'Any'
-      || results.length > 0
-    )
+      || results.length > 0)
 
     return (
       <ErrorBoundary resetState={this.resetState}>
@@ -372,20 +380,14 @@ class Search extends React.Component {
             </Col>
             <Col className="mb-2 mt-1" md={{ size: 3, offset: 0 }}>
               <Technology
-                ref={(input) => {
-                  this.inputTech = input
-                  return input
-                }}
+                ref={(input) => { this.inputTech = input }}
                 onTechnologyChange={this.handleTechnologyChange}
                 techList={techList}
               />
             </Col>
             <Col className="mb-1" md={{ size: 5, offset: 0 }}>
               <Product
-                ref={(input) => {
-                  this.inputProd = input
-                  return input
-                }}
+                ref={(input) => { this.inputProd = input }}
                 filtered={filtered}
                 onProductChange={this.handleProductChange}
                 onBuzzwordsChange={this.handleBuzzwordsChange}
@@ -397,10 +399,7 @@ class Search extends React.Component {
           <Row className="justify-content-md-center ml-2 mr-2">
             <Col className="mb-1" md={{ size: 5, offset: 0 }}>
               <Product
-                ref={(input) => {
-                  this.inputProd = input
-                  return input
-                }}
+                ref={(input) => { this.inputProd = input }}
                 filtered={filtered}
                 onProductChange={this.handleProductChange}
                 onBuzzwordsChange={this.handleBuzzwordsChange}
@@ -410,10 +409,7 @@ class Search extends React.Component {
 
             <Col className="mb-2 mt-1" md={{ size: 3, offset: 0 }}>
               <Technology
-                ref={(input) => {
-                  this.inputTech = input
-                  return input
-                }}
+                ref={(input) => { this.inputTech = input }}
                 onTechnologyChange={this.handleTechnologyChange}
                 techList={techList}
               />

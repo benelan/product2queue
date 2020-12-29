@@ -131,7 +131,7 @@ class Product extends React.Component {
           <TabPane tabId="1">
             <Card style={{ height: '82px' }} body>
               <Input
-                innerRef={(input) => { this.inputProd = input; return input }}
+                innerRef={(input) => { this.inputProd = input }}
                 type="search"
                 name="searchProduct"
                 className="input"
@@ -145,7 +145,7 @@ class Product extends React.Component {
           <TabPane tabId="2">
             <Card style={{ height: '82px' }} body>
               <Input
-                innerRef={(input) => { this.inputBuzz = input; return input }}
+                innerRef={(input) => { this.inputBuzz = input }}
                 type="search"
                 name="searchBuzzwords"
                 className="input"
