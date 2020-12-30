@@ -47,7 +47,7 @@ Full documentation can be found [here](https://benelan.github.io/product2queue/)
 - Creates a search index from the parsed JSON
 	- ``createIndex(documents, techList)``
 - The index is passed to the ``Search`` child component along with the other objects
-- ``Navbar`` is also rendered
+- ``Navb`` is also rendered
 
 ### Search.js
 - The child UI components are rendered

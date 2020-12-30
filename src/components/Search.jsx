@@ -99,7 +99,7 @@ class Search extends React.Component {
     // create an array of queues
     const queueArray = matches.queue.split(',').map((entry) => entry.trim())
     // create a separate list of queues that will be visible in the results
-    matches.visibleQueue = matches.queue
+    matches.visibleQueue = [...matches.queue]
 
     // if there is more than one queue
     if (queueArray.length > 1) {
@@ -206,9 +206,9 @@ class Search extends React.Component {
     * Changes state and then starts the search.
     * @param  {String} newProd - the new product input
   */
-  async handleProductChange(newProd) {
+  handleProductChange(newProd) {
     // clear the dropdown and results and change query
-    await this.setState((prevState) => ({
+    this.setState((prevState) => ({
       query: { // object that we want to update
         ...prevState.query, // keep all other key-value pairs
         product: newProd,
@@ -216,8 +216,9 @@ class Search extends React.Component {
       },
       filtered: [],
       results: {},
-    }))
-    this.doSearch()
+    }), () => {
+      this.doSearch()
+    })
   }
 
   /**
@@ -225,9 +226,9 @@ class Search extends React.Component {
     * Changes state and then starts the search.
     * @param  {String} newBuzz - the new buzzword input
   */
-  async handleBuzzwordsChange(newBuzz) {
+  handleBuzzwordsChange(newBuzz) {
     // clear the dropdown and results and change query
-    await this.setState((prevState) => ({
+    this.setState((prevState) => ({
       query: { // object that we want to update
         ...prevState.query, // keep all other key-value pairs
         buzzwords: newBuzz,
@@ -235,8 +236,9 @@ class Search extends React.Component {
       },
       filtered: [],
       results: {},
-    }))
-    this.doSearch()
+    }), () => {
+      this.doSearch()
+    })
   }
 
   /**
@@ -244,58 +246,58 @@ class Search extends React.Component {
     * Changes state, manipulates results, and then starts the search.
     * @param  {String} newTech - the new technology selection
   */
-  async handleTechnologyChange(newTech) {
+  handleTechnologyChange(newTech) {
     const { results } = this.state
     const { tech } = this.props
 
-    await this.setState((prevState) => ({
+    this.setState((prevState) => ({
       query: { // object that we want to update
         ...prevState.query, // keep all other key-value pairs
         technology: newTech, // update the value of specific key
       },
-    }))
-
-    // the section below is for changing the queue/tech in the results
-    // when the technology dropdown is changed
-    if (results.product) {
+    }), () => {
+      // the section below is for changing the queue/tech in the results
+      // when the technology dropdown is changed
+      if (results.product) {
       // set original results
-      const originalResults = { ...results }
-      // set the list of original techs
-      const originalTech = originalResults.technology.split(',').map((item) => item.trim())
-      // set the state to the technology input value if the original result
-      // includes the selected tech we will narrow down the visible queues
-      if (originalTech.includes(newTech)) {
+        const resultsClone = { ...results }
+        // set the list of original techs
+        const originalTech = resultsClone.technology.split(',').map((item) => item.trim())
+        // set the state to the technology input value if the original result
+        // includes the selected tech we will narrow down the visible queues
+        if (originalTech.includes(newTech)) {
         // set the temp string of queues which is what will be visible
-        let temp = ''
-        // create the list of queues in the original results
-        const originalQueues = originalResults.queue.split(',')
-        // iterate through the queues
-        originalQueues.forEach((query) => {
+          let temp = ''
+          // create the list of queues in the original results
+          const originalQueues = resultsClone.queue.split(',')
+          // iterate through the queues
+          originalQueues.forEach((query) => {
           // if the queue belongs to the selected tech
-          if (
-            tech[newTech.replace(/\s/g, '')].includes(
-              query.trim(),
-            )
-          ) {
+            if (
+              tech[newTech.replace(/\s/g, '')].includes(
+                query.trim(),
+              )
+            ) {
             // add it to the temp string
-            temp += query.trim()
-          }
-        })
-        // set the temp string to the visible results
-        originalResults.visibleQueue = temp
+              temp += query.trim()
+            }
+          })
+          // set the temp string to the visible results
+          resultsClone.visibleQueue = temp
 
-        this.setState({ results: originalResults })
-      } else if (newTech === 'Any') {
-        originalResults.visibleQueue = originalResults.queue
-      } else {
+          this.setState({ results: resultsClone })
+        } else if (newTech === 'Any') {
+          resultsClone.visibleQueue = resultsClone.queue
+        } else {
         // clear the dropdown and results
+          this.setState({ filtered: [], results: {} })
+        }
+      } else {
+      // clear the dropdown and results
         this.setState({ filtered: [], results: {} })
       }
-    } else {
-      // clear the dropdown and results
-      this.setState({ filtered: [], results: {} })
-    }
-    this.doSearch()
+      this.doSearch()
+    })
   }
 
   /**
@@ -314,16 +316,7 @@ class Search extends React.Component {
 
   /** resets the state and clears the input UI */
   clear() {
-    this.setState({
-      filtered: [],
-      query: {
-        product: '',
-        technology: 'Any',
-        buzzwords: '',
-      },
-      results: {},
-    })
-
+    this.resetState()
     this.inputProd.clear()
     this.inputTech.clear()
   }

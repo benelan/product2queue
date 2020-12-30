@@ -55,10 +55,10 @@ const Technology = class extends React.Component {
     }
 
     // turn the tech list into react-select compatible object
-    const items = techList.map((tech) => ({ value: tech, label: tech }))
-
-    // add 'Any' to the beginning of the list
-    items.unshift({ value: 'Any', label: 'Any' })
+    const items = [
+      { value: 'Any', label: 'Any' },
+      ...techList.map((tech) => ({ value: tech, label: tech })),
+    ]
 
     return (
       <>

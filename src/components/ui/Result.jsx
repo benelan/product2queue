@@ -75,7 +75,7 @@ const Result = ({ results }) => {
                     {' '}
                     <a target="_blank" rel="noopener noreferrer" style={linkStyle} href={sdk}>this documentation</a>
                     {' '}
-                    before transferring to Develper Products.
+                    before transferring to Developer Products.
                   </ListGroupItem>
                 ) : ('')
               }
