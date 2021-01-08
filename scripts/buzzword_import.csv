@@ -1,0 +1,95 @@
+﻿cell,buzzwords
+$B$9,Demographics; Geo-Enrichment; Territory design; Business Locations; Drive times; Reports; Trade Areas; Community Analyst Online; Fusion reports; Tapestry; Model Builder
+$C$59,Arcade; ArcToolbox; Attribute Assistant; Bing; Buffer; Crashes; Creating and editing Attributes; Data driven pages; Geodatabases; Domains/Subtypes; Geocoding/Address Locator; Geoprocessing; Metadata; Model Builder; Python; XY Coordinates
+$B$5,Jupyter; Notebooks
+$D$5,Jupyter; Notebooks
+$C$6,ArcMap or ArcGIS Pro - Business Analyst
+$C$3,ArcMap or ArcGIS Pro - 3D Analyst extension
+$D$3,ArcGIS Server - 3D Analyst extension
+$D$7,ArcGIS Enterprise - Business Analyst Server Role
+$C$11,ArcMap and ArcGIS Pro - Data Interopability extension; Workbench; FME; Safe software
+$C$12,ArcMap or ArcGIS Pro - Data Reviewer extension
+$C$13,ArcMap; ArcCatalog - ArcToolbox; Attribute Assistant; Bing; Buffer; Crashes; Creating and editing Attributes; Data driven pages; Geodatabases; Domains/Subtypes; Geocoding/Address Locator; Geoprocessing; Metadata; Model Builder; Python; XY; Raster
+$D$11,ArcGIS Server - Data Interopability extension; Workbench; FME; Safe software
+$D$12,ArcGIS Server - Data Reviewer extension
+$D$17,ArcGIS GIS Server; Portal for ArcGIS; ArcGIS Data Store; Web Adaptor; publishing; sharing; consuming services; hosted feature layers; register data store; federation; REST; Python; geoprocessing services
+$F$28,ArcMap or ArcGIS Pro - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Administering; Editing; Versioning; Reconcile/Post; Views; Query Layers; Locks; Indexes
+$F$33,ArcMap or ArcGIS Pro - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Administering; Editing; Versioning; Reconcile/Post; Views; Query Layers; Locks; Indexes
+$F$73,ArcMap or ArcGIS Pro - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Administering; Editing; Versioning; Reconcile/Post; Views; Query Layers; Locks; Indexes
+$F$23,ArcMap or ArcGIS Pro - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Administering; Editing; Versioning; Reconcile/Post; Views; Query Layers; Locks; Indexes
+$F$24,ArcGIS Server - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Feature Services; Replication; Offline Editing; Geometric or Utility Network; Parcel Fabric; Branch Versioning
+$F$25,ArcMap or ArcGIS Pro - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Administering; Editing; Versioning; Reconcile/Post; Views; Query Layers; Locks; Indexes
+$F$26,ArcGIS Server - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Feature Services; Replication; Offline Editing; Geometric or Utility Network; Parcel Fabric; Branch Versioning
+$F$35,ArcMap or ArcGIS Pro - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Administering; Editing; Versioning; Reconcile/Post; Views; Query Layers; Locks; Indexes
+$F$36,ArcGIS Server - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Feature Services; Replication; Offline Editing; Geometric or Utility Network; Parcel Fabric; Branch Versioning
+$B$56,Arcade; Basic Viewer Web App; Credit Refund Request; Hosted Feature Service; Journal/Cascade; Online Map Publishing; Open Data Site; Solutions; Story Maps; Widgets
+$B$57,URL Switch; Administrator Switch; Administrator Password Reset
+$C$54,ArcMap or ArcGIS Pro - Network Analyst extension
+$D$54,ArcGIS Server - Network Analyst extension
+$D$55,ArcGIS Server - Notebook Server
+$D$38,ArcGIS Enterprise - GeoAnalytics Server Role or Extension
+$D$39,ArcGIS Enterprise - GeoEvent Server Role or Extension
+$C$40,ArcMap or ArcGIS Pro - Geostatistical Analyst extension
+$D$40,ArcGIS Server - Geostatistical Analyst extension
+$C$42,ArcMap or ArcGIS Pro - Image Analyst extension
+$D$42,ArcGIS Server - Image Analyst extension
+$D$43,ArcGIS Enterprise - Image Server Role
+$B$61,Sharing; Editing; Layers; Services; and Basemaps from ArcGIS Online
+$C$60,ArcMap or ArcGIS Pro - Pipeline Referencing extension
+$D$60,ArcGIS Server - Pipeline Referencing extension
+$C$61,Arcade; ArcToolbox; Attribute Assistant; Bing; Buffer; Crashes; Creating and editing Attributes; Data driven pages; Geodatabases; Domains/Subtypes; Geocoding/Address Locator; Geoprocessing; Metadata; Model Builder; Python; XY; Raster
+$D$61,Sharing; Editing; Layers; Services; and Basemaps from ArcGIS Enterprise
+$C$86,ArcMap or ArcGIS Pro - Production Mapping extension
+$C$89,ArcMap or ArcGIS Pro - Roads & Highways extension
+$D$89,ArcGIS Server - Roads & Highways extension
+$C$66,ArcMap or ArcGIS Pro - Spatial Analyst extension
+$D$66,ArcGIS Server - Spatial Analyst extension
+$C$29,ArcMap or ArcGIS Pro - Maritime extension
+$D$29,ArcGIS Server - Maritime extension
+$C$30,ArcMap or ArcGIS Pro - Maritime extension
+$D$30,ArcGIS Server - Maritime extension
+$C$31,ArcMap or ArcGIS Pro - Maritime extension
+$D$31,ArcGIS Server - Maritime extension
+$C$21,ArcMap or ArcGIS Pro - Aviation extension
+$D$21,ArcGIS Server - Aviation extension
+$C$22,ArcMap or ArcGIS Pro - Aviation extension
+$D$22,ArcGIS Server - Aviation extension
+$C$73,ArcMap or ArcGIS Pro - Python; ArcPy; Python Add-ins; Python Toolboxes
+$D$73,ArcGIS Server - Python; ArcPy; Python Add-ins; Python Toolboxes; Geoprocessing Services
+$G$38,ArcGIS Enterprise Builder; Cloud (Azure/AWS); Installation; Licensing; Chef; PowerShell DSC
+$G$39,ArcGIS Enterprise Builder; Cloud (Azure/AWS); Installation; Licensing; Chef; PowerShell DSC
+$G$43,ArcGIS Enterprise Builder; Cloud (Azure/AWS); Installation; Licensing; Chef; PowerShell DSC
+$G$53,ArcGIS Enterprise Builder; Cloud (Azure/AWS); Installation; Licensing; Chef; PowerShell DSC
+$F$17,ArcGIS Server - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Feature Services; Replication; Offline Editing; Geometric or Utility Network; Parcel Fabric; Branch Versioning
+$G$17,ArcGIS Enterprise Builder; Cloud (Azure/AWS); Installation; Licensing; Chef; PowerShell DSC
+$G$6,Installation; Esri License Manager; Single-Use and Concurrent Licensing; Configuration
+$G$7,ArcGIS Enterprise Builder; Cloud (Azure/AWS); Installation; Licensing; Chef; PowerShell DSC
+$F$13,ArcMap or ArcGIS Pro - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Administering; Editing; Versioning; Reconcile/Post; Views; Query Layers; Locks; Indexes
+$G$13,Installation; Esri License Manager; Single-Use and Concurrent Licensing; Configuration
+$G$56,Subscription Activation; Account Generation; User Types and Apps
+$F$61,ArcMap or ArcGIS Pro - SQL Server; Oracle; PostgreSQL; SAP HANA; Connecting; Administering; Editing; Versioning; Reconcile/Post; Views; Query Layers; Locks; Indexes
+$G$61,Installation; Named User; Single-Use and Concurrent Licensing; Configuration
+$B$23,ArcGIS Online - Solution configuration; add-in setup; templates; and workflows
+$C$23,ArcMap or ArcGIS Pro - Solution configuration; add-in setup; templates; and workflows
+$D$23,ArcGIS Enterprise - Solution configuration; add-in setup; templates; and workflows
+$B$24,ArcGIS Online - Solution configuration; add-in setup; templates; and workflows
+$C$24,ArcMap or ArcGIS Pro - Solution configuration; add-in setup; templates; and workflows
+$D$24,ArcGIS Enterprise - Solution configuration; add-in setup; templates; and workflows
+$B$25,ArcGIS Online - Solution configuration; add-in setup; templates; and workflows
+$C$25,ArcMap or ArcGIS Pro - Solution configuration; add-in setup; templates; and workflows
+$D$25,ArcGIS Enterprise - Solution configuration; add-in setup; templates; and workflows
+$B$26,ArcGIS Online - Solution configuration; add-in setup; templates; and workflows
+$C$26,ArcMap or ArcGIS Pro - Solution configuration; add-in setup; templates; and workflows
+$D$26,ArcGIS Enterprise - Solution configuration; add-in setup; templates; and workflows
+$B$28,ArcGIS Online - Solution configuration; add-in setup; templates; and workflows
+$C$28,ArcMap or ArcGIS Pro - Solution configuration; add-in setup; templates; and workflows
+$D$28,ArcGIS Enterprise - Solution configuration; add-in setup; templates; and workflows
+$B$33,ArcGIS Online - Solution configuration; add-in setup; templates; and workflows
+$C$33,ArcMap or ArcGIS Pro - Solution configuration; add-in setup; templates; and workflows
+$D$33,ArcGIS Enterprise - Solution configuration; add-in setup; templates; and workflows
+$B$35,ArcGIS Online - Solution configuration; add-in setup; templates; and workflows
+$C$35,ArcMap or ArcGIS Pro - Solution configuration; add-in setup; templates; and workflows
+$D$35,ArcGIS Enterprise - Solution configuration; add-in setup; templates; and workflows
+$B$36,ArcGIS Online - Solution configuration; add-in setup; templates; and workflows
+$C$36,ArcMap or ArcGIS Pro - Solution configuration; add-in setup; templates; and workflows
+$D$36,ArcGIS Enterprise - Solution configuration; add-in setup; templates; and workflows
