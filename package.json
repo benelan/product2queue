@@ -1,5 +1,5 @@
 {
-  "name": "product2queue",
+  "name": "ess-products",
   "version": "0.1.0",
   "homepage": "./",
   "private": true,
@@ -13,7 +13,8 @@
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.3",
     "react-select": "^3.1.0",
-    "reactstrap": "^8.4.1"
+    "reactstrap": "^8.4.1",
+    "xss": "^1.0.8"
   },
   "devDependencies": {
     "better-docs": "^2.3.2",

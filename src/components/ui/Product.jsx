@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
+import xss from 'xss'
 import {
   Input,
   ListGroup,
@@ -53,8 +54,17 @@ class Product extends React.Component {
   }
 
   componentDidMount() {
+    const { onProductChange } = this.props
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
+    // get url params
+    const params = new URL(document.location).searchParams
+    // grab values and sanitize html
+    const product = xss(params.get('p'))
+    if (product) {
+      this.inputProd.value = product
+      setTimeout(() => { onProductChange(product) }, 666)
+    }
   }
 
   componentWillUnmount() {
