@@ -322,7 +322,7 @@ class Search extends React.Component {
   }
 
   resetState() {
-    window.history.replaceState({}, document.title, '/')
+    window.history.replaceState({}, document.title, '/products')
     this.setState({
       filtered: [],
       query: {

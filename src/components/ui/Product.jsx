@@ -39,13 +39,13 @@ class Product extends React.Component {
     // clears the product input value
     this.clearProd = () => {
       this.inputProd.value = ''
-      window.history.replaceState({}, document.title, '/')
+      window.history.replaceState({}, document.title, '/products')
     }
 
     // clears the buzzword input value
     this.clearBuzz = () => {
       this.inputBuzz.value = ''
-      window.history.replaceState({}, document.title, '/')
+      window.history.replaceState({}, document.title, '/products')
     }
 
     // clears both product and buzzword inputs
