@@ -61,9 +61,19 @@ class Product extends React.Component {
     const params = new URL(document.location).searchParams
     // grab values and sanitize html
     const product = xss(params.get('p'))
+    const buzzwords = xss(params.get('b'))
+    // has product url query
     if (product) {
+      // put it in the input and execute change event func
       this.inputProd.value = product
-      setTimeout(() => { onProductChange(product) }, 666)
+      setTimeout(() => onProductChange(product), 666)
+      // has buzzword param and no product
+    } else if (buzzwords) {
+      // toggle to buzzwords tab
+      this.toggle('2')
+      // put it in the input and execute change event func
+      this.inputBuzz.value = buzzwords
+      setTimeout(() => onProductChange(buzzwords), 666)
     }
   }
 
