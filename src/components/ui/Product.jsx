@@ -54,7 +54,7 @@ class Product extends React.Component {
   }
 
   componentDidMount() {
-    const { onProductChange } = this.props
+    const { onProductChange, onBuzzwordsChange } = this.props
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
     // get url params
@@ -73,7 +73,7 @@ class Product extends React.Component {
       this.toggle('2')
       // put it in the input and execute change event func
       this.inputBuzz.value = buzzwords
-      setTimeout(() => onProductChange(buzzwords), 666)
+      setTimeout(() => onBuzzwordsChange(buzzwords), 666)
     }
   }
 
