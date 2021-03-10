@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-  
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title> components/ui/Result.jsx</title>
@@ -24,14 +24,14 @@
   <link type="text/css" rel="stylesheet" href="">
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-  
+
 </head>
 
 
 
 <body class="layout small-header">
     <div id="stickyNavbarOverlay"></div>
-    
+
 
 <div class="top-nav">
     <div class="inner">
@@ -41,15 +41,15 @@
             <span aria-hidden="true"></span>
         </a>
         <div class="logo">
-            
-             
+
+
                 <a href="index.html">
                     <h1 class="navbar-item">Product2Queue Documentation</h1>
                 </a>
-            
+
         </div>
         <div class="menu">
-            
+
             <div class="navigation">
                 <a
                     href="index.html"
@@ -57,9 +57,9 @@
                 >
                     API Documentation
                 </a>
-                
-                
-                
+
+
+
             </div>
         </div>
     </div>
@@ -69,11 +69,11 @@
             class="sidebar "
             id="sidebarNav"
         >
-            
+
             <nav>
-                
+
                     <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="ErrorBoundary.html">ErrorBoundary</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
-                
+
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
@@ -82,11 +82,11 @@
                     <p>Source</p>
                     <h1>components/ui/Result.jsx</h1>
                 </header>
-                
 
 
 
-    
+
+
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react'
@@ -99,86 +99,83 @@ import { Label, ListGroup, ListGroupItem } from 'reactstrap'
  * @author Ben Elan &amp; Lingtao Xie
  * @parent Search
  */
-class Result extends React.PureComponent {
-  render() {
-    // hyperlink color
-    const linkStyle = {
-      color: '#5cb85c',
-    }
-
-    // URLs for transfer resources
-    const geoData = 'https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view'
-    const sdk = 'https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view'
-
-    const { results } = this.props
-    return (
-      &lt;>
-        { // if there are results, display them
-          results.product ? (
-            &lt;>
-              &lt;Label style={{ marginBottom: '13px' }} for="res">Results&lt;/Label>
-              &lt;ListGroup id="res">
-                &lt;ListGroupItem>
-                  &lt;b>Product: &lt;/b>
-                  {results.product}
-                &lt;/ListGroupItem>
-                &lt;ListGroupItem>
-                  &lt;b>Queue: &lt;/b>
-                  {results.visibleQueue}
-                &lt;/ListGroupItem>
-                &lt;ListGroupItem>
-                  &lt;b>Support Method: &lt;/b>
-                  {results.supportMethod}
-                &lt;/ListGroupItem>
-
-                { // display reference url if there is one
-                  results.url ? (
-                    &lt;ListGroupItem>
-                      &lt;a target="_blank" rel="noopener noreferrer" style={linkStyle} href={results.url}>
-                        &lt;b>Reference&lt;/b>
-                      &lt;/a>
-                    &lt;/ListGroupItem>
-                  ) : ('')
-                }
-                { // display email if there is one
-                  results.email ? (
-                    &lt;ListGroupItem>
-                      &lt;b>Contact: &lt;/b>
-                      &lt;a style={linkStyle} href={`mailto:${results.email}`}>
-                        {results.email}
-                      &lt;/a>
-                    &lt;/ListGroupItem>
-                  ) : ('')
-                }
-                { // display data transfer resource if the data queue in results
-                  results.visibleQueue.includes('Data') ? (
-                    &lt;ListGroupItem>
-                      Please review
-                      {' '}
-                      &lt;a target="_blank" rel="noopener noreferrer" style={linkStyle} href={geoData}>this documentation&lt;/a>
-                      {' '}
-                      before transferring to Data Management.
-                    &lt;/ListGroupItem>
-                  ) : ('')
-                }
-                { // display sdk transfer resource if the sdk queue in results
-                  results.visibleQueue.includes('SDK') ? (
-                    &lt;ListGroupItem>
-                      Please review
-                      {' '}
-                      &lt;a target="_blank" rel="noopener noreferrer" style={linkStyle} href={sdk}>this documentation&lt;/a>
-                      {' '}
-                      before transferring to Develper Products.
-                    &lt;/ListGroupItem>
-                  ) : ('')
-                }
-              &lt;/ListGroup>
-            &lt;/>
-          ) : ('') // display nothing if there are no results
-        }
-      &lt;/>
-    )
+const Result = ({ results }) => {
+  // hyperlink color
+  const linkStyle = {
+    color: '#5cb85c',
   }
+
+  // URLs for transfer resources
+  const geoData = 'https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view'
+  const sdk = 'https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view'
+
+  return (
+    &lt;>
+      { // if there are results, display them
+        results.product ? (
+          &lt;>
+            &lt;Label style={{ marginBottom: '13px' }} for="res">Results&lt;/Label>
+            &lt;ListGroup id="res">
+              &lt;ListGroupItem>
+                &lt;b>Product: &lt;/b>
+                {results.product}
+              &lt;/ListGroupItem>
+              &lt;ListGroupItem>
+                &lt;b>Queue: &lt;/b>
+                {results.visibleQueue}
+              &lt;/ListGroupItem>
+              &lt;ListGroupItem>
+                &lt;b>Support Method: &lt;/b>
+                {results.supportMethod}
+              &lt;/ListGroupItem>
+
+              { // display reference url if there is one
+                results.url ? (
+                  &lt;ListGroupItem>
+                    &lt;a target="_blank" rel="noopener noreferrer" style={linkStyle} href={results.url}>
+                      &lt;b>Reference&lt;/b>
+                    &lt;/a>
+                  &lt;/ListGroupItem>
+                ) : ('')
+              }
+              { // display email if there is one
+                results.email ? (
+                  &lt;ListGroupItem>
+                    &lt;b>Contact: &lt;/b>
+                    &lt;a style={linkStyle} href={`mailto:${results.email}`}>
+                      {results.email}
+                    &lt;/a>
+                  &lt;/ListGroupItem>
+                ) : ('')
+              }
+              { // display data transfer resource if the data queue in results
+                results.visibleQueue.includes('Data') ? (
+                  &lt;ListGroupItem>
+                    Please review
+                    {' '}
+                    &lt;a target="_blank" rel="noopener noreferrer" style={linkStyle} href={geoData}>this documentation&lt;/a>
+                    {' '}
+                    before transferring to Data Management.
+                  &lt;/ListGroupItem>
+                ) : ('')
+              }
+              { // display sdk transfer resource if the sdk queue in results
+                results.visibleQueue.includes('SDK') ? (
+                  &lt;ListGroupItem>
+                    Please review
+                    {' '}
+                    &lt;a target="_blank" rel="noopener noreferrer" style={linkStyle} href={sdk}>this documentation&lt;/a>
+                    {' '}
+                    before transferring to Developer Products.
+                  &lt;/ListGroupItem>
+                ) : ('')
+              }
+            &lt;/ListGroup>
+          &lt;/>
+        ) : ('') // display nothing if there are no results
+      }
+    &lt;/>
+  )
 }
 
 Result.propTypes = {
@@ -195,9 +192,9 @@ export default Result
 
 
             </div>
-            
-            
-            
+
+
+
         </div>
         <div id="side-nav" class="side-nav">
         </div>

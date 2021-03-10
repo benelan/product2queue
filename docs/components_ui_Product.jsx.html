@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-  
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title> components/ui/Product.jsx</title>
@@ -24,14 +24,14 @@
   <link type="text/css" rel="stylesheet" href="">
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-  
+
 </head>
 
 
 
 <body class="layout small-header">
     <div id="stickyNavbarOverlay"></div>
-    
+
 
 <div class="top-nav">
     <div class="inner">
@@ -41,15 +41,15 @@
             <span aria-hidden="true"></span>
         </a>
         <div class="logo">
-            
-             
+
+
                 <a href="index.html">
                     <h1 class="navbar-item">Product2Queue Documentation</h1>
                 </a>
-            
+
         </div>
         <div class="menu">
-            
+
             <div class="navigation">
                 <a
                     href="index.html"
@@ -57,9 +57,9 @@
                 >
                     API Documentation
                 </a>
-                
-                
-                
+
+
+
             </div>
         </div>
     </div>
@@ -69,11 +69,11 @@
             class="sidebar "
             id="sidebarNav"
         >
-            
+
             <nav>
-                
+
                     <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="App.html">App</a></li><li><a href="ErrorBoundary.html">ErrorBoundary</a></li><li><a href="Navb.html">Navb</a></li><li><a href="Product.html">Product</a></li><li><a href="Result.html">Result</a></li><li><a href="Search.html">Search</a></li><li><a href="Technology.html">Technology</a></li><li><a href="VirtualScroll.html">VirtualScroll</a></li></ul></div>
-                
+
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
@@ -82,15 +82,16 @@
                     <p>Source</p>
                     <h1>components/ui/Product.jsx</h1>
                 </header>
-                
 
 
 
-    
+
+
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React, { memo } from 'react'
 import PropTypes from 'prop-types'
+import xss from 'xss'
 import {
   Input,
   ListGroup,
@@ -129,11 +130,13 @@ class Product extends React.Component {
     // clears the product input value
     this.clearProd = () => {
       this.inputProd.value = ''
+      window.history.replaceState({}, document.title, '/products')
     }
 
     // clears the buzzword input value
     this.clearBuzz = () => {
       this.inputBuzz.value = ''
+      window.history.replaceState({}, document.title, '/products')
     }
 
     // clears both product and buzzword inputs
@@ -144,8 +147,27 @@ class Product extends React.Component {
   }
 
   componentDidMount() {
+    const { onProductChange, onBuzzwordsChange } = this.props
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
+    // get url params
+    const params = new URL(document.location).searchParams
+    // grab values and sanitize html
+    const product = xss(params.get('p'))
+    const buzzwords = xss(params.get('b'))
+    // has product url query
+    if (product) {
+      // put it in the input and execute change event func
+      this.inputProd.value = product
+      setTimeout(() => onProductChange(product), 666)
+      // has buzzword param and no product
+    } else if (buzzwords) {
+      // toggle to buzzwords tab
+      this.toggle('2')
+      // put it in the input and execute change event func
+      this.inputBuzz.value = buzzwords
+      setTimeout(() => onBuzzwordsChange(buzzwords), 666)
+    }
   }
 
   componentWillUnmount() {
@@ -222,7 +244,7 @@ class Product extends React.Component {
           &lt;TabPane tabId="1">
             &lt;Card style={{ height: '82px' }} body>
               &lt;Input
-                innerRef={(input) => { this.inputProd = input; return input }}
+                innerRef={(input) => { this.inputProd = input }}
                 type="search"
                 name="searchProduct"
                 className="input"
@@ -236,7 +258,7 @@ class Product extends React.Component {
           &lt;TabPane tabId="2">
             &lt;Card style={{ height: '82px' }} body>
               &lt;Input
-                innerRef={(input) => { this.inputBuzz = input; return input }}
+                innerRef={(input) => { this.inputBuzz = input }}
                 type="search"
                 name="searchBuzzwords"
                 className="input"
@@ -287,9 +309,9 @@ export default Product
 
 
             </div>
-            
-            
-            
+
+
+
         </div>
         <div id="side-nav" class="side-nav">
         </div>
