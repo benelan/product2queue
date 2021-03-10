@@ -139,11 +139,7 @@ const App = () => {
     // stemming causes issues when doing wildcard searches
 
     this.pipeline.remove(lunr.stemmer)
-    this.pipeline.remove(lunr.trimmer)
-    this.pipeline.remove(lunr.stopWordFilter)
     this.searchPipeline.remove(lunr.stemmer)
-    this.searchPipeline.remove(lunr.trimmer)
-    this.searchPipeline.remove(lunr.stopWordFilter)
     // the ref is the unique identifier
     this.ref('product')
     // the fields are for searching
