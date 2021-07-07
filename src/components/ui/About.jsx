@@ -48,9 +48,6 @@ const About = ({ buttonLabel, className }) => {
             If you have any questions about the products or queues, feel free to contact the
             {' '}
             <a style={{ color: '#5cb85c' }} href="mailto:supt-readinessleads@esri.com?subject=Product%20Supportability%20Question">Readiness Leads</a>
-            . Additionally, please report any issues or bugs to the
-            {' '}
-            <a style={{ color: '#5cb85c' }} href="mailto:lxie@esri.com?cc=belan@esri.com&subject=Product%20App%20Issue">Developers</a>
             .
           </p>
         </ModalBody>

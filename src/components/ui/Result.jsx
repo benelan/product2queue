@@ -15,8 +15,8 @@ const Result = ({ results }) => {
   }
 
   // URLs for transfer resources
-  const geoData = 'https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view'
-  const sdk = 'https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view'
+  const geoData = 'https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x000000HbQYAA0/view'
+  const sdk = 'https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x000000HdbxAAC/view'
 
   return (
     <>

@@ -63,7 +63,7 @@ const Navb = () => {
                   style={linkStyle}
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008f0KAAQ/view"
+                  href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x000000HbQYAA0/view"
                 >
                   Data Management
                 </NavLink>
@@ -74,7 +74,7 @@ const Navb = () => {
                   style={linkStyle}
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x0000008kIXAAY/view"
+                  href="https://esri.lightning.force.com/lightning/r/Knowledge__kav/ka15x000000HdbxAAC/view"
                 >
                   Developer Products
                 </NavLink>
