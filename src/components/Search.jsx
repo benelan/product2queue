@@ -99,7 +99,7 @@ class Search extends React.Component {
     // create an array of queues
     const queueArray = matches.queue.split(',').map((entry) => entry.trim())
     // create a separate list of queues that will be visible in the results
-    matches.visibleQueue = [...matches.queue]
+    matches.visibleQueue = matches.queue
 
     // if there is more than one queue
     if (queueArray.length > 1) {
