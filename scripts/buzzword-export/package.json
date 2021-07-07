@@ -1,5 +1,5 @@
 {
-  "name": "buzzword_export",
+  "name": "buzzword-export",
   "main": "index.js",
   "dependencies": {
     "csv-parser": "^2.3.3"
